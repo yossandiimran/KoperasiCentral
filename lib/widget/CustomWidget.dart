@@ -335,35 +335,6 @@ class CustomWidget {
     }).toList();
   }
 
-  getBoxNamed(context) {
-    return Container(
-      decoration: widget.decCont(defWhite, 20, 20, 20, 20),
-      width: global.getWidth(context),
-      padding: EdgeInsets.only(top: 20, right: 100, left: 20, bottom: 20),
-      margin: EdgeInsets.only(top: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Halo,", style: textStyling.nunitoBold(global.getWidth(context) / 21, defBlack1)),
-          Text(
-            preference.getData("name") + " !",
-            style: textStyling.mcLarenBold(global.getWidth(context) / 20, defBlack1),
-          ),
-          Text(
-            preference.getData("email"),
-            style: textStyling.nuniton(
-              preference.getData("email").length > 20
-                  ? global.getWidth(context) / (preference.getData("email").length * 1.3)
-                  : global.getWidth(context) / 26,
-              defBlack1,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   getImageBgSugar(context) {
     return Positioned(
       top: kToolbarHeight * 2,

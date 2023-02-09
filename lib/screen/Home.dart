@@ -73,7 +73,6 @@ class HomeState extends State<Home> {
                           ],
                         ),
                       ),
-                      widget.getBoxNamed(context),
                     ],
                   ),
                 ),

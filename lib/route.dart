@@ -8,8 +8,6 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case '/login':
         return MaterialPageRoute(builder: (_) => Login());
-      case '/changePass':
-        return MaterialPageRoute(builder: (_) => ChangePass());
       case '/home':
         return MaterialPageRoute(builder: (_) => Home());
 

@@ -13,27 +13,6 @@ class LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    checkLogin();
-    fbmessaging.initFirebase(
-      context: context,
-    );
-  }
-
-  checkLogin() async {
-    try {
-      await preference.initialization();
-      var email = await preference.getData("email");
-      var firstLogin = await preference.getData("first_login");
-      if (email != null) {
-        if (firstLogin == "") {
-          if (mounted) Navigator.pushNamed(context, "/changePass");
-        } else {
-          if (mounted) Navigator.pushNamed(context, "/home");
-        }
-      }
-    } catch (err) {
-      // print(err);
-    }
   }
 
   bool obsText = true;
@@ -60,57 +39,9 @@ class LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 80, left: 50, right: 50),
-                    height: global.getHeight(context) / 1.5,
+                    height: global.getHeight(context),
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                        bottomRight: Radius.circular(30),
-                        bottomLeft: Radius.circular(30),
-                      ),
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [defPurple, defPurple2, defPurple2],
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Spacer(),
-                        Row(
-                          children: [
-                            Spacer(),
-                            Icon(Icons.menu_book_rounded, size: 50, color: Colors.blueGrey.shade50),
-                            Text(
-                              " Master Data",
-                              textAlign: TextAlign.center,
-                              style: textStyling.customColorBold(33, Colors.blueGrey.shade50),
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Container(
-                          margin: EdgeInsets.only(left: 10, right: 10),
-                          width: global.getWidth(context) / 1,
-                          height: 3,
-                          color: Colors.blueGrey.shade50,
-                        ),
-                        SizedBox(height: 5),
-                        Row(
-                          children: [
-                            Spacer(),
-                            Text(
-                              "Online Master Data Mobile Application",
-                              textAlign: TextAlign.center,
-                              style: textStyling.customColor(13, Colors.blueGrey.shade50),
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                        Spacer(),
-                        Spacer(),
-                        Spacer(),
-                      ],
+                      image: DecorationImage(image: AssetImage("assets/bg2.png"), fit: BoxFit.cover),
                     ),
                   ),
                 ],
@@ -118,7 +49,7 @@ class LoginState extends State<Login> {
             ),
             Positioned(
               top: 0,
-              bottom: kToolbarHeight / 2,
+              bottom: kToolbarHeight,
               left: 0,
               right: 0,
               child: Stack(
@@ -141,9 +72,9 @@ class LoginState extends State<Login> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Sign In",
+                                  "Login Anggota Koperasi",
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(color: defBlack1, fontSize: 25, fontWeight: FontWeight.bold),
+                                  style: TextStyle(color: defBlack1, fontSize: 20, fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -153,7 +84,7 @@ class LoginState extends State<Login> {
                                   controller: email,
                                   decoration: const InputDecoration(
                                     border: UnderlineInputBorder(),
-                                    labelText: 'Username / E-Mail',
+                                    labelText: 'Username',
                                     labelStyle: TextStyle(fontSize: 15),
                                   ),
                                 ),
@@ -182,8 +113,8 @@ class LoginState extends State<Login> {
                                 ),
                                 Container(
                                   padding: const EdgeInsets.only(
-                                    left: 20,
-                                    right: 20,
+                                    left: 0,
+                                    right: 0,
                                     top: 0,
                                     bottom: 5,
                                   ),
@@ -191,21 +122,21 @@ class LoginState extends State<Login> {
                                     children: [
                                       GestureDetector(
                                         onTap: () async {
-                                          var obj = {"user": email.text, "pass": password.text};
-                                          await LoginService(context: context, objParam: obj).login();
+                                          // var obj = {"user": email.text, "pass": password.text};
+                                          // await LoginService(context: context, objParam: obj).login();
+                                          Navigator.pushNamed(context, '/home');
                                         },
                                         child: Container(
-                                          width: global.getWidth(context) / 1.5,
                                           padding: const EdgeInsets.all(15),
                                           decoration: widget.decorationContainerGradient(
-                                            defPurple,
-                                            defPurple2,
+                                            defOrange,
+                                            defOrange,
                                             20.0,
                                           ),
                                           child: Center(
                                             child: Text(
-                                              "Login",
-                                              style: textStyling.defaultWhiteBold(18.0),
+                                              "Masuk Aplikasi",
+                                              style: textStyling.defaultWhiteBold(14.0),
                                             ),
                                           ),
                                         ),
@@ -238,7 +169,6 @@ class LoginState extends State<Login> {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(height: 10),
                               ],
                             ),
                           ),

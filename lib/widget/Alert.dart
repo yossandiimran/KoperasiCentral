@@ -51,8 +51,8 @@ class Alert {
               children: [
                 const Spacer(),
                 Icon(
-                  Icons.check_circle_outline_outlined,
-                  color: defBlue,
+                  Icons.check_circle_outline_rounded,
+                  color: defGreen,
                   size: global.getWidth(context) / 8,
                 ),
                 const Spacer(),

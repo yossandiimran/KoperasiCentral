@@ -26,7 +26,6 @@ part 'service/LoginService.dart';
 // Screen / View ======================================
 part 'screen/Login.dart';
 part 'screen/SplashScreen.dart';
-part 'screen/ChangePass.dart';
 part 'screen/Home.dart';
 // ================= Vendor Screen ====================
 
