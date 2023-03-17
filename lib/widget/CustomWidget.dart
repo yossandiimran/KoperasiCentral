@@ -9,14 +9,21 @@ class CustomWidget {
     return AppBar(
       backgroundColor: color,
       elevation: 0,
-      leading: IconButton(
-        onPressed: () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios_new_rounded, color: defWhite),
+      automaticallyImplyLeading: false,
+      leading: Container(
+        padding: EdgeInsets.only(left: 10),
+        child: Image.asset("assets/1.png"),
       ),
       title: Text(
         title,
-        style: textStyling.customColorBold(global.getWidth(context) / 25, defWhite),
+        style: textStyling.customColorBold(18, defBlack1),
       ),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.notifications_on_rounded, color: defblue2),
+        ),
+      ],
     );
   }
 
@@ -32,13 +39,7 @@ class CustomWidget {
           Container(
             padding: EdgeInsets.only(top: kToolbarHeight, left: 20, right: 20),
             height: kToolbarHeight * 2,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [defPurple, defPurple2, defPurple2],
-              ),
-            ),
+            decoration: BoxDecoration(color: Colors.blueGrey.shade50),
           ),
         ],
       ),

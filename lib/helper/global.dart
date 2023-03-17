@@ -9,6 +9,7 @@ TextStyling textStyling = TextStyling();
 FirebaseMessagingHelper fbmessaging = FirebaseMessagingHelper();
 
 var appVersion = '0.0.1';
+var isMenuActive = 0;
 
 //Default Theme Color
 Color defBlue = const Color(0xff1572e8), defRed = const Color(0xffea4d56);
@@ -16,6 +17,11 @@ Color defOrange = const Color(0xffff910a), defGreen = const Color(0xff2bb930);
 Color defGrey = const Color(0xff8d9498), defBlack1 = const Color(0xff1a2035);
 Color defBlack2 = const Color(0xff202940), defWhite = Colors.white;
 Color defPurple = const Color(0xff6861ce), defPurple2 = const Color(0xff5c55bf);
+Color defOrange2 = const Color(0xffe7a92c), defblue2 = const Color(0xff22328f);
+Color defTaro1 = const Color(0xff8894c4), defTaro2 = const Color(0xffa4a9cf);
+Color defTaro3 = const Color(0xff7c8cbc), defwheat = const Color(0xfff6d99c);
+var defblue3 = Colors.blue[100], defred2 = Colors.red[100], defgreen2 = Colors.green[100];
+var deforg3 = Colors.orange[200], defyel = Colors.yellow[100], defteal = Colors.teal[100];
 
 class Global {
   getWidth(context) => MediaQuery.of(context).size.width;

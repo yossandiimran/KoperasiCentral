@@ -11,6 +11,10 @@ class RouteGenerator {
       case '/home':
         return MaterialPageRoute(builder: (_) => Home());
 
+      //Sample Menu Test
+      case '/test':
+        return MaterialPageRoute(builder: (_) => MainTest());
+
       default:
         return _errorRoute();
     }
