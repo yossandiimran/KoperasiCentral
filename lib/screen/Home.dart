@@ -16,7 +16,8 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return true;
+        alert.alertConfirmExit(context);
+        return false;
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -33,27 +34,27 @@ class HomeState extends State<Home> {
       case 0:
         return Dashboard();
       case 1:
-        return Container();
+        return Saldo();
       case 2:
-        return Container();
+        return Transaksi();
       case 3:
-        return Container();
+        return Profile();
     }
   }
 
   navBarApp() {
     return GNav(
-        color: defGrey,
+        color: defWhite,
         haptic: true,
-        tabBorderRadius: 20,
+        tabBorderRadius: 15,
         curve: Curves.linear,
         duration: Duration(milliseconds: 100),
         gap: 8,
         activeColor: defWhite,
         iconSize: 24,
-        backgroundColor: defWhite,
-        tabBackgroundColor: defBlue,
-        tabMargin: EdgeInsets.only(left: 5, right: 5),
+        backgroundColor: defBlack1,
+        tabBackgroundColor: defblue2,
+        tabMargin: EdgeInsets.only(left: 3, right: 3, top: 4, bottom: 4),
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         onTabChange: (value) {
           isMenuActive = value;
@@ -75,7 +76,7 @@ class HomeState extends State<Home> {
           ),
           GButton(
             icon: Icons.person_rounded,
-            text: 'Profile',
+            text: 'Akun',
           )
         ]);
   }

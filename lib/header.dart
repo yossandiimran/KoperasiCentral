@@ -30,6 +30,9 @@ part 'screen/Login.dart';
 part 'screen/SplashScreen.dart';
 part 'screen/Home.dart';
 part 'screen/Dashboard.dart';
+part 'screen/menu/Profile.dart';
+part 'screen/menu/Saldo.dart';
+part 'screen/menu/Transaksi.dart';
 // ================= Vendor Screen ====================
 
 //Testing Menu

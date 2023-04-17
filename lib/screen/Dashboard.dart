@@ -16,7 +16,8 @@ class DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return true;
+        alert.alertConfirmExit(context);
+        return false;
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -88,7 +89,7 @@ class DashboardState extends State<Dashboard> {
                   height: global.getHeight(context) - (kToolbarHeight * 5),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(topRight: Radius.circular(40), topLeft: Radius.circular(40)),
-                    color: defWhite,
+                    color: Colors.white,
                   ),
                   child: ScrollConfiguration(
                     behavior: const ScrollBehavior().copyWith(overscroll: false),
@@ -182,7 +183,7 @@ class DashboardState extends State<Dashboard> {
                       margin: EdgeInsets.only(top: 20, left: 10, right: 10),
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.all(Radius.circular(20)),
-                        color: defblue2,
+                        color: defBlue,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.3),
