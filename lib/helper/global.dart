@@ -30,7 +30,7 @@ class Global {
   //Handle Service ===============================================================
   // DEV PUBLIC 36.91.208.116
   // var baseUrl = 'http://192.168.1.113:30/master-data/public/api/';
-  var baseUrl = 'http://36.91.208.116/master-data/public/api/';
+  var baseUrl = 'http://192.168.1.113:30/service-koperasi/public/user/';
   var bapiUrl = 'http://36.91.208.116:8000/user-center/getkend';
   // var bapiUrl = 'http://36.91.208.116:8000/user-center/getkend';
 

@@ -10,28 +10,23 @@ class Alert {
         return AlertDialog(
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
           contentPadding: const EdgeInsets.only(top: 10.0),
-          content: SizedBox(
-            height: global.getWidth(context) / 3,
-            child: Column(
-              children: [
-                const Spacer(),
-                Icon(
-                  Icons.warning_amber_rounded,
-                  color: defOrange,
-                  size: global.getWidth(context) / 8,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.warning_amber_rounded,
+                color: defOrange,
+                size: global.getWidth(context) / 8,
+              ),
+              Container(
+                margin: const EdgeInsets.all(10),
+                child: Text(
+                  "$text",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: global.getWidth(context) / 20),
                 ),
-                const Spacer(),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  child: Text(
-                    "$text",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: global.getWidth(context) / 20),
-                  ),
-                ),
-                const Spacer(),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
@@ -45,28 +40,23 @@ class Alert {
         return AlertDialog(
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
           contentPadding: const EdgeInsets.only(top: 10.0),
-          content: SizedBox(
-            height: global.getWidth(context) / 3,
-            child: Column(
-              children: [
-                const Spacer(),
-                Icon(
-                  Icons.check_circle_outline_rounded,
-                  color: defGreen,
-                  size: global.getWidth(context) / 8,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check_circle_outline_outlined,
+                color: defBlue,
+                size: global.getWidth(context) / 8,
+              ),
+              Container(
+                margin: const EdgeInsets.all(10),
+                child: Text(
+                  "$text",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: global.getWidth(context) / 20),
                 ),
-                const Spacer(),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  child: Text(
-                    "$text",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: global.getWidth(context) / 20),
-                  ),
-                ),
-                const Spacer(),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
@@ -214,6 +204,52 @@ class Alert {
           ),
         );
       },
+    );
+  }
+}
+
+class BadgeIconNotif extends StatelessWidget {
+  final IconData iconData;
+  final VoidCallback onTap;
+  final int notificationCount;
+
+  const BadgeIconNotif({
+    Key? key,
+    required this.onTap,
+    required this.iconData,
+    this.notificationCount = 0,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(iconData),
+              ],
+            ),
+            notificationCount != 0
+                ? Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                      alignment: Alignment.center,
+                      child: Text('$notificationCount'),
+                    ),
+                  )
+                : Container(),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -59,8 +59,8 @@ class App extends StatelessWidget {
           ),
         ),
       ),
-      // initialRoute: '/',
-      initialRoute: '/test',
+      initialRoute: '/',
+      // initialRoute: '/test',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

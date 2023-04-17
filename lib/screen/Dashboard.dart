@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, no_logic_in_create_state, avoid_print, avoid_unnecessary_containers, unnecessary_null_comparison, invalid_use_of_visible_for_testing_member
+// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, no_logic_in_create_state, avoid_print, avoid_unnecessary_containers, unnecessary_null_comparison, invalid_use_of_visible_for_testing_member, prefer_interpolation_to_compose_strings
 part of '../../header.dart';
 
 class Dashboard extends StatefulWidget {
@@ -49,7 +49,7 @@ class DashboardState extends State<Dashboard> {
                           children: [
                             SizedBox(width: 15),
                             Text(
-                              "Selamat datang, \nYossandi Imran Prihartanto",
+                              "Selamat datang, \n" + preference.getData("name"),
                               style: textStyling.customColor(global.getWidth(context) / 20, defWhite),
                             ),
                             Spacer(),
@@ -88,7 +88,7 @@ class DashboardState extends State<Dashboard> {
                   height: global.getHeight(context) - (kToolbarHeight * 5),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(topRight: Radius.circular(40), topLeft: Radius.circular(40)),
-                    color: Colors.blueGrey.shade50,
+                    color: defWhite,
                   ),
                   child: ScrollConfiguration(
                     behavior: const ScrollBehavior().copyWith(overscroll: false),

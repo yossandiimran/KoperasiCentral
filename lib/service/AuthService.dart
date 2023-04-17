@@ -1,11 +1,11 @@
-// ignore_for_file: file_names, use_build_context_synchronously, prefer_typing_uninitialized_variables, prefer_interpolation_to_compose_strings
+// ignore_for_file: file_names, use_build_context_synchronously, prefer_typing_uninitialized_variables, prefer_interpolation_to_compose_strings, avoid_print
 
 part of "../header.dart";
 
-class LoginService {
+class AuthService {
   final BuildContext context;
   final objParam;
-  LoginService({required this.context, this.objParam});
+  AuthService({required this.context, this.objParam});
 
   Future login() async {
     alert.loadingAlert(context: context, text: "Mohon Tunggu .. ", isPop: false);
@@ -13,14 +13,14 @@ class LoginService {
     try {
       var url = global.getMainServiceUrl('login');
       var dvc = await FirebaseMessaging.instance.getToken();
-      var obj = {"username": objParam["user"], "password": objParam["pass"], "device_token": dvc};
+      var obj = {"username": objParam["username"], "password": objParam["password"], "device_token": dvc};
       await http.post(url, body: obj).then((res) async {
         var data = json.decode(res.body), lm = LoginModel.fromJson(data);
         if (res.statusCode == 200) {
           if (lm.success == false) {
             return global.errorResponse(context, lm.message);
           } else {
-            var checkPreference = await setUserPreference(lm, objParam["pass"]);
+            var checkPreference = await setUserPreference(lm, objParam["password"]);
             if (checkPreference == 200) {
               var firstLogin = preference.getData("first_login");
               if (firstLogin == "") {
@@ -39,7 +39,9 @@ class LoginService {
         return global.errorResponsePop(context, "Koneksi Timeout ...");
       });
     } catch (e) {
-      return 500;
+      // return 500;
+      print(e);
+      return global.errorResponsePop(context, "Terjadi Kesalahan !");
     }
   }
 
@@ -67,18 +69,26 @@ class LoginService {
       });
     } catch (e) {
       return 500;
+      // print(e);
     }
   }
 
   Future setUserPreference(LoginModel lm, pass) async {
     try {
+      await preference.setString("id", lm.data!.user!.id.toString());
+      await preference.setString("reff_id", lm.data!.user!.reffId.toString());
       await preference.setString("name", lm.data!.user!.name);
+      await preference.setString("username", lm.data!.user!.username);
       await preference.setString("email", lm.data!.user!.email);
-      await preference.setString("pass", pass);
-      await preference.setString("first_login", lm.data!.user!.firstLogin);
+      await preference.setString("email_verified_at", lm.data!.user!.emailVerifiedAt.toString());
+      await preference.setString("first_login", lm.data!.user!.firstLogin.toString());
       await preference.setString("token", lm.data!.accessToken);
+      await preference.setString("token_type", lm.data!.tokenType);
+      await preference.setString("expires_in", lm.data!.expiresIn.toString());
+      await preference.setString("pass", pass);
       return 200;
     } catch (err) {
+      print(err);
       return 201;
     }
   }

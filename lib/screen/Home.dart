@@ -51,8 +51,8 @@ class HomeState extends State<Home> {
         gap: 8,
         activeColor: defWhite,
         iconSize: 24,
-        backgroundColor: Colors.blueGrey.shade50,
-        tabBackgroundColor: defOrange,
+        backgroundColor: defWhite,
+        tabBackgroundColor: defBlue,
         tabMargin: EdgeInsets.only(left: 5, right: 5),
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         onTabChange: (value) {
@@ -70,8 +70,8 @@ class HomeState extends State<Home> {
             text: 'Saldo',
           ),
           GButton(
-            icon: Icons.search_rounded,
-            text: 'Cari',
+            icon: Icons.receipt_long_rounded,
+            text: 'Transaksi',
           ),
           GButton(
             icon: Icons.person_rounded,

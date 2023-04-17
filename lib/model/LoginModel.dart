@@ -1,5 +1,5 @@
 // ignore_for_file: file_names
-part of "../header.dart";
+part of '../header.dart';
 
 class LoginModel {
   bool? success;
@@ -26,71 +26,62 @@ class LoginModel {
 }
 
 class Data {
-  String? accessToken;
   User? user;
+  String? accessToken;
+  String? tokenType;
+  int? expiresIn;
 
-  Data({this.accessToken, this.user});
+  Data({this.user, this.accessToken, this.tokenType, this.expiresIn});
 
   Data.fromJson(Map<String, dynamic> json) {
-    accessToken = json['access_token'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
+    accessToken = json['access_token'];
+    tokenType = json['token_type'];
+    expiresIn = json['expires_in'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['access_token'] = accessToken;
     if (user != null) {
       data['user'] = user!.toJson();
     }
+    data['access_token'] = accessToken;
+    data['token_type'] = tokenType;
+    data['expires_in'] = expiresIn;
     return data;
   }
 }
 
 class User {
+  int? id;
+  int? reffId;
   String? name;
   String? username;
   String? email;
-  String? werks;
-  String? imei;
-  int? groupUser;
-  String? firstLogin;
-  String? createdAt;
-  String? updatedAt;
+  String? emailVerifiedAt;
+  bool? firstLogin;
 
-  User(
-      {this.name,
-      this.username,
-      this.email,
-      this.werks,
-      this.imei,
-      this.groupUser,
-      this.firstLogin,
-      this.createdAt,
-      this.updatedAt});
+  User({this.id, this.reffId, this.name, this.username, this.email, this.emailVerifiedAt, this.firstLogin});
 
   User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    reffId = json['reff_id'];
     name = json['name'];
     username = json['username'];
     email = json['email'];
-    werks = json['werks'];
-    imei = json['imei'];
-    groupUser = json['group_user'];
+    emailVerifiedAt = json['email_verified_at'];
     firstLogin = json['first_login'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['reff_id'] = reffId;
     data['name'] = name;
     data['username'] = username;
     data['email'] = email;
-    data['werks'] = werks;
-    data['imei'] = imei;
-    data['group_user'] = groupUser;
+    data['email_verified_at'] = emailVerifiedAt;
     data['first_login'] = firstLogin;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
     return data;
   }
 }

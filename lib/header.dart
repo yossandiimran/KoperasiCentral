@@ -20,9 +20,10 @@ part 'widget/TextStyling.dart';
 
 // Model ======================================
 part 'model/LoginModel.dart';
+part 'model/AnggotaModel.dart';
 
 // Service ======================================
-part 'service/LoginService.dart';
+part 'service/AuthService.dart';
 
 // Screen / View ======================================
 part 'screen/Login.dart';
