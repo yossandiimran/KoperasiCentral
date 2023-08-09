@@ -72,7 +72,7 @@ class ProfileState extends State<Profile> {
                               GestureDetector(
                                 onTap: () {},
                                 child: ListTile(
-                                  title: Text("Change Password"),
+                                  title: Text("Ganti Password"),
                                   leading: Icon(Icons.lock_rounded, color: defOrange),
                                   trailing: Icon(Icons.arrow_forward_ios_rounded),
                                 ),
@@ -80,7 +80,7 @@ class ProfileState extends State<Profile> {
                               GestureDetector(
                                 onTap: () {},
                                 child: ListTile(
-                                  title: Text("User Guide"),
+                                  title: Text("Panduan Pengguna"),
                                   leading: Icon(Icons.book_rounded, color: defPurple),
                                   trailing: Icon(Icons.arrow_forward_ios_rounded),
                                 ),
@@ -106,7 +106,7 @@ class ProfileState extends State<Profile> {
                               GestureDetector(
                                 onTap: () {},
                                 child: ListTile(
-                                  title: Text("Setting App"),
+                                  title: Text("Pengaturan App"),
                                   leading: Icon(Icons.settings_rounded, color: defBlue),
                                   trailing: Icon(Icons.arrow_forward_ios_rounded),
                                 ),

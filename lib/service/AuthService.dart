@@ -22,11 +22,17 @@ class AuthService {
           } else {
             var checkPreference = await setUserPreference(lm, objParam["password"]);
             if (checkPreference == 200) {
-              var firstLogin = preference.getData("first_login");
-              if (firstLogin == "") {
-                return global.successResponseNavigate(context, lm.message, '/changePass');
+              var firstLogin = await preference.getData("first_login");
+              print(firstLogin);
+              if (firstLogin == "false") {
+                return global.successResponseNavigate(
+                  context,
+                  "Selamat datang di SmartKoperasi Central, ini adalah kali pertama anda login, silahkan melengkapi form dibawah ini mengakses aplikasi ini, terimakasih ^_^ \n ",
+                  '/mutakhirData',
+                );
               } else {
-                return global.successResponseNavigate(context, lm.message, '/home');
+                // return global.successResponseNavigate(context, lm.message, '/home');
+                return Navigator.pushNamed(context, '/home');
               }
             } else {
               return global.errorResponse(context, 'Tidak dapat Login !');
@@ -35,9 +41,10 @@ class AuthService {
         } else {
           return global.errorResponse(context, lm.message);
         }
-      }).timeout(const Duration(seconds: 10), onTimeout: () {
-        return global.errorResponsePop(context, "Koneksi Timeout ...");
       });
+      // .timeout(const Duration(seconds: 10), onTimeout: () {
+      // return global.errorResponsePop(context, "Koneksi Timeout ...");
+      // });
     } catch (e) {
       // return 500;
       print(e);
@@ -57,7 +64,6 @@ class AuthService {
           if (lm.success == false) {
             return global.errorResponse(context, lm.message);
           } else {
-            preference.setString("first_login", "true");
             return global.successResponseNavigate(context, lm.message, '/home');
           }
         } else {
@@ -74,11 +80,14 @@ class AuthService {
   }
 
   Future setUserPreference(LoginModel lm, pass) async {
+    print(lm.data!.user!.userData!.toString());
     try {
       await preference.setString("id", lm.data!.user!.id.toString());
       await preference.setString("reff_id", lm.data!.user!.reffId.toString());
       await preference.setString("name", lm.data!.user!.name);
       await preference.setString("username", lm.data!.user!.username);
+      await preference.setString("tanggalPernyataan", lm.data!.user!.userData!.tanggalPernyataan ?? "-");
+      await preference.setString("tanggalPersetujuan", lm.data!.user!.userData!.tanggalPersetujuan ?? "-");
       await preference.setString("email", lm.data!.user!.email);
       await preference.setString("email_verified_at", lm.data!.user!.emailVerifiedAt.toString());
       await preference.setString("first_login", lm.data!.user!.firstLogin.toString());

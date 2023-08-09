@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, no_logic_in_create_state, avoid_print, avoid_unnecessary_containers, unnecessary_null_comparison, invalid_use_of_visible_for_testing_member
+// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, no_logic_in_create_state, avoid_print, avoid_unnecessary_containers, unnecessary_null_comparison, invalid_use_of_visible_for_testing_member, use_build_context_synchronously
 part of '../../header.dart';
 
 class Home extends StatefulWidget {
@@ -10,6 +10,14 @@ class HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    getStatusPernyataan();
+  }
+
+  Future<void> getStatusPernyataan() async {
+    var pernyataan = await preference.getData('tanggalPernyataan');
+    if (pernyataan == '-') {
+      Navigator.pushNamed(context, '/aggreement');
+    }
   }
 
   @override

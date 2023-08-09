@@ -206,6 +206,59 @@ class Alert {
       },
     );
   }
+
+  alertConfirmation({required BuildContext context, required var action, required String message}) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          contentPadding: const EdgeInsets.only(top: 10.0),
+          content: SizedBox(
+            height: global.getWidth(context) / 3,
+            child: Column(
+              children: [
+                Spacer(),
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  child: Text(
+                    message,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: global.getWidth(context) / 20),
+                  ),
+                ),
+                Spacer(),
+                Row(
+                  children: [
+                    Spacer(),
+                    GestureDetector(
+                      onTap: action,
+                      child: Container(
+                        decoration: widget.decCont2(defRed, 10, 10, 10, 10),
+                        padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+                        child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
+                        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                        child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
+                      ),
+                    ),
+                    Spacer(),
+                  ],
+                ),
+                Spacer(),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 class BadgeIconNotif extends StatelessWidget {

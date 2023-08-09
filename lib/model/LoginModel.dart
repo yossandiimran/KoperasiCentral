@@ -60,8 +60,18 @@ class User {
   String? email;
   String? emailVerifiedAt;
   bool? firstLogin;
+  UserData? userData;
 
-  User({this.id, this.reffId, this.name, this.username, this.email, this.emailVerifiedAt, this.firstLogin});
+  User({
+    this.id,
+    this.reffId,
+    this.name,
+    this.username,
+    this.email,
+    this.emailVerifiedAt,
+    this.firstLogin,
+    this.userData,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -71,6 +81,7 @@ class User {
     email = json['email'];
     emailVerifiedAt = json['email_verified_at'];
     firstLogin = json['first_login'];
+    userData = json['data'] != null ? UserData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -82,6 +93,75 @@ class User {
     data['email'] = email;
     data['email_verified_at'] = emailVerifiedAt;
     data['first_login'] = firstLogin;
+    if (userData != null) {
+      data['data'] = userData!.toJson();
+    }
+    return data;
+  }
+}
+
+class UserData {
+  int? id;
+  bool? anggotaBaru;
+  String? kodeAnggota;
+  String? tipeAnggota;
+  String? simpananWajib;
+  String? plafon;
+  String? saldoSimpanan;
+  String? saldoPinjaman;
+  int? status;
+  String? tanggalPermohonan;
+  String? buktiPermohonan;
+  String? tanggalPersetujuan;
+  String? tanggalPernyataan;
+
+  UserData({
+    this.id,
+    this.anggotaBaru,
+    this.kodeAnggota,
+    this.tipeAnggota,
+    this.simpananWajib,
+    this.plafon,
+    this.saldoSimpanan,
+    this.saldoPinjaman,
+    this.status,
+    this.tanggalPermohonan,
+    this.buktiPermohonan,
+    this.tanggalPersetujuan,
+    this.tanggalPernyataan,
+  });
+
+  UserData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    anggotaBaru = json['anggota_baru'];
+    kodeAnggota = json['kode_anggota'];
+    tipeAnggota = json['tipe_anggota'];
+    simpananWajib = json['simpanan_wajib'];
+    plafon = json['plafon'];
+    saldoSimpanan = json['saldo_simpanan'];
+    saldoPinjaman = json['saldo_pinjaman'];
+    status = json['status'];
+    tanggalPermohonan = json['tanggal_permohonan'];
+    buktiPermohonan = json['bukti_permohonan'];
+    tanggalPersetujuan = json['tanggal_persetujuan'];
+    tanggalPernyataan = json['tanggal_pernyataan'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['anggota_baru'] = anggotaBaru;
+    data['kode_anggota'] = kodeAnggota;
+    data['tipe_anggota'] = tipeAnggota;
+    data['simpanan_wajib'] = simpananWajib;
+    data['plafon'] = plafon;
+    data['saldo_simpanan'] = saldoSimpanan;
+    data['saldo_pinjaman'] = saldoPinjaman;
+    data['status'] = status;
+    data['tanggal_permohonan'] = tanggalPermohonan;
+    data['bukti_permohonan'] = buktiPermohonan;
+    data['tanggal_persetujuan'] = tanggalPersetujuan;
+    data['tanggal_pernyataan'] = tanggalPernyataan;
     return data;
   }
 }

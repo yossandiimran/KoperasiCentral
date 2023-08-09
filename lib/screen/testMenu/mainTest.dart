@@ -23,19 +23,10 @@ class MainTestState extends State<MainTest> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.blueGrey.shade50,
         extendBodyBehindAppBar: true,
-        body: getMenuWidget(),
+        body: getSetting(),
         bottomNavigationBar: navBarApp(),
       ),
     );
-  }
-
-  getMenuWidget() {
-    switch (isMenuActive) {
-      case 0:
-        return getForm();
-      case 1:
-        return getSetting();
-    }
   }
 
   getSetting() => SafeArea(
@@ -180,34 +171,5 @@ class MainTestState extends State<MainTest> {
     await preference.setString("ip1", ip1.text);
     await preference.setString("ip2", ip2.text);
     alert.alertSuccess(context: context, text: "Tersimpan");
-  }
-}
-
-class SendServiceMain {
-  final context;
-  final baseIp;
-  final obj;
-  SendServiceMain({required this.context, required this.baseIp, required this.obj});
-
-  Future sendService() async {
-    var dataReturn;
-    try {
-      var url = global.getMainServiceUrl(baseIp);
-      var header = {'authorization': 'Bearer ' + preference.getData('token')};
-      await http.get(url, headers: header).then((res) async {
-        var data = json.decode(res.body);
-        if (data["success"] == 'false') {
-          if (data["message" == "Unauthenticated."]) {
-            global.checkResponseStatus(context: context, res: res, data: data);
-          }
-        }
-        dataReturn = global.checkResponseStatus(context: context, res: res, data: data);
-      }).timeout(const Duration(seconds: 10), onTimeout: () {
-        return global.errorResponsePop(context, "Koneksi Timeout ...");
-      });
-    } catch (e) {
-      return global.errorResponsePop(context, "Error System Crash CTL 402");
-    }
-    return dataReturn;
   }
 }

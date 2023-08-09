@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:koperasi_central/header.dart';
 
 Global global = Global();
@@ -26,29 +27,18 @@ var deforg3 = Colors.orange[200], defyel = Colors.yellow[100], defteal = Colors.
 class Global {
   getWidth(context) => MediaQuery.of(context).size.width;
   getHeight(context) => MediaQuery.of(context).size.height;
-
   //Handle Service ===============================================================
   // DEV PUBLIC 36.91.208.116
   // var baseUrl = 'http://192.168.1.113:30/master-data/public/api/';
   var baseUrl = 'http://192.168.1.113:30/service-koperasi/public/user/';
-  var bapiUrl = 'http://36.91.208.116:8000/user-center/getkend';
+  var basePath = 'http://192.168.1.113:30/service-koperasi/public/storage/file/';
   // var bapiUrl = 'http://36.91.208.116:8000/user-center/getkend';
 
   //PRD PUBLIC
   // var baseUrl = 'http://210.210.165.197/geura/public/api/';
-  // var bapiUrl = 'http://202.138.230.51:8080/ebbm/';
+  // var basePath = 'http://210.210.165.197/geura/public/storage/file/';
 
   getMainServiceUrl(String link) => Uri.parse(baseUrl + link);
-
-  getBapiServiceUrl(String link) {
-    var url = Uri.parse(bapiUrl + link);
-    if (preference.getData("urlsap") != null) {
-      if (preference.getData("urlsap") != " ") {
-        url = Uri.parse(preference.getData("urlsap") + link);
-      }
-    }
-    return url;
-  }
 
   defaultErrorResponse(context, message) => alert.alertWarning(context: context, text: message);
 
@@ -84,16 +74,15 @@ class Global {
     alert.alertSuccess(context: context, text: message);
   }
 
-  checkResponseStatus({context, res, data}) async {
-    if (res.statusCode == 200) {
-      return data["data"];
-    } else if (res.statusCode == 422) {
-      return global.errorResponsePop(context, "Error 422");
-    } else if (res.statusCode == 401) {
-      preference.clearPreference();
-      return global.errorResponseNavigate(context, "Sesi anda habis, silahkan login ulang !", '/');
-    } else if (res.statusCode == 400) {
-      return global.errorResponsePop(context, data["message"]);
-    }
+  String formatDate(DateTime dateTime) {
+    return DateFormat('MM/dd/yyyy').format(dateTime);
+  }
+
+  String formatTime(DateTime dateTime) {
+    return DateFormat('HH:mm:ss').format(dateTime);
+  }
+
+  String formatDate2(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd').format(dateTime);
   }
 }

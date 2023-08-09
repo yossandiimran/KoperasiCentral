@@ -22,12 +22,14 @@ class SplashScreenState extends State<SplashScreen> {
       await preference.initialization();
       var firstLogin = await preference.getData("first_login");
       var name = await preference.getData("name");
-      if (firstLogin != null) {
+      if (firstLogin == "true") {
         if (name != null) {
           if (mounted) Navigator.pushNamed(context, "/home");
         } else {
           if (mounted) Navigator.pushNamed(context, "/login");
         }
+      } else if (firstLogin == "false") {
+        if (mounted) Navigator.pushNamed(context, "/mutakhirData");
       }
     } catch (err) {
       // print(err);
