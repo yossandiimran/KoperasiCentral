@@ -7,10 +7,33 @@ class Dashboard extends StatefulWidget {
 }
 
 class DashboardState extends State<Dashboard> {
-  List listPengajuan = ["pengajuan1"];
+  List listPengajuan = [];
+  var sisaAngsuran = 0, sisaTagihan = 0, pinjamanAktif = 0;
+  var limit = 0, pinjamanLunas = 0, saldo = 0;
   @override
   void initState() {
     super.initState();
+    getDashboardData();
+  }
+
+  Future<void> getDashboardData() async {
+    MasterService masterService = MasterService(context: context);
+    Map dataMaster = await masterService.getDashboardService();
+    sisaAngsuran = dataMaster["data"]['sisa_angsuran'];
+    sisaTagihan = dataMaster["data"]['sisa_tagihan'];
+    pinjamanAktif = dataMaster["data"]['pinjaman_aktif'];
+    limit = dataMaster["data"]['limit_pinjaman'];
+    pinjamanLunas = dataMaster["data"]['pinjaman_lunas'];
+    saldo = int.parse(dataMaster["data"]['saldo_simpanan']);
+
+    PengajuanPinjamanService pps = PengajuanPinjamanService(context: context);
+    Map dataPengajuan = await pps.getListPengajuan();
+    for (int i = 0; i < dataPengajuan["data"].length; i++) {
+      if (i == 0) {
+        listPengajuan.add(dataPengajuan["data"][i]);
+      }
+    }
+    setState(() {});
   }
 
   @override
@@ -139,12 +162,15 @@ class DashboardState extends State<Dashboard> {
                             color: defOrange,
                             size: 36,
                           ),
-                          trailing: Text("22D055", style: textStyling.customColorBold(15, defBlack1)),
+                          // trailing: Text("22D055", style: textStyling.customColorBold(15, defBlack1)),
                         ),
                         Spacer(),
                         ListTile(
                           title: Text("Total Saldo", style: textStyling.customColorBold(16, defOrange)),
-                          subtitle: Text("Rp. 10.000.000", style: textStyling.customColorBold(20, defBlack1)),
+                          subtitle: Text(
+                            CurrencyFormat.convertToIdr(saldo, 2).toString(),
+                            style: textStyling.customColorBold(20, defBlack1),
+                          ),
                         ),
                       ],
                     ),
@@ -226,11 +252,11 @@ class DashboardState extends State<Dashboard> {
                                 visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                                 leading: Icon(Icons.payment_rounded, color: defblue2),
                                 title: Text(
-                                  "Rp. 5.250.000,-",
+                                  CurrencyFormat.convertToIdr(limit, 2).toString(),
                                   style: textStyling.nunitoBold(15, defBlack2),
                                 ),
                                 subtitle: Text(
-                                  "Jumlah Pokok Pinjaman",
+                                  "Limit Pinjaman",
                                   style: textStyling.nunitoBold(14, defGrey),
                                 ),
                               ),
@@ -238,11 +264,11 @@ class DashboardState extends State<Dashboard> {
                                 dense: true,
                                 leading: Icon(Icons.calendar_month_rounded, color: defRed),
                                 title: Text(
-                                  "Rp. 250.000,-",
+                                  CurrencyFormat.convertToIdr(sisaTagihan, 2).toString(),
                                   style: textStyling.nunitoBold(15, defBlack2),
                                 ),
                                 subtitle: Text(
-                                  "Tagihan Mendatang + Denda | 14/06/2023",
+                                  "Sisa Tagihan Aktif",
                                   style: textStyling.nunitoBold(14, defGrey),
                                 ),
                               ),
@@ -257,11 +283,14 @@ class DashboardState extends State<Dashboard> {
                                     child: Column(
                                       children: [
                                         Text(
-                                          "Jumlah Cicilan",
+                                          "Sisa Angsuran",
                                           style: textStyling.customColorBold(12, defWhite),
                                           textAlign: TextAlign.center,
                                         ),
-                                        Text("4", style: textStyling.customColorBold(20, defWhite)),
+                                        Text(
+                                          sisaAngsuran.toString(),
+                                          style: textStyling.customColorBold(20, defWhite),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -277,7 +306,10 @@ class DashboardState extends State<Dashboard> {
                                           style: textStyling.customColorBold(12, defWhite),
                                           textAlign: TextAlign.center,
                                         ),
-                                        Text("1", style: textStyling.customColorBold(20, defWhite)),
+                                        Text(
+                                          pinjamanAktif.toString(),
+                                          style: textStyling.customColorBold(20, defWhite),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -293,7 +325,10 @@ class DashboardState extends State<Dashboard> {
                                           style: textStyling.customColorBold(12, defWhite),
                                           textAlign: TextAlign.center,
                                         ),
-                                        Text("2", style: textStyling.customColorBold(20, defWhite)),
+                                        Text(
+                                          pinjamanLunas.toString(),
+                                          style: textStyling.customColorBold(20, defWhite),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -326,7 +361,7 @@ class DashboardState extends State<Dashboard> {
                         // Badge Status Pengajuan Pinjaman / Tracking
                         for (var i = 0; i < listPengajuan.length; i++)
                           Dismissible(
-                            key: Key(listPengajuan[i]),
+                            key: Key(listPengajuan[i]['nomor_transaksi']),
                             onDismissed: (direction) {
                               setState(() {
                                 listPengajuan.removeAt(i);
@@ -335,24 +370,21 @@ class DashboardState extends State<Dashboard> {
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                               margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                              // decoration: widget.decCont(Colors.orange[100], 15, 15, 15, 15),
-                              // decoration: widget.decCont(Colors.lightGreenAccent[100], 15, 15, 15, 15),
-                              decoration: widget.decCont(defred2, 15, 15, 15, 15),
+                              decoration: widget.decCont(defGrey, 15, 15, 15, 15),
                               child: ListTile(
                                 dense: true,
                                 visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                                // leading: Icon(Icons.access_time_filled_sharp, color: defOrange, size: 30),
-                                // leading: Icon(Icons.check_circle_outline_outlined, color: defGreen, size: 30),
-                                leading: Icon(Icons.remove_circle_outline_rounded, color: defRed, size: 30),
+                                leading: Icon(Icons.check_circle_outline_outlined, color: defWhite, size: 30),
                                 title: Text(
-                                  // "Menunggu Persetujuan",
-                                  // "Pengajuan Disetujui",
-                                  "Pengajuan Ditolak",
-                                  style: textStyling.nunitoBold(14, defBlack2),
+                                  "Pengajuan Pinjaman Terakhir",
+                                  style: textStyling.customColorBold(14, defWhite),
                                 ),
                                 subtitle: Text(
-                                  "Pengajuan Pinjaman Mutakhir: 24 Februari 2023 jam 08:29 Nominal: 20,000,000",
-                                  style: textStyling.nunitoBold(13, defGrey),
+                                  '''Nomor Transaksi : ${listPengajuan[i]['nomor_transaksi']}
+Tanggal Transaksi :  ${listPengajuan[i]['tgl_transaksi']}
+Besar Pinjaman :  ${CurrencyFormat.convertToIdr(int.parse(listPengajuan[i]['besar_pinjaman']), 2).toString()}
+Tenor : ${listPengajuan[i]['tenor']} Bulan''',
+                                  style: textStyling.nunitoBold(13, defWhite),
                                 ),
                               ),
                             ),

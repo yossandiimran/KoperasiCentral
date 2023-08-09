@@ -33,6 +33,7 @@ part 'service/HandleStatusCode.dart';
 part 'service/AuthService.dart';
 part 'service/MasterService.dart';
 part 'service/PemutakhiranDataService.dart';
+part 'service/PengajuanPinjamanService.dart';
 
 // Screen / View ======================================
 part 'screen/Login.dart';
@@ -44,6 +45,7 @@ part 'screen/menu/Saldo.dart';
 part 'screen/menu/Transaksi.dart';
 part 'screen/pemutakhiranData/PemutakhiranData.dart';
 part 'screen/aggreement/Aggreement.dart';
+part 'screen/pengajuanPinjaman/PengajuanPinjamanForm.dart';
 // ================= Vendor Screen ====================
 
 //Testing Menu

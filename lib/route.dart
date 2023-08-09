@@ -12,6 +12,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PemutakhiranData());
       case '/aggreement':
         return MaterialPageRoute(builder: (_) => Aggreement());
+      case '/formPengajuanPinjaman':
+        return MaterialPageRoute(builder: (_) => PengajuanPinjamanForm());
       case '/home':
         return MaterialPageRoute(builder: (_) => Home());
 

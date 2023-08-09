@@ -234,7 +234,7 @@ class Alert {
                     GestureDetector(
                       onTap: action,
                       child: Container(
-                        decoration: widget.decCont2(defRed, 10, 10, 10, 10),
+                        decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
                         padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
                         child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
                       ),
@@ -243,7 +243,7 @@ class Alert {
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
                       child: Container(
-                        decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
+                        decoration: widget.decCont2(defRed, 10, 10, 10, 10),
                         padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                         child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
                       ),

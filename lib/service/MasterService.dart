@@ -60,6 +60,23 @@ class MasterService extends HandleStatusCode {
     return returnData;
   }
 
+  Future<Map> getDashboardService() async {
+    Uri url = global.getMainServiceUrl('dashboard');
+    try {
+      returnData = {};
+      await http.get(url, headers: {
+        'authorization': 'Bearer ${preference.getData('token')}',
+      }).then((response) async {
+        Map res = await handle(code: response.statusCode, response: response.body);
+        returnData = {'data': res["data"]};
+      });
+    } catch (err) {
+      returnData = {};
+    }
+
+    return returnData;
+  }
+
   // User Aggreement Service ========================================================================
   Future<Map> getUserAggreement() async {
     Uri url = global.getMainServiceUrl('user-aggrement');

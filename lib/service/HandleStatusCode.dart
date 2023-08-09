@@ -13,13 +13,13 @@ class HandleStatusCode {
       if (code == 200) {
         return returnObj = {'success': true, 'data': data["data"], 'message': data['message']};
       } else if (code == 201) {
-        return returnObj = {'success': false, 'data': data["data"], 'message': data['message']};
+        return returnObj = {'success': true, 'data': data["data"], 'message': data['message']};
       } else if (code == 202) {
         return returnObj = {'success': false, 'data': data["data"], 'message': data['message']};
       } else if (code == 203) {
         return returnObj = {'success': false, 'data': data["data"], 'message': data['message']};
       } else if (code == 400) {
-        return alert.alertWarning(context: context, text: "Bad Request ! \nerr(404)");
+        return returnObj = {'success': false, 'data': data["data"], 'message': data['message']};
       } else if (code == 401) {
         preference.clearPreference();
         Navigator.pushReplacementNamed(context, '/');
