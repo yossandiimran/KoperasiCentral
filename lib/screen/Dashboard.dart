@@ -208,28 +208,33 @@ class DashboardState extends State<Dashboard> {
                         ),
                       ),
                     ),
-                    Container(
-                      width: global.getWidth(context) / 2.3,
-                      padding: EdgeInsets.all(20),
-                      margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(20)),
-                        color: defBlue,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Text("Setor", style: textStyling.customColorBold(16, defWhite)),
-                          Spacer(),
-                          Icon(Icons.upload_rounded, color: Colors.white),
-                        ],
+                    GestureDetector(
+                      onTap: () {
+                        alert.alertWarning(context: context, text: "Dalam Pengembangan");
+                      },
+                      child: Container(
+                        width: global.getWidth(context) / 2.3,
+                        padding: EdgeInsets.all(20),
+                        margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(20)),
+                          color: defBlue,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 7,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Text("Setor", style: textStyling.customColorBold(16, defWhite)),
+                            Spacer(),
+                            Icon(Icons.upload_rounded, color: Colors.white),
+                          ],
+                        ),
                       ),
                     ),
                     Spacer(),

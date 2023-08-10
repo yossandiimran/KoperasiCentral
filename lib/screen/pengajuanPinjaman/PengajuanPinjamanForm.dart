@@ -155,7 +155,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                 child: DropdownSearch<String>(
                   showSearchBox: false,
                   mode: Mode.DIALOG,
-                  items: ["3 Bulan", "6 Bulan", "12 Bulan", "24 Bulan", "36 Bulan", "48 Bulan"],
+                  items: ["1 Bulan", "3 Bulan", "6 Bulan", "12 Bulan", "24 Bulan", "36 Bulan", "48 Bulan"],
                   dropdownSearchDecoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide.none,

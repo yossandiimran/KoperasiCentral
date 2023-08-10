@@ -1,5 +1,5 @@
 // ignore_for_file: file_names, avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
-part of "../../header.dart";
+part of '../../../header.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -62,7 +62,9 @@ class ProfileState extends State<Profile> {
                           child: Column(
                             children: [
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  alert.alertWarning(context: context, text: "Cooming Soon");
+                                },
                                 child: ListTile(
                                   title: Text("Profile"),
                                   leading: Icon(Icons.person_rounded, color: defblue2),
@@ -70,7 +72,9 @@ class ProfileState extends State<Profile> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  alert.alertWarning(context: context, text: "Cooming Soon");
+                                },
                                 child: ListTile(
                                   title: Text("Ganti Password"),
                                   leading: Icon(Icons.lock_rounded, color: defOrange),
@@ -78,7 +82,9 @@ class ProfileState extends State<Profile> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  alert.alertWarning(context: context, text: "Cooming Soon");
+                                },
                                 child: ListTile(
                                   title: Text("Panduan Pengguna"),
                                   leading: Icon(Icons.book_rounded, color: defPurple),
@@ -86,7 +92,9 @@ class ProfileState extends State<Profile> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  alert.alertWarning(context: context, text: "Cooming Soon");
+                                },
                                 child: ListTile(
                                   title: Text("Faq"),
                                   leading: Icon(Icons.message_rounded, color: defGreen),
@@ -104,7 +112,9 @@ class ProfileState extends State<Profile> {
                           child: Column(
                             children: [
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  alert.alertWarning(context: context, text: "Cooming Soon");
+                                },
                                 child: ListTile(
                                   title: Text("Pengaturan App"),
                                   leading: Icon(Icons.settings_rounded, color: defBlue),

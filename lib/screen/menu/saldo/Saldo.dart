@@ -1,5 +1,5 @@
 // ignore_for_file: file_names, avoid_unnecessary_containers, prefer_const_constructors
-part of "../../header.dart";
+part of '../../../header.dart';
 
 class Saldo extends StatefulWidget {
   const Saldo({super.key});
@@ -88,7 +88,7 @@ class SaldoState extends State<Saldo> {
                         style: textStyling.defaultWhiteBold(15),
                       ),
                       subtitle: Text(
-                        "Rp. 15.000.000,00",
+                        "Rp. 0,00",
                         style: textStyling.nunitoBold(13, defBlack1),
                       ),
                     ),
@@ -107,13 +107,16 @@ class SaldoState extends State<Saldo> {
                         style: textStyling.defaultWhiteBold(15),
                       ),
                       subtitle: Text(
-                        "Rp. 999.999.000,00",
+                        "Rp. 0,00",
                         style: textStyling.nunitoBold(13, defBlack1),
                       ),
                     ),
                   ),
                   Spacer(),
                 ],
+              ),
+              Container(
+                child: Text("\n\n\n\nDalam Pengembangan"),
               )
             ],
           ),

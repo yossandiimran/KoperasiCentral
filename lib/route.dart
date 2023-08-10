@@ -16,10 +16,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PengajuanPinjamanForm());
       case '/home':
         return MaterialPageRoute(builder: (_) => Home());
-
-      //Sample Menu Test
-      case '/test':
-        return MaterialPageRoute(builder: (_) => MainTest());
+      case '/detailTransaksi':
+        return MaterialPageRoute(builder: (_) => TransaksiDetail(obj: settings.arguments));
 
       default:
         return _errorRoute();

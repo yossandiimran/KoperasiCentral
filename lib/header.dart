@@ -40,13 +40,10 @@ part 'screen/Login.dart';
 part 'screen/SplashScreen.dart';
 part 'screen/Home.dart';
 part 'screen/Dashboard.dart';
-part 'screen/menu/Profile.dart';
-part 'screen/menu/Saldo.dart';
-part 'screen/menu/Transaksi.dart';
+part 'screen/menu/profile/Profile.dart';
+part 'screen/menu/saldo/Saldo.dart';
+part 'screen/menu/transaksi/Transaksi.dart';
+part 'screen/menu/transaksi/TransaksiDetail.dart';
 part 'screen/pemutakhiranData/PemutakhiranData.dart';
 part 'screen/aggreement/Aggreement.dart';
 part 'screen/pengajuanPinjaman/PengajuanPinjamanForm.dart';
-// ================= Vendor Screen ====================
-
-//Testing Menu
-part 'screen/testMenu/mainTest.dart';
