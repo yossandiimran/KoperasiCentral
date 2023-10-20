@@ -16,10 +16,10 @@ class TransaksiDetailState extends State<TransaksiDetail> {
   @override
   void initState() {
     super.initState();
-    getDashboardData();
+    initDetailData();
   }
 
-  Future<void> getDashboardData() async {
+  Future<void> initDetailData() async {
     Map objParam = {'id': obj['data']['id']};
     PengajuanPinjamanService pps = PengajuanPinjamanService(context: context, objParam: objParam);
     Map dataPengajuan = await pps.getDetailPengajuan();
@@ -56,39 +56,46 @@ class TransaksiDetailState extends State<TransaksiDetail> {
           right: 0,
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                SizedBox(height: kToolbarHeight * 4),
-                for (var i = 0; i < listPengajuan.length; i++)
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                    decoration: widget.decCont2(defWhite, 15, 15, 15, 15),
-                    child: Column(children: [
-                      ListTile(
-                        dense: true,
-                        visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                        leading: Icon(
-                          listPengajuan[i]['sudah_dibayar'] ? Icons.check_circle : Icons.access_time,
-                          color: listPengajuan[i]['sudah_dibayar'] ? defGreen : defRed,
-                          size: 30,
-                        ),
-                        title: Text(
-                          "Angsuran Ke ${listPengajuan[i]["angsuran_ke"]}",
-                          style: textStyling.customColorBold(14, defBlack1),
-                        ),
-                        subtitle: Text(
-                          '''Jatuh Tempo : ${listPengajuan[i]["jatuh_tempo"]}
+            child: !isLoading
+                ? Column(
+                    children: [
+                      SizedBox(height: kToolbarHeight * 4),
+                      for (var i = 0; i < listPengajuan.length; i++)
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                          decoration: widget.decCont2(defWhite, 15, 15, 15, 15),
+                          child: Column(children: [
+                            ListTile(
+                              dense: true,
+                              visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                              leading: Icon(
+                                listPengajuan[i]['sudah_dibayar'] ? Icons.check_circle : Icons.access_time,
+                                color: listPengajuan[i]['sudah_dibayar'] ? defGreen : defRed,
+                                size: 35,
+                              ),
+                              title: Text(
+                                "Angsuran Ke ${listPengajuan[i]["angsuran_ke"]}",
+                                style: textStyling.customColorBold(15, defBlack1),
+                              ),
+                              subtitle: Text(
+                                '''Jatuh Tempo : ${listPengajuan[i]["jatuh_tempo"] ?? '-'}
 Nominal :  ${CurrencyFormat.convertToIdr(int.parse(listPengajuan[i]["nominal"]), 2).toString()}
 Status : ${listPengajuan[i]['sudah_dibayar'] ? 'Lunas' : 'Belum Lunas'}''',
-                          style: textStyling.nunitoBold(12, defGrey),
+                                style: textStyling.nunitoBold(14, defGrey),
+                              ),
+                            ),
+                          ]),
                         ),
-                      ),
-                    ]),
+                      SizedBox(height: 10),
+                    ],
+                  )
+                : Column(
+                    children: [
+                      SizedBox(height: kToolbarHeight * 4),
+                      for (var i = 0; i < 10; i++) shimmerWidget.listTileShimmer(context: context)
+                    ],
                   ),
-                SizedBox(height: 10),
-              ],
-            ),
           ),
         ),
         Positioned(
@@ -122,14 +129,16 @@ Status : ${listPengajuan[i]['sudah_dibayar'] ? 'Lunas' : 'Belum Lunas'}''',
                     ListTile(
                       visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                       title: Text(
-                        "Detail Transaksi\n",
+                        "Detail Transaksi",
                         style: textStyling.customColorBold(18, defOrange),
                       ),
                       subtitle: Text(
-                        '''Nomor : ${obj['data']['nomor_transaksi']}
-Tanggal transaksi :  ${obj['data']['tgl_transaksi']}
-Besar Pinjaman :  ${CurrencyFormat.convertToIdr(int.parse(obj['data']['besar_pinjaman']), 2).toString()}
-Tenor : ${obj['data']['tenor']} Bulan''',
+                        '''Nomor Transaksi : ${obj["data"]['nomor_transaksi']}
+Tanggal Transaksi :  ${obj["data"]['tgl_transaksi']}
+Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(obj["data"]['besar_pinjaman']), 2).toString()}
+Realisasi :  ${CurrencyFormat.convertToIdr(double.parse(obj["data"]['realisasi_pinjaman']), 2).toString()}
+Sisa Tagihan :  ${CurrencyFormat.convertToIdr(int.parse(obj["data"]['sisa_pembayaran'].toString()), 2).toString()}
+Tenor : ${obj["data"]['tenor']} Bulan''',
                         style: textStyling.nunitoBold(15, defGrey),
                       ),
                     ),

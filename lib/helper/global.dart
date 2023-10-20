@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:koperasi_central/header.dart';
 
@@ -7,9 +10,10 @@ Preference preference = Preference();
 Alert alert = Alert();
 CustomWidget widget = CustomWidget();
 TextStyling textStyling = TextStyling();
+ShimmerWidget shimmerWidget = ShimmerWidget();
 FirebaseMessagingHelper fbmessaging = FirebaseMessagingHelper();
 
-var appVersion = '0.0.1';
+var appVersion = '0.0.1(beta-1)';
 var isMenuActive = 0;
 
 //Default Theme Color
@@ -28,15 +32,18 @@ class Global {
   getWidth(context) => MediaQuery.of(context).size.width;
   getHeight(context) => MediaQuery.of(context).size.height;
   //Handle Service ===============================================================
-  // DEV PUBLIC 36.91.208.116
-  // var baseUrl = 'http://192.168.1.113:30/master-data/public/api/';
-  var baseUrl = 'http://192.168.1.113:30/service-koperasi/public/user/';
-  var basePath = 'http://192.168.1.113:30/service-koperasi/public/storage/file/';
-  // var bapiUrl = 'http://36.91.208.116:8000/user-center/getkend';
 
-  //PRD PUBLIC
-  // var baseUrl = 'http://210.210.165.197/geura/public/api/';
-  // var basePath = 'http://210.210.165.197/geura/public/storage/file/';
+  final mainUrl = 'http://192.168.1.113:30/';
+  // final mainUrl = 'http://210.210.165.198/';
+  late String baseUrl, basePath, ktpPath, pasPath;
+
+  @override
+  Global() {
+    baseUrl = '${mainUrl}service-koperasi/public/user/';
+    basePath = '${mainUrl}service-koperasi/public/storage/file/';
+    ktpPath = '${mainUrl}recruitment-e-central/public/img/identity/';
+    pasPath = '${mainUrl}recruitment-e-central/public/img/user/';
+  }
 
   getMainServiceUrl(String link) => Uri.parse(baseUrl + link);
 
@@ -85,6 +92,28 @@ class Global {
   String formatDate2(DateTime dateTime) {
     return DateFormat('yyyy-MM-dd').format(dateTime);
   }
+
+  String formatDate3(DateTime dateTime) {
+    return DateFormat('dd-MM-yyyy').format(dateTime);
+  }
+
+  Future<void> cekLogin7day({required BuildContext context}) async {
+    var lastLogin = await preference.getData('lastLogin') ?? "-";
+    DateTime now = DateTime.now();
+    if (lastLogin == '-') {
+      await preference.setString('lastLogin', now.toString());
+    } else {
+      DateTime dateLast = DateTime.parse(lastLogin);
+      Duration difference = now.difference(dateLast);
+      int daysDifference = difference.inDays;
+      if (daysDifference >= 7) {
+        preference.clearPreference();
+        Navigator.pushReplacementNamed(context, '/');
+      } else {
+        await preference.setString('lastLogin', now.toString());
+      }
+    }
+  }
 }
 
 class CurrencyFormat {
@@ -95,5 +124,16 @@ class CurrencyFormat {
       decimalDigits: decimalDigit,
     );
     return currencyFormatter.format(number);
+  }
+}
+
+//Upper Case Text Field
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
+    );
   }
 }

@@ -9,6 +9,23 @@ class MasterService extends HandleStatusCode {
 
   MasterService({required this.context, this.objParam}) : super(context);
 
+  Future<Map> getMaster() async {
+    Uri url = global.getMainServiceUrl(objParam?['url']);
+    try {
+      returnData = {};
+      await http.get(url, headers: {
+        'authorization': 'Bearer ${preference.getData('token')}',
+      }).then((response) async {
+        Map res = await handle(code: response.statusCode, response: response.body);
+        returnData = {'data': res["data"]};
+      });
+    } catch (err) {
+      returnData = {};
+    }
+
+    return returnData;
+  }
+
   Future<Map> getMasterKota() async {
     Uri url = global.getMainServiceUrl('select-values/kota');
     try {
@@ -60,6 +77,23 @@ class MasterService extends HandleStatusCode {
     return returnData;
   }
 
+  Future<Map> getMasterJenisSimpanan() async {
+    Uri url = global.getMainServiceUrl('select-values/jenis-simpanan');
+    try {
+      returnData = {};
+      await http.get(url, headers: {
+        'authorization': 'Bearer ${preference.getData('token')}',
+      }).then((response) async {
+        Map res = await handle(code: response.statusCode, response: response.body);
+        returnData = {'data': res["data"]};
+      });
+    } catch (err) {
+      returnData = {};
+    }
+
+    return returnData;
+  }
+
   Future<Map> getDashboardService() async {
     Uri url = global.getMainServiceUrl('dashboard');
     try {
@@ -67,7 +101,7 @@ class MasterService extends HandleStatusCode {
       await http.get(url, headers: {
         'authorization': 'Bearer ${preference.getData('token')}',
       }).then((response) async {
-        Map res = await handle(code: response.statusCode, response: response.body);
+        Map res = await handle(code: response.statusCode, response: response.body, isDashboard: true);
         returnData = {'data': res["data"]};
       });
     } catch (err) {

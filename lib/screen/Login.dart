@@ -84,7 +84,7 @@ class LoginState extends State<Login> {
                                   controller: email,
                                   decoration: const InputDecoration(
                                     border: UnderlineInputBorder(),
-                                    labelText: 'Username',
+                                    labelText: 'Email / Username',
                                     labelStyle: TextStyle(fontSize: 15),
                                   ),
                                 ),
@@ -131,7 +131,7 @@ class LoginState extends State<Login> {
                                           decoration: widget.decorationContainerGradient(
                                             defOrange,
                                             defOrange,
-                                            20.0,
+                                            10.0,
                                           ),
                                           child: Center(
                                             child: Text(
@@ -156,9 +156,9 @@ class LoginState extends State<Login> {
                                       ),
                                       const Spacer(),
                                       GestureDetector(
-                                        onTap: () => alert.alertSuccess(
+                                        onTap: () => alert.alertWarning(
                                           context: context,
-                                          text: "Silahkan Hubungi Admin",
+                                          text: "Silahkan melakukan penggantian password melalui aplikasi\nE-Central !",
                                         ),
                                         child: Text(
                                           "Lupa Password ?",

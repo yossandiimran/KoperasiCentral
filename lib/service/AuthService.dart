@@ -1,12 +1,12 @@
-// ignore_for_file: file_names, use_build_context_synchronously, prefer_typing_uninitialized_variables, prefer_interpolation_to_compose_strings, avoid_print
+// ignore_for_file: file_names, use_build_context_synchronously, prefer_typing_uninitialized_variables, prefer_interpolation_to_compose_strings, avoid_print, overridden_fields, annotate_overrides
 
 part of "../header.dart";
 
-class AuthService {
+class AuthService extends HandleStatusCode {
   final BuildContext context;
   final objParam;
-  AuthService({required this.context, this.objParam});
-
+  AuthService({required this.context, this.objParam}) : super(context);
+  Map returnData = {};
   Future login() async {
     alert.loadingAlert(context: context, text: "Mohon Tunggu .. ", isPop: false);
 
@@ -23,15 +23,28 @@ class AuthService {
             var checkPreference = await setUserPreference(lm, objParam["password"]);
             if (checkPreference == 200) {
               var firstLogin = await preference.getData("first_login");
+              var pernyataan = await preference.getData('tanggalPernyataan');
+
               print(firstLogin);
-              if (firstLogin == "false") {
+              //   if (firstLogin == "false") {
+              //     return global.successResponseNavigate(
+              //       context,
+              //       "Selamat datang di SmartKoperasi Central, ini adalah kali pertama anda login, silahkan melengkapi form dibawah ini mengakses aplikasi ini, terimakasih ^_^ \n ",
+              //       '/mutakhirData',
+              //     );
+              //   } else {
+              //     return Navigator.pushNamed(context, '/home');
+              //   }
+              // } else {
+              //   return global.errorResponse(context, 'Tidak dapat Login !');
+              // }
+              if (pernyataan == "-") {
                 return global.successResponseNavigate(
                   context,
-                  "Selamat datang di SmartKoperasi Central, ini adalah kali pertama anda login, silahkan melengkapi form dibawah ini mengakses aplikasi ini, terimakasih ^_^ \n ",
-                  '/mutakhirData',
+                  "Selamat datang di SmartKoperasi Central, Silahkan Membaca ketentuan pengguna terlebih dahulu !",
+                  '/aggreement',
                 );
               } else {
-                // return global.successResponseNavigate(context, lm.message, '/home');
                 return Navigator.pushNamed(context, '/home');
               }
             } else {
@@ -100,5 +113,22 @@ class AuthService {
       print(err);
       return 201;
     }
+  }
+
+  Future<Map> getCentralData() async {
+    Uri url = global.getMainServiceUrl('profile/central');
+    try {
+      returnData = {};
+      await http.get(url, headers: {
+        'authorization': 'Bearer ${preference.getData('token')}',
+      }).then((response) async {
+        Map res = await handle(code: response.statusCode, response: response.body);
+        returnData = {'data': res["data"]};
+      });
+    } catch (err) {
+      returnData = {};
+    }
+
+    return returnData;
   }
 }

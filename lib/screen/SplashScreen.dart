@@ -22,14 +22,20 @@ class SplashScreenState extends State<SplashScreen> {
       await preference.initialization();
       var firstLogin = await preference.getData("first_login");
       var name = await preference.getData("name");
-      if (firstLogin == "true") {
-        if (name != null) {
-          if (mounted) Navigator.pushNamed(context, "/home");
-        } else {
-          if (mounted) Navigator.pushNamed(context, "/login");
+      var pernyataan = await preference.getData('tanggalPernyataan');
+      print(pernyataan);
+      if (pernyataan == '-') {
+        if (mounted) Navigator.pushNamed(context, '/aggreement');
+      } else {
+        if (firstLogin == "true") {
+          if (name != null) {
+            if (mounted) Navigator.pushNamed(context, "/home");
+          } else {
+            if (mounted) Navigator.pushNamed(context, "/login");
+          }
+        } else if (firstLogin == "false") {
+          if (mounted) Navigator.pushNamed(context, "/mutakhirData");
         }
-      } else if (firstLogin == "false") {
-        if (mounted) Navigator.pushNamed(context, "/mutakhirData");
       }
     } catch (err) {
       // print(err);
@@ -62,7 +68,7 @@ class SplashScreenState extends State<SplashScreen> {
                   children: [
                     Spacer(),
                     Text(
-                      "Untuk Karyawan PT. Graha Seribusatujaya",
+                      "Untuk Karyawan\nPT. Graha Seribusatujaya",
                       textAlign: TextAlign.center,
                       style: textStyling.defaultWhiteBold(25),
                     ),
@@ -70,7 +76,7 @@ class SplashScreenState extends State<SplashScreen> {
                     Padding(
                       padding: EdgeInsets.only(left: 15, right: 15),
                       child: Text(
-                        "Smart Koperasi Central untuk seluruh karyawan central springbed yang untuk lebih fleksibel dimanapun dan kapanpun",
+                        "Mobile Koperasi Central untuk seluruh karyawan central springbed yang untuk lebih fleksibel dimanapun dan kapanpun",
                         textAlign: TextAlign.center,
                         style: textStyling.nunitoBold(14, defWhite),
                       ),

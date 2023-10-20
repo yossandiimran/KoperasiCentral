@@ -16,12 +16,14 @@ import 'package:koperasi_central/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 // Helper
 part 'helper/firebaseMessagingHelper.dart';
 part 'helper/preference.dart';
 part 'widget/Alert.dart';
 part 'widget/CustomWidget.dart';
+part 'widget/ShimmerWidget.dart';
 part 'widget/TextStyling.dart';
 
 // Model ======================================
@@ -34,6 +36,7 @@ part 'service/AuthService.dart';
 part 'service/MasterService.dart';
 part 'service/PemutakhiranDataService.dart';
 part 'service/PengajuanPinjamanService.dart';
+part 'service/PengajuanSimpananService.dart';
 
 // Screen / View ======================================
 part 'screen/Login.dart';
@@ -41,9 +44,11 @@ part 'screen/SplashScreen.dart';
 part 'screen/Home.dart';
 part 'screen/Dashboard.dart';
 part 'screen/menu/profile/Profile.dart';
+part 'screen/menu/profile/ProfileUser.dart';
 part 'screen/menu/saldo/Saldo.dart';
-part 'screen/menu/transaksi/Transaksi.dart';
+part 'screen/menu/transaksi/TransaksiMain.dart';
 part 'screen/menu/transaksi/TransaksiDetail.dart';
 part 'screen/pemutakhiranData/PemutakhiranData.dart';
 part 'screen/aggreement/Aggreement.dart';
 part 'screen/pengajuanPinjaman/PengajuanPinjamanForm.dart';
+part 'screen/pengajuanSimpanan/PengajuanSimpananForm.dart';

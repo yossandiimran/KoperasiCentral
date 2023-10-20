@@ -15,8 +15,18 @@ class HomeState extends State<Home> {
 
   Future<void> getStatusPernyataan() async {
     var pernyataan = await preference.getData('tanggalPernyataan');
+    print(pernyataan);
     if (pernyataan == '-') {
       Navigator.pushNamed(context, '/aggreement');
+    }
+    var firstLogin = await preference.getData("first_login");
+    print(firstLogin);
+    if (firstLogin == "false") {
+      global.successResponseNavigate(
+        context,
+        "Selamat datang di SmartKoperasi Central, ini adalah kali pertama anda login, silahkan melengkapi form berikut ini, terimakasih ^_^ \n ",
+        '/mutakhirData',
+      );
     }
   }
 
@@ -67,7 +77,6 @@ class HomeState extends State<Home> {
         onTabChange: (value) {
           isMenuActive = value;
           setState(() {});
-          print(isMenuActive);
         },
         tabs: const [
           GButton(

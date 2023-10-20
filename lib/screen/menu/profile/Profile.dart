@@ -26,7 +26,7 @@ class ProfileState extends State<Profile> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("Akun Pengguna", style: textStyling.defaultWhite(20)),
+          // title: Text("Akun Pengguna", style: textStyling.defaultWhite(20)),
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
@@ -56,31 +56,31 @@ class ProfileState extends State<Profile> {
                     child: Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          margin: EdgeInsets.symmetric(horizontal: 10),
                           padding: EdgeInsets.all(10),
-                          decoration: widget.decCont2(Colors.white, 25, 25, 25, 25),
+                          decoration: widget.decCont(Colors.white, 0, 0, 10, 10),
                           child: Column(
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  alert.alertWarning(context: context, text: "Cooming Soon");
+                                  Navigator.pushNamed(context, '/profileUser');
                                 },
                                 child: ListTile(
                                   title: Text("Profile"),
                                   leading: Icon(Icons.person_rounded, color: defblue2),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded),
+                                  // trailing: Icon(Icons.arrow_forward_ios_rounded),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  alert.alertWarning(context: context, text: "Cooming Soon");
-                                },
-                                child: ListTile(
-                                  title: Text("Ganti Password"),
-                                  leading: Icon(Icons.lock_rounded, color: defOrange),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded),
-                                ),
-                              ),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     alert.alertWarning(context: context, text: "Cooming Soon");
+                              //   },
+                              //   child: ListTile(
+                              //     title: Text("Ganti Password"),
+                              //     leading: Icon(Icons.lock_rounded, color: defOrange),
+                              //     trailing: Icon(Icons.arrow_forward_ios_rounded),
+                              //   ),
+                              // ),
                               GestureDetector(
                                 onTap: () {
                                   alert.alertWarning(context: context, text: "Cooming Soon");
@@ -88,7 +88,7 @@ class ProfileState extends State<Profile> {
                                 child: ListTile(
                                   title: Text("Panduan Pengguna"),
                                   leading: Icon(Icons.book_rounded, color: defPurple),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded),
+                                  // trailing: Icon(Icons.arrow_forward_ios_rounded),
                                 ),
                               ),
                               GestureDetector(
@@ -98,17 +98,17 @@ class ProfileState extends State<Profile> {
                                 child: ListTile(
                                   title: Text("Faq"),
                                   leading: Icon(Icons.message_rounded, color: defGreen),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded),
+                                  // trailing: Icon(Icons.arrow_forward_ios_rounded),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: 15),
+                        SizedBox(height: 10),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          margin: EdgeInsets.symmetric(horizontal: 10),
                           padding: EdgeInsets.all(10),
-                          decoration: widget.decCont2(Colors.white, 25, 25, 25, 25),
+                          decoration: widget.decCont(Colors.white, 10, 10, 0, 0),
                           child: Column(
                             children: [
                               GestureDetector(
@@ -118,7 +118,7 @@ class ProfileState extends State<Profile> {
                                 child: ListTile(
                                   title: Text("Pengaturan App"),
                                   leading: Icon(Icons.settings_rounded, color: defBlue),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded),
+                                  // trailing: Icon(Icons.arrow_forward_ios_rounded),
                                 ),
                               ),
                               GestureDetector(
@@ -128,7 +128,7 @@ class ProfileState extends State<Profile> {
                                 child: ListTile(
                                   title: Text("Logout"),
                                   leading: Icon(Icons.logout_rounded, color: defRed),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded),
+                                  // trailing: Icon(Icons.arrow_forward_ios_rounded),
                                 ),
                               ),
                               Divider(thickness: 2),

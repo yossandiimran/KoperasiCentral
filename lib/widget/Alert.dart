@@ -104,46 +104,44 @@ class Alert {
         return AlertDialog(
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
           contentPadding: const EdgeInsets.only(top: 10.0),
-          content: SizedBox(
-            height: global.getWidth(context) / 3,
-            child: Column(
-              children: [
-                Spacer(),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  child: Text(
-                    "Keluar dari Aplikasi ?",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: global.getWidth(context) / 20),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 10),
+              Container(
+                margin: const EdgeInsets.all(10),
+                child: Text(
+                  "Keluar dari Aplikasi ?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: global.getWidth(context) / 20),
+                ),
+              ),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () => exit(0),
+                    child: Container(
+                      decoration: widget.decCont2(defRed, 10, 10, 10, 10),
+                      padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+                      child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
+                    ),
                   ),
-                ),
-                Spacer(),
-                Row(
-                  children: [
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () => exit(0),
-                      child: Container(
-                        decoration: widget.decCont2(defRed, 10, 10, 10, 10),
-                        padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
-                        child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
-                      ),
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                      child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
                     ),
-                    SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                        child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
-                      ),
-                    ),
-                    Spacer(),
-                  ],
-                ),
-                Spacer(),
-              ],
-            ),
+                  ),
+                  Spacer(),
+                ],
+              ),
+              SizedBox(height: 20),
+            ],
           ),
         );
       },
@@ -157,50 +155,49 @@ class Alert {
         return AlertDialog(
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
           contentPadding: const EdgeInsets.only(top: 10.0),
-          content: SizedBox(
-            height: global.getWidth(context) / 3,
-            child: Column(
-              children: [
-                Spacer(),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  child: Text(
-                    "Keluar dari akun anda ?",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: global.getWidth(context) / 20),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 10),
+              Container(
+                margin: const EdgeInsets.all(10),
+                child: Text(
+                  "Keluar dari akun anda ?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: global.getWidth(context) / 20),
+                ),
+              ),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () async {
+                      isMenuActive = 0;
+                      preference.clearPreference();
+                      Navigator.pushReplacementNamed(context, '/');
+                      // await SapLogoutService(context: context).sapCall();
+                    },
+                    child: Container(
+                      decoration: widget.decCont2(defRed, 10, 10, 10, 10),
+                      padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+                      child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
+                    ),
                   ),
-                ),
-                Spacer(),
-                Row(
-                  children: [
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () async {
-                        preference.clearPreference();
-                        Navigator.pushReplacementNamed(context, '/');
-                        // await SapLogoutService(context: context).sapCall();
-                      },
-                      child: Container(
-                        decoration: widget.decCont2(defRed, 10, 10, 10, 10),
-                        padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
-                        child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
-                      ),
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                      child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
                     ),
-                    SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                        child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
-                      ),
-                    ),
-                    Spacer(),
-                  ],
-                ),
-                const Spacer(),
-              ],
-            ),
+                  ),
+                  Spacer(),
+                ],
+              ),
+              SizedBox(height: 20),
+            ],
           ),
         );
       },
@@ -213,47 +210,44 @@ class Alert {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          contentPadding: const EdgeInsets.only(top: 10.0),
-          content: SizedBox(
-            height: global.getWidth(context) / 3,
-            child: Column(
-              children: [
-                Spacer(),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  child: Text(
-                    message,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: global.getWidth(context) / 20),
+          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 10),
+              Container(
+                margin: const EdgeInsets.all(10),
+                child: Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: global.getWidth(context) / 20),
+                ),
+              ),
+              Row(
+                children: [
+                  Spacer(),
+                  GestureDetector(
+                    onTap: action,
+                    child: Container(
+                      decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
+                      padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+                      child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
+                    ),
                   ),
-                ),
-                Spacer(),
-                Row(
-                  children: [
-                    Spacer(),
-                    GestureDetector(
-                      onTap: action,
-                      child: Container(
-                        decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
-                        padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
-                        child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
-                      ),
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      decoration: widget.decCont2(defRed, 10, 10, 10, 10),
+                      padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                      child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
                     ),
-                    SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        decoration: widget.decCont2(defRed, 10, 10, 10, 10),
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                        child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
-                      ),
-                    ),
-                    Spacer(),
-                  ],
-                ),
-                Spacer(),
-              ],
-            ),
+                  ),
+                  Spacer(),
+                ],
+              ),
+              SizedBox(height: 10),
+            ],
           ),
         );
       },

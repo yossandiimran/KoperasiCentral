@@ -10,15 +10,19 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Login());
       case '/mutakhirData':
         return MaterialPageRoute(builder: (_) => PemutakhiranData());
+
       case '/aggreement':
         return MaterialPageRoute(builder: (_) => Aggreement());
       case '/formPengajuanPinjaman':
         return MaterialPageRoute(builder: (_) => PengajuanPinjamanForm());
+      case '/formPengajuanSimpanan':
+        return MaterialPageRoute(builder: (_) => PengajuanSimpananForm());
       case '/home':
         return MaterialPageRoute(builder: (_) => Home());
       case '/detailTransaksi':
         return MaterialPageRoute(builder: (_) => TransaksiDetail(obj: settings.arguments));
-
+      case '/profileUser':
+        return MaterialPageRoute(builder: (_) => ProfileUser());
       default:
         return _errorRoute();
     }

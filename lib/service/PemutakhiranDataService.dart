@@ -10,7 +10,6 @@ class PemutakhiranDataService extends HandleStatusCode {
   PemutakhiranDataService({required this.context, this.objParam}) : super(context);
 
   Future<Map> postPemutakhiranData() async {
-    Navigator.pop(context);
     alert.loadingAlert(context: context, text: "Menyimpan Data", isPop: false);
     Uri url = global.getMainServiceUrl('profile/pemutakhiran');
     var request = http.MultipartRequest('POST', url);
@@ -37,13 +36,11 @@ class PemutakhiranDataService extends HandleStatusCode {
     request.fields['dom_kodepos'] = objParam?["dom_kodepos"];
     request.fields['no_hp'] = objParam?["no_hp"];
 
-    request.files.add(await http.MultipartFile.fromPath('f_pengkinian', objParam?["f_pengkinian"].path));
-
     try {
       await request.send().then((val) async {
         var responseString = await val.stream.bytesToString();
-        Map res = await handle(code: val.statusCode, response: responseString);
         Navigator.pop(context);
+        Map res = await handle(code: val.statusCode, response: responseString);
         if (res['success']) {
           alert.alertSuccess(context: context, text: res['message']);
           // Relogin
@@ -55,6 +52,7 @@ class PemutakhiranDataService extends HandleStatusCode {
         }
       });
     } catch (err) {
+      print(err);
       returnData = {};
     }
 
