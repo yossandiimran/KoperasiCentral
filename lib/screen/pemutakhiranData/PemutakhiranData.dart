@@ -293,9 +293,9 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                       decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
-                        width: global.getWidth(context) / 1.2,
+                        width: global.getWidth(context),
                         child: DropdownSearch<String>(
-                          mode: Mode.DIALOG,
+                          mode: Mode.MENU,
                           items: ["LAKI - LAKI", "PEREMPUAN"],
                           dropdownSearchDecoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
@@ -307,19 +307,19 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                             jenisKelamin = itm!;
                           },
                           popupTitle: Container(
-                            height: 50,
+                            height: 40,
                             decoration: BoxDecoration(
-                              color: defOrange,
+                              color: defBlack1,
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
                               ),
                             ),
                             child: Center(
                               child: Text(
                                 'Jenis Kelamin',
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -328,10 +328,10 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                           ),
                           popupShape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(24),
-                              topRight: Radius.circular(24),
-                              bottomRight: Radius.circular(24),
-                              bottomLeft: Radius.circular(24),
+                              topLeft: Radius.circular(0),
+                              topRight: Radius.circular(0),
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
                             ),
                           ),
                         ),
@@ -374,7 +374,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                         width: global.getWidth(context) / 1.2,
                         child: DropdownSearch<String>(
                           showSearchBox: true,
-                          mode: Mode.DIALOG,
+                          mode: Mode.MENU,
                           items: [for (var i = 0; i < item.length; i++) item[i]["name"].toUpperCase()],
                           dropdownSearchDecoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
@@ -397,19 +397,19 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                             ),
                           ),
                           popupTitle: Container(
-                            height: 50,
+                            height: 40,
                             decoration: BoxDecoration(
-                              color: defOrange,
+                              color: defBlack1,
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
                               ),
                             ),
                             child: Center(
                               child: Text(
                                 'Pilih Kota',
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -418,10 +418,10 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                           ),
                           popupShape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(24),
-                              topRight: Radius.circular(24),
-                              bottomRight: Radius.circular(24),
-                              bottomLeft: Radius.circular(24),
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
                             ),
                           ),
                         ),
@@ -441,7 +441,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                         width: global.getWidth(context) / 1.2,
                         child: DropdownSearch<String>(
                           showSearchBox: true,
-                          mode: Mode.DIALOG,
+                          mode: Mode.MENU,
                           items: [for (var i = 0; i < kecamatan.length; i++) kecamatan[i]["name"]],
                           dropdownSearchDecoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
@@ -460,19 +460,19 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                             ),
                           ),
                           popupTitle: Container(
-                            height: 50,
+                            height: 40,
                             decoration: BoxDecoration(
-                              color: defOrange,
+                              color: defBlack1,
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
                               ),
                             ),
                             child: Center(
                               child: Text(
                                 'Pilih Kecamatan',
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -481,10 +481,10 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                           ),
                           popupShape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(24),
-                              topRight: Radius.circular(24),
-                              bottomRight: Radius.circular(24),
-                              bottomLeft: Radius.circular(24),
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
                             ),
                           ),
                         ),
@@ -574,11 +574,11 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                                     width: global.getWidth(context) / 1.6,
                                     height: 140,
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: defOrange),
+                                      border: Border.all(color: defBlack1),
                                       borderRadius: BorderRadius.all(Radius.circular(20)),
                                     ),
                                     child: Center(
-                                      child: Icon(Icons.camera_alt, color: defOrange),
+                                      child: Icon(Icons.camera_alt, color: defBlack1),
                                     ),
                                   ),
                                 ),
@@ -627,11 +627,11 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                                     width: global.getWidth(context) / 1.6,
                                     height: 360,
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: defOrange),
+                                      border: Border.all(color: defBlack1),
                                       borderRadius: BorderRadius.all(Radius.circular(20)),
                                     ),
                                     child: Center(
-                                      child: Icon(Icons.camera_alt, color: defOrange),
+                                      child: Icon(Icons.camera_alt, color: defBlack1),
                                     ),
                                   ),
                                 ),
@@ -714,7 +714,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                         width: global.getWidth(context) / 1.2,
                         child: DropdownSearch<String>(
                           showSearchBox: true,
-                          mode: Mode.DIALOG,
+                          mode: Mode.MENU,
                           items: [for (var i = 0; i < item.length; i++) item[i]["name"]],
                           dropdownSearchDecoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
@@ -737,19 +737,19 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                             ),
                           ),
                           popupTitle: Container(
-                            height: 50,
+                            height: 40,
                             decoration: BoxDecoration(
-                              color: defOrange,
+                              color: defBlack1,
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
                               ),
                             ),
                             child: Center(
                               child: Text(
                                 'Pilih Kota',
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -758,10 +758,10 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                           ),
                           popupShape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(24),
-                              topRight: Radius.circular(24),
-                              bottomRight: Radius.circular(24),
-                              bottomLeft: Radius.circular(24),
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
                             ),
                           ),
                         ),
@@ -781,7 +781,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                         width: global.getWidth(context) / 1.2,
                         child: DropdownSearch<String>(
                           showSearchBox: true,
-                          mode: Mode.DIALOG,
+                          mode: Mode.MENU,
                           items: [for (var i = 0; i < kecamatanDom.length; i++) kecamatanDom[i]["name"]],
                           dropdownSearchDecoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
@@ -800,19 +800,19 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                             ),
                           ),
                           popupTitle: Container(
-                            height: 50,
+                            height: 40,
                             decoration: BoxDecoration(
-                              color: defOrange,
+                              color: defBlack1,
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(0),
                               ),
                             ),
                             child: Center(
                               child: Text(
                                 'Pilih Kecamatan',
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -821,10 +821,10 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                           ),
                           popupShape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(24),
-                              topRight: Radius.circular(24),
-                              bottomRight: Radius.circular(24),
-                              bottomLeft: Radius.circular(24),
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
                             ),
                           ),
                         ),
@@ -935,11 +935,11 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                                     width: global.getWidth(context) / 1.6,
                                     height: 140,
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: defOrange),
+                                      border: Border.all(color: defBlack1),
                                       borderRadius: BorderRadius.all(Radius.circular(20)),
                                     ),
                                     child: Center(
-                                      child: Icon(Icons.camera_alt, color: defOrange),
+                                      child: Icon(Icons.camera_alt, color: defBlack1),
                                     ),
                                   ),
                                 ),
@@ -973,13 +973,14 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                       child: Text("  Status Gaji", textAlign: TextAlign.left),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                       margin: EdgeInsets.only(top: 5),
                       decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
                         child: DropdownSearch<String>(
+                          enabled: false,
                           mode: Mode.DIALOG,
                           items: ["1 Mingguan", "3 Mingguan", "Bulanan"],
                           // items: ["Harian", "Bulanan"],
@@ -990,12 +991,12 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                           ),
                           selectedItem: statGaji,
                           onChanged: (itm) {
-                            statGaji = itm!;
+                            // statGaji = itm!;
                           },
                           popupTitle: Container(
                             height: 50,
                             decoration: BoxDecoration(
-                              color: defOrange,
+                              color: defBlack1,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),

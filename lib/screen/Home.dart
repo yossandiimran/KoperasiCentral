@@ -7,6 +7,7 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
+  var firstLogin = "false";
   @override
   void initState() {
     super.initState();
@@ -19,12 +20,12 @@ class HomeState extends State<Home> {
     if (pernyataan == '-') {
       Navigator.pushNamed(context, '/aggreement');
     }
-    var firstLogin = await preference.getData("first_login");
+    firstLogin = await preference.getData("first_login");
     print(firstLogin);
     if (firstLogin == "false") {
-      global.successResponseNavigate(
+      return global.successResponseNavigate(
         context,
-        "Selamat datang di SmartKoperasi Central, ini adalah kali pertama anda login, silahkan melengkapi form berikut ini, terimakasih ^_^ \n ",
+        "Selamat datang di SmartKoperasi Central, silahkan melengkapi form berikut ini! \n ",
         '/mutakhirData',
       );
     }

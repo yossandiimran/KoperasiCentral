@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, no_logic_in_create_state, avoid_print, avoid_unnecessary_containers, unnecessary_null_comparison, invalid_use_of_visible_for_testing_member, prefer_interpolation_to_compose_strings
+// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, no_logic_in_create_state, avoid_print, avoid_unnecessary_containers, unnecessary_null_comparison, invalid_use_of_visible_for_testing_member, prefer_interpolation_to_compose_strings, use_build_context_synchronously
 part of '../../header.dart';
 
 class PengajuanPinjamanForm extends StatefulWidget {
@@ -8,8 +8,11 @@ class PengajuanPinjamanForm extends StatefulWidget {
 
 class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
   List<dynamic> item = [];
+  Map dataSimulasi = {};
+  bool tanpaAngsuran = false;
 
   var jumlahPinjaman = TextEditingController(), tenorSelected = "", jenisSelected = "";
+  var angsuranInput = TextEditingController();
   List<String> listTenor = [];
   @override
   void initState() {
@@ -21,6 +24,8 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
     MasterService masterService = MasterService(context: context);
     Map respData = await masterService.getMasterJenisPinjam();
     item = respData["data"];
+
+    print(item);
     setState(() {});
   }
 
@@ -82,10 +87,17 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                   onChanged: (itm) {
                     jenisSelected = itm!;
                     print(jenisSelected);
-                    if (jenisSelected == 'Sembako') {
-                      listTenor = ["1 Bulan"];
+                    List kodeJenis = item.where((element) => element['nama'] == jenisSelected).toList();
+                    dataSimulasi.clear();
+                    angsuranInput.clear();
+                    jumlahPinjaman.clear();
+                    if (kodeJenis[0]["tanpa_angsuran"]) {
+                      listTenor = ["1x"];
+                      tenorSelected = "1x";
+                      tanpaAngsuran = true;
                     } else {
-                      listTenor = ["1 Bulan", "3 Bulan", "6 Bulan", "12 Bulan", "24 Bulan", "36 Bulan", "48 Bulan"];
+                      tanpaAngsuran = false;
+                      listTenor = ["1x", "3x", "6x", "12x", "24x", "36x", "48x"];
                     }
                     setState(() {});
                   },
@@ -149,60 +161,89 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
             Container(
               alignment: Alignment.bottomLeft,
               margin: EdgeInsets.only(top: 15),
-              child: Text("  Tenor", textAlign: TextAlign.left),
+              child: Text("  Jumlah Angsuran", textAlign: TextAlign.left),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              margin: EdgeInsets.only(top: 5),
-              decoration: widget.decCont(Colors.white, 15, 15, 15, 15),
-              width: global.getWidth(context),
-              child: SizedBox(
-                width: global.getWidth(context) / 1.2,
-                child: DropdownSearch<String>(
-                  showSearchBox: false,
-                  mode: Mode.DIALOG,
-                  items: listTenor,
-                  dropdownSearchDecoration: InputDecoration(
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  selectedItem: tenorSelected,
-                  onChanged: (itm) {
-                    tenorSelected = itm!;
-                    setState(() {});
-                  },
-                  popupTitle: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: defOrange,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+            !tanpaAngsuran
+                ? Container(
+                    padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+                    margin: EdgeInsets.only(top: 5),
+                    decoration: widget.decCont(Colors.white, 15, 15, 15, 15),
+                    width: global.getWidth(context),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: angsuranInput,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Angsuran",
                       ),
                     ),
-                    child: Center(
-                      child: Text(
-                        'Pilih Tenor',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                  )
+                // Container(
+                //     padding: EdgeInsets.symmetric(horizontal: 10),
+                //     margin: EdgeInsets.only(top: 5),
+                //     decoration: widget.decCont(Colors.white, 15, 15, 15, 15),
+                //     width: global.getWidth(context),
+                //     child: SizedBox(
+                //       width: global.getWidth(context) / 1.2,
+                //       child: DropdownSearch<String>(
+                //         showSearchBox: false,
+                //         mode: Mode.DIALOG,
+                //         items: listTenor,
+                //         dropdownSearchDecoration: InputDecoration(
+                //           enabledBorder: UnderlineInputBorder(
+                //             borderSide: BorderSide.none,
+                //           ),
+                //         ),
+                //         selectedItem: tenorSelected,
+                //         onChanged: (itm) {
+                //           tenorSelected = itm!;
+                //           setState(() {});
+                //         },
+                //         popupTitle: Container(
+                //           height: 50,
+                //           decoration: BoxDecoration(
+                //             color: defOrange,
+                //             borderRadius: BorderRadius.only(
+                //               topLeft: Radius.circular(20),
+                //               topRight: Radius.circular(20),
+                //             ),
+                //           ),
+                //           child: Center(
+                //             child: Text(
+                //               'Pilih Angsuran',
+                //               style: TextStyle(
+                //                 fontSize: 22,
+                //                 fontWeight: FontWeight.bold,
+                //                 color: Colors.white,
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //         popupShape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.only(
+                //             topLeft: Radius.circular(24),
+                //             topRight: Radius.circular(24),
+                //             bottomRight: Radius.circular(24),
+                //             bottomLeft: Radius.circular(24),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   )
+                : Container(
+                    padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+                    margin: EdgeInsets.only(top: 5),
+                    decoration: widget.decCont(Colors.white, 15, 15, 15, 15),
+                    width: global.getWidth(context),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "1x",
                       ),
                     ),
                   ),
-                  popupShape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
-                      bottomRight: Radius.circular(24),
-                      bottomLeft: Radius.circular(24),
-                    ),
-                  ),
-                ),
-              ),
-            ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
               margin: EdgeInsets.symmetric(vertical: 10),
@@ -231,19 +272,16 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                   Spacer(),
                   GestureDetector(
                     onTap: () async {
-                      save();
+                      cekAngsuran();
                     },
                     child: Container(
-                      width: global.getWidth(context) / 2.7,
                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(defGreen, 15, 15, 15, 15),
+                      decoration: widget.decCont(defBlue, 15, 15, 15, 15),
                       child: Row(
                         children: [
-                          Spacer(),
-                          Text("Simpan ", style: textStyling.customColor(14, defWhite)),
-                          Icon(Icons.arrow_forward_rounded, color: defWhite),
-                          Spacer(),
+                          Text("Simulasi Cicilan", style: textStyling.customColor(14, defWhite)),
+                          Icon(Icons.list, color: defWhite),
                         ],
                       ),
                     ),
@@ -251,6 +289,70 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                 ],
               ),
             ),
+            dataSimulasi.isNotEmpty
+                ? Container(
+                    decoration: widget.decCont2(defWhite, 10, 10, 10, 10),
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Text("Simulasi Cicilan : ", style: textStyling.mcLarenBold(16, defBlack1)),
+                        Divider(thickness: 2),
+                        ListTile(
+                          dense: true,
+                          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                          subtitle: Text(
+                            // '''Nomor Transaksi : ${listPengajuan[i]['nomor_transaksi']}
+                            '''
+Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(jumlahPinjaman.text), 2).toString()}
+Realisasi :  ${CurrencyFormat.convertToIdr(double.parse(dataSimulasi["data"]["realisasi"].toString()), 2).toString()}
+Angsuran : ${angsuranInput.text != "" ? angsuranInput.text : "1"}x''',
+                            style: textStyling.nunitoBold(15, defBlack1),
+                          ),
+                        ),
+                        ExpansionTile(
+                          expandedAlignment: Alignment.bottomLeft,
+                          title: Text("Detail Angsuran"),
+                          children: [
+                            for (var element in dataSimulasi["data"]["cicilan"])
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Angsuran Ke - ${element["angsuran_ke"]}",
+                                      style: textStyling.mcLaren(13, defBlack1),
+                                    ),
+                                    Text(
+                                      CurrencyFormat.convertToIdr(element["nominal"], 2).toString(),
+                                      style: textStyling.nunitoBold(15, defBlack1),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            save();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                            margin: EdgeInsets.only(top: 5),
+                            decoration: widget.decCont(defGreen, 15, 15, 15, 15),
+                            child: Row(
+                              children: [
+                                Spacer(),
+                                Text("Ajukan Pinjaman ", style: textStyling.customColor(14, defWhite)),
+                                Icon(Icons.arrow_forward_rounded, color: defWhite),
+                                Spacer(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
             SizedBox(height: global.getHeight(context) / 2),
           ],
         ),
@@ -258,16 +360,39 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
     );
   }
 
+  cekAngsuran() async {
+    if (jumlahPinjaman.text == '') return alert.alertWarning(context: context, text: "Jumlah Pinjaman Wajib Diisi !");
+    List kodeJenis = item.where((element) => element['nama'] == jenisSelected).toList();
+    var angsr = angsuranInput.text != "" ? angsuranInput.text : "1";
+    print(angsr);
+    if (int.parse(angsr.toString()) > int.parse(kodeJenis[0]['tenor'].toString())) {
+      return alert.alertWarning(
+          context: context,
+          text: "Jumlah angsuran pada ${kodeJenis[0]['nama']} tidak boleh melebihi ${kodeJenis[0]['tenor']}x");
+    }
+    Map objParam = {
+      'kode_jenis': kodeJenis[0]['kode'],
+      'besar_pinjaman': jumlahPinjaman.text,
+      'tenor': angsr,
+    };
+    PengajuanPinjamanService pps = PengajuanPinjamanService(context: context, objParam: objParam);
+    alert.loadingAlert(context: context, text: "Menghitung angsuran ... ", isPop: false);
+    dataSimulasi = await pps.getListSimulasi();
+
+    print(dataSimulasi);
+    setState(() {});
+    Navigator.pop(context);
+  }
+
   save() async {
     if (jumlahPinjaman.text == '') return alert.alertWarning(context: context, text: "Jumlah Pinjaman Wajib Diisi !");
 
     List kodeJenis = item.where((element) => element['nama'] == jenisSelected).toList();
-    List splitted = tenorSelected.split(' ');
 
     Map objParam = {
       'kode_jenis': kodeJenis[0]['kode'],
       'besar_pinjaman': jumlahPinjaman.text,
-      'tenor': splitted[0],
+      'tenor': angsuranInput.text != "" ? angsuranInput.text : "1",
     };
 
     alert.alertConfirmation(

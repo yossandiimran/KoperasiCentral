@@ -10,6 +10,7 @@ class Profile extends StatefulWidget {
 class ProfileState extends State<Profile> {
   @override
   void initState() {
+    global.autoLogoutCheck(context);
     super.initState();
   }
 

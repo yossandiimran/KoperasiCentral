@@ -16,7 +16,7 @@ class CustomWidget {
       ),
       title: Text(
         title,
-        style: textStyling.customColorBold(18, defBlack1),
+        style: textStyling.customColorBold(global.getWidth(context) / 21, defBlack1),
       ),
       actions: [
         IconButton(

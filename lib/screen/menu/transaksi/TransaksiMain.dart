@@ -13,6 +13,7 @@ class TransaksiState extends State<Transaksi> {
   bool isLoading = true;
   @override
   void initState() {
+    global.autoLogoutCheck(context);
     super.initState();
     getDashboardData();
   }
@@ -91,7 +92,7 @@ Tanggal Pencairan :  ${listPengajuan[i]['diterima'] ?? "-"}
 Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(listPengajuan[i]['besar_pinjaman']), 2).toString()}
 Realisasi :  ${CurrencyFormat.convertToIdr(double.parse(listPengajuan[i]['realisasi_pinjaman']), 2).toString()}
 Sisa Tagihan :  ${CurrencyFormat.convertToIdr(int.parse(listPengajuan[i]['sisa_pembayaran'].toString()), 2).toString()}
-Tenor : ${listPengajuan[i]['tenor']} Bulan''',
+Angsuran : ${listPengajuan[i]['tenor']}x''',
                                   style: textStyling.nunitoBold(14, defGrey),
                                 ),
                               ),

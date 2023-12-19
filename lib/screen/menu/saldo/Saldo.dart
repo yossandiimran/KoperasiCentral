@@ -16,6 +16,7 @@ class SaldoState extends State<Saldo> {
   @override
   void initState() {
     super.initState();
+    global.autoLogoutCheck(context);
     getSaldoData(refresh: true);
     sc.addListener(scrollListener);
   }
@@ -47,7 +48,7 @@ class SaldoState extends State<Saldo> {
       Map objParam = {"page": page};
       PengajuanSimpananService simpananList = PengajuanSimpananService(context: context, objParam: objParam);
       Map dataPengajuan = await simpananList.getListPengajuan();
-      for (int i = 0; i < dataPengajuan["data"].length; i++) listSaldo.add(dataPengajuan["data"][i]);
+      for (int i = 0; i < dataPengajuan["data"].take(7).toList().length; i++) listSaldo.add(dataPengajuan["data"][i]);
       MasterService masterService = MasterService(context: context);
       Map dataMaster = await masterService.getDashboardService();
       saldoKas = int.parse(dataMaster["data"]['saldo_simpanan']);

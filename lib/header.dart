@@ -50,5 +50,6 @@ part 'screen/menu/transaksi/TransaksiMain.dart';
 part 'screen/menu/transaksi/TransaksiDetail.dart';
 part 'screen/pemutakhiranData/PemutakhiranData.dart';
 part 'screen/aggreement/Aggreement.dart';
+part 'screen/aggreement/AggreementPdf.dart';
 part 'screen/pengajuanPinjaman/PengajuanPinjamanForm.dart';
 part 'screen/pengajuanSimpanan/PengajuanSimpananForm.dart';

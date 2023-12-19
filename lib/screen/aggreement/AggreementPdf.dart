@@ -1,15 +1,12 @@
 // ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, no_logic_in_create_state, avoid_print, avoid_unnecessary_containers, unnecessary_null_comparison, invalid_use_of_visible_for_testing_member, prefer_interpolation_to_compose_strings, avoid_returning_null_for_void
 part of '../../header.dart';
 
-class Aggreement extends StatefulWidget {
+class AggreementPdf extends StatefulWidget {
   @override
-  AggreementState createState() => AggreementState();
+  AggreementPdfState createState() => AggreementPdfState();
 }
 
-bool cek1 = false;
-bool cek2 = false;
-
-class AggreementState extends State<Aggreement> {
+class AggreementPdfState extends State<AggreementPdf> {
   bool isLoading = true;
 
   Map data = {};
@@ -57,8 +54,7 @@ class AggreementState extends State<Aggreement> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        alert.alertLogout(context);
-        return false;
+        return true;
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -83,123 +79,59 @@ class AggreementState extends State<Aggreement> {
   getBody() => SafeArea(
         child: !isLoading
             ? Column(
-                children: [
+                children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                    padding: EdgeInsets.all(10),
                     decoration: widget.decCont(defWhite, 10, 10, 10, 10),
-                    child: Column(
-                      children: [
-                        SizedBox(height: kToolbarHeight),
-                        Divider(thickness: 3),
-                        SizedBox(height: 15),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/aggreementPdf').then((value) => setState(() {}));
-                          },
-                          child: ListTile(
-                            leading: Icon(
-                              cek2 ? Icons.check_box_rounded : Icons.check_box_outline_blank_rounded,
-                              color: !cek2 ? defGrey : defBlue,
-                            ),
-                            subtitle: RichText(
-                              textAlign: TextAlign.justify,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Saya telah menyetujui ',
-                                    style: textStyling.nunitoBold(13, defGrey),
-                                  ),
-                                  TextSpan(
-                                    text: 'peraturan dan kebijakan ',
-                                    style: textStyling.nunitoBold(13, defBlue),
-                                  ),
-                                  TextSpan(
-                                    text: 'yang dikeluarkan oleh Koperasi PT Graha Seribusatu jaya',
-                                    style: textStyling.nunitoBold(13, defGrey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        GestureDetector(
-                          onTap: () {
-                            // cek1 ? cek1 = false : cek1 = true;
-                            // setState(() {});
-                            openModalSheetPrivacy().then((value) => setState(() {}));
-                          },
-                          child: ListTile(
-                            leading: Icon(
-                              cek1 ? Icons.check_box_rounded : Icons.check_box_outline_blank_rounded,
-                              color: !cek1 ? defGrey : defBlue,
-                            ),
-                            subtitle: RichText(
-                              textAlign: TextAlign.justify,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Saya telah menyetujui ',
-                                    style: textStyling.nunitoBold(13, defGrey),
-                                  ),
-                                  TextSpan(
-                                    text: 'kebijakan privasi & persetujuan ',
-                                    style: textStyling.nunitoBold(13, defBlue),
-                                  ),
-                                  TextSpan(
-                                    text: 'ketentuan penggunaan aplikasi',
-                                    style: textStyling.nunitoBold(13, defGrey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        Divider(thickness: 3),
-                        Row(
-                          children: [
-                            Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                alert.alertLogout(context);
-                              },
-                              child: Container(
-                                decoration: widget.decCont(
-                                  defOrange,
-                                  10,
-                                  0,
-                                  10,
-                                  0,
-                                ),
-                                padding: EdgeInsets.all(10),
-                                child: Text("     Batalkan     ", style: textStyling.defaultWhiteBold(14)),
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            GestureDetector(
-                              onTap: () {
-                                submitAggreement();
-                              },
-                              child: Container(
-                                decoration: widget.decCont(
-                                  cek1 && cek2 ? defBlue : defGrey,
-                                  0,
-                                  10,
-                                  0,
-                                  10,
-                                ),
-                                padding: EdgeInsets.all(10),
-                                child: Text("   Lanjutkan   ", style: textStyling.defaultWhiteBold(14)),
-                              ),
-                            ),
-                            Spacer(),
-                          ],
-                        ),
-                      ],
+                    height: global.getHeight(context) / 1.3,
+                    child: Center(
+                      child: PDFView(
+                        filePath: pFile.path,
+                      ),
                     ),
                   ),
-                  Spacer(),
+                  Row(
+                    children: [
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          cek2 = false;
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          decoration: widget.decCont(
+                            defOrange,
+                            10,
+                            0,
+                            10,
+                            0,
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: Text("     Batalkan     ", style: textStyling.defaultWhiteBold(14)),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      GestureDetector(
+                        onTap: () {
+                          cek2 = true;
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          decoration: widget.decCont(
+                            defBlue,
+                            0,
+                            10,
+                            0,
+                            10,
+                          ),
+                          padding: EdgeInsets.all(10),
+                          child: Text("          Setuju          ", style: textStyling.defaultWhiteBold(14)),
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                  SizedBox(height: 15),
                 ],
               )
             : Center(
@@ -210,6 +142,84 @@ class AggreementState extends State<Aggreement> {
   Future<void> submitAggreement() async {
     if (!cek1 || !cek2) return null;
     MasterService(context: context).postUserAggreement();
+  }
+
+  Future<void> openModalSheet() async {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: false,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10.0),
+          topRight: Radius.circular(10.0),
+        ),
+      ),
+      builder: (BuildContext context) {
+        return FractionallySizedBox(
+          heightFactor: 0.9,
+          child: Container(
+            padding: EdgeInsets.only(top: 10),
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: widget.decCont(defWhite, 10, 10, 10, 10),
+                  height: global.getHeight(context) / 1.3,
+                  child: Center(
+                    child: PDFView(
+                      filePath: pFile.path,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        cek2 = false;
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: widget.decCont(
+                          defOrange,
+                          10,
+                          0,
+                          10,
+                          0,
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Text("     Batalkan     ", style: textStyling.defaultWhiteBold(14)),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    GestureDetector(
+                      onTap: () {
+                        cek2 = true;
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: widget.decCont(
+                          defBlue,
+                          0,
+                          10,
+                          0,
+                          10,
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Text("          Setuju          ", style: textStyling.defaultWhiteBold(14)),
+                      ),
+                    ),
+                    Spacer(),
+                  ],
+                ),
+                SizedBox(height: 15),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Future<void> openModalSheetPrivacy() async {

@@ -106,7 +106,7 @@ class PengajuanSimpananFormState extends State<PengajuanSimpananForm> {
                     ),
                     child: Center(
                       child: Text(
-                        'Pilih Jenis Pinjaman',
+                        'Pilih Jenis Simpanan',
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,

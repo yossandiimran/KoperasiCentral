@@ -275,6 +275,7 @@ class ProfileUserState extends State<ProfileUser> {
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
                         child: DropdownSearch<String>(
+                          enabled: false,
                           mode: Mode.DIALOG,
                           items: ["LAKI - LAKI", "PEREMPUAN"],
                           dropdownSearchDecoration: InputDecoration(
@@ -353,6 +354,7 @@ class ProfileUserState extends State<ProfileUser> {
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
                         child: DropdownSearch<String>(
+                          enabled: false,
                           showSearchBox: true,
                           mode: Mode.DIALOG,
                           items: [for (var i = 0; i < item.length; i++) item[i]["name"].toUpperCase()],
@@ -379,7 +381,7 @@ class ProfileUserState extends State<ProfileUser> {
                           popupTitle: Container(
                             height: 50,
                             decoration: BoxDecoration(
-                              color: defOrange,
+                              color: defBlack1,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20),
@@ -420,6 +422,7 @@ class ProfileUserState extends State<ProfileUser> {
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
                         child: DropdownSearch<String>(
+                          enabled: false,
                           showSearchBox: true,
                           mode: Mode.DIALOG,
                           items: [for (var i = 0; i < kecamatan.length; i++) kecamatan[i]["name"]],
@@ -954,6 +957,7 @@ class ProfileUserState extends State<ProfileUser> {
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
                         child: DropdownSearch<String>(
+                          enabled: false,
                           mode: Mode.DIALOG,
                           items: ["1 Mingguan", "3 Mingguan", "Bulanan"],
                           // items: ["Harian", "Bulanan"],

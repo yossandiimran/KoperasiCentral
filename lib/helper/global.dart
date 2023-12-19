@@ -13,7 +13,7 @@ TextStyling textStyling = TextStyling();
 ShimmerWidget shimmerWidget = ShimmerWidget();
 FirebaseMessagingHelper fbmessaging = FirebaseMessagingHelper();
 
-var appVersion = '0.0.1(beta-1)';
+var appVersion = '0.1.0';
 var isMenuActive = 0;
 
 //Default Theme Color
@@ -29,12 +29,19 @@ var defblue3 = Colors.blue[100], defred2 = Colors.red[100], defgreen2 = Colors.g
 var deforg3 = Colors.orange[200], defyel = Colors.yellow[100], defteal = Colors.teal[100];
 
 class Global {
+  Future<double> getWidthPerHeight({String ctr = "Currenct", required BuildContext ctx}) async {
+    Size hts = MediaQuery.of(ctx).size;
+    double queit = ctr == "Current" ? hts.height / hts.width : 200;
+
+    return queit;
+  }
+
   getWidth(context) => MediaQuery.of(context).size.width;
   getHeight(context) => MediaQuery.of(context).size.height;
   //Handle Service ===============================================================
 
-  final mainUrl = 'http://192.168.1.113:30/';
-  // final mainUrl = 'http://210.210.165.198/';
+  // final mainUrl = 'http://192.168.1.113:30/';
+  final mainUrl = 'http://cbn1.gsg.co.id/';
   late String baseUrl, basePath, ktpPath, pasPath;
 
   @override
@@ -112,6 +119,20 @@ class Global {
       } else {
         await preference.setString('lastLogin', now.toString());
       }
+    }
+  }
+
+  //Auto Logout 1 jam
+  Future<void> autoLogoutCheck(context) async {
+    var strDate = await preference.getData("dtLogin");
+    DateTime targetTime = DateTime.parse(strDate);
+    DateTime now = DateTime.now();
+    Duration difference = now.difference(targetTime);
+    int hoursDifference = difference.inHours;
+    if (hoursDifference >= 1) {
+      Navigator.pushNamed(context, '/login');
+      alert.alertWarning(context: context, text: "Sesi Anda Habis Silahkan Login Ulang !");
+      return preference.clearPreference();
     }
   }
 }

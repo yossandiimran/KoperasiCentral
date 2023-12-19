@@ -57,12 +57,28 @@ class PengajuanPinjamanService extends HandleStatusCode {
 
   Future<Map> getDetailPengajuan() async {
     Uri url = global.getMainServiceUrl('transaksi/pinjaman/detail/${objParam?['id']}');
-    print(url);
     try {
       returnData = {};
       await http.get(url, headers: {
         'authorization': 'Bearer ${preference.getData('token')}',
       }).then((response) async {
+        Map res = await handle(code: response.statusCode, response: response.body);
+        returnData = {'data': res["data"]};
+      });
+    } catch (err) {
+      returnData = {};
+    }
+
+    return returnData;
+  }
+
+  Future<Map> getListSimulasi() async {
+    Uri url = global.getMainServiceUrl('transaksi/pinjaman/simulasi');
+    print(url);
+    Map<String, String> header = {'authorization': 'Bearer ${preference.getData('token')}'};
+    try {
+      returnData = {};
+      await http.post(url, headers: header, body: objParam).then((response) async {
         Map res = await handle(code: response.statusCode, response: response.body);
         returnData = {'data': res["data"]};
       });

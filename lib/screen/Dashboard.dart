@@ -11,15 +11,18 @@ class DashboardState extends State<Dashboard> {
   Map dataMaster = {};
   var sisaAngsuran = 0, sisaTagihan = 0, pinjamanAktif = 0;
   var limit = 0, pinjamanLunas = 0, saldo = 0;
-  bool isLoading = true;
+  bool isLoading = true, isShowCash = false;
   @override
   void initState() {
     super.initState();
+    global.autoLogoutCheck(context);
     global.cekLogin7day(context: context);
     getDashboardData();
   }
 
   Future<void> getDashboardData() async {
+    isShowCash = preference.getData("isShowCash") ?? true;
+    print(isShowCash);
     listPengajuan.clear();
     isLoading = true;
     setState(() {});
@@ -98,7 +101,7 @@ class DashboardState extends State<Dashboard> {
                   Spacer(),
                   Container(
                     padding: EdgeInsets.only(top: 15, left: 10, right: 10),
-                    height: global.getHeight(context) - (kToolbarHeight * 2.5),
+                    height: global.getHeight(context) - (kToolbarHeight * 2.6),
                     decoration: BoxDecoration(
                       borderRadius:
                           const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
@@ -197,7 +200,7 @@ class DashboardState extends State<Dashboard> {
                         children: [
                           ListTile(
                             leading: Icon(
-                              Icons.monetization_on,
+                              Icons.monetization_on_rounded,
                               color: defOrange,
                               size: 36,
                             ),
@@ -208,13 +211,24 @@ class DashboardState extends State<Dashboard> {
                             title: Text("Total Saldo", style: textStyling.customColorBold(16, defOrange)),
                             subtitle: !isLoading
                                 ? Text(
-                                    CurrencyFormat.convertToIdr(saldo, 2).toString(),
+                                    isShowCash ? CurrencyFormat.convertToIdr(saldo, 2).toString() : "Rp ●●●.●●●.●●●,-",
                                     style: textStyling.customColorBold(20, defBlack1),
                                   )
                                 : shimmerWidget.defaultShimmer(
                                     width: global.getWidth(context),
                                     height: 10,
                                   ),
+                            trailing: IconButton(
+                              onPressed: () {
+                                isShowCash ? isShowCash = false : isShowCash = true;
+                                preference.setBool("isShowCash", isShowCash);
+                                setState(() {});
+                              },
+                              icon: Icon(
+                                !isShowCash ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                                color: defBlue,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -316,7 +330,9 @@ class DashboardState extends State<Dashboard> {
                                   leading: Icon(Icons.payment_rounded, color: defblue2),
                                   title: !isLoading
                                       ? Text(
-                                          CurrencyFormat.convertToIdr(limit, 2).toString(),
+                                          isShowCash
+                                              ? CurrencyFormat.convertToIdr(limit, 2).toString()
+                                              : "Rp ●●●.●●●.●●●,-",
                                           style: textStyling.nunitoBold(15, defBlack2),
                                         )
                                       : shimmerWidget.defaultShimmer(
@@ -333,7 +349,9 @@ class DashboardState extends State<Dashboard> {
                                   leading: Icon(Icons.calendar_month_rounded, color: defRed),
                                   title: !isLoading
                                       ? Text(
-                                          CurrencyFormat.convertToIdr(sisaTagihan, 2).toString(),
+                                          isShowCash
+                                              ? CurrencyFormat.convertToIdr(sisaTagihan, 2).toString()
+                                              : "Rp ●●●.●●●.●●●,-",
                                           style: textStyling.nunitoBold(15, defBlack2),
                                         )
                                       : shimmerWidget.defaultShimmer(
@@ -501,7 +519,7 @@ class DashboardState extends State<Dashboard> {
                                       '''Nomor Transaksi : ${listPengajuan[i]['nomor_transaksi']}
 Tanggal Transaksi :  ${listPengajuan[i]['tgl_transaksi']}
 Besar Pinjaman :  ${CurrencyFormat.convertToIdr(int.parse(listPengajuan[i]['besar_pinjaman']), 2).toString()}
-Tenor : ${listPengajuan[i]['tenor']} Bulan''',
+Angsuran : ${listPengajuan[i]['tenor']}x''',
                                       style: textStyling.nunitoBold(13, defWhite),
                                     ),
                                   ),

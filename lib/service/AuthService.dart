@@ -25,24 +25,14 @@ class AuthService extends HandleStatusCode {
               var firstLogin = await preference.getData("first_login");
               var pernyataan = await preference.getData('tanggalPernyataan');
 
-              print(firstLogin);
-              //   if (firstLogin == "false") {
-              //     return global.successResponseNavigate(
-              //       context,
-              //       "Selamat datang di SmartKoperasi Central, ini adalah kali pertama anda login, silahkan melengkapi form dibawah ini mengakses aplikasi ini, terimakasih ^_^ \n ",
-              //       '/mutakhirData',
-              //     );
-              //   } else {
-              //     return Navigator.pushNamed(context, '/home');
-              //   }
-              // } else {
-              //   return global.errorResponse(context, 'Tidak dapat Login !');
-              // }
               if (pernyataan == "-") {
+                return Navigator.pushNamed(context, '/aggreement');
+              }
+              if (firstLogin == "false") {
                 return global.successResponseNavigate(
                   context,
-                  "Selamat datang di SmartKoperasi Central, Silahkan Membaca ketentuan pengguna terlebih dahulu !",
-                  '/aggreement',
+                  "Selamat datang di SmartKoperasi Central, silahkan melengkapi form berikut ini! \n ",
+                  '/mutakhirData',
                 );
               } else {
                 return Navigator.pushNamed(context, '/home');
@@ -55,11 +45,7 @@ class AuthService extends HandleStatusCode {
           return global.errorResponse(context, lm.message);
         }
       });
-      // .timeout(const Duration(seconds: 10), onTimeout: () {
-      // return global.errorResponsePop(context, "Koneksi Timeout ...");
-      // });
     } catch (e) {
-      // return 500;
       print(e);
       return global.errorResponsePop(context, "Terjadi Kesalahan !");
     }
@@ -108,6 +94,7 @@ class AuthService extends HandleStatusCode {
       await preference.setString("token_type", lm.data!.tokenType);
       await preference.setString("expires_in", lm.data!.expiresIn.toString());
       await preference.setString("pass", pass);
+      await preference.setString("dtLogin", DateTime.now().toString());
       return 200;
     } catch (err) {
       print(err);

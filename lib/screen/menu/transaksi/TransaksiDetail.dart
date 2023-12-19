@@ -138,7 +138,7 @@ Tanggal Transaksi :  ${obj["data"]['tgl_transaksi']}
 Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(obj["data"]['besar_pinjaman']), 2).toString()}
 Realisasi :  ${CurrencyFormat.convertToIdr(double.parse(obj["data"]['realisasi_pinjaman']), 2).toString()}
 Sisa Tagihan :  ${CurrencyFormat.convertToIdr(int.parse(obj["data"]['sisa_pembayaran'].toString()), 2).toString()}
-Tenor : ${obj["data"]['tenor']} Bulan''',
+Angsuran : ${obj["data"]['tenor']}x''',
                         style: textStyling.nunitoBold(15, defGrey),
                       ),
                     ),
