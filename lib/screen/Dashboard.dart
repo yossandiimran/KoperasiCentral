@@ -85,7 +85,8 @@ class DashboardState extends State<Dashboard> {
         resizeToAvoidBottomInset: false,
         backgroundColor: defWhite,
         extendBodyBehindAppBar: true,
-        appBar: widget.appBarTitle(context, "Mobile Koperasi Central", Colors.transparent),
+        appBar: widget.appBarTitle(
+            context, "Mobile Koperasi Central", Colors.transparent),
         body: RefreshIndicator(
           onRefresh: () async => getDashboardData(),
           child: Stack(children: [
@@ -101,11 +102,14 @@ class DashboardState extends State<Dashboard> {
                   Spacer(),
                   Container(
                     padding: EdgeInsets.only(top: 15, left: 10, right: 10),
-                    height: global.getHeight(context) - (kToolbarHeight * 2.6),
+                    height: global.getHeight(context) - (kToolbarHeight * 3),
                     decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-                      image: DecorationImage(image: AssetImage("assets/bgbg2.png"), fit: BoxFit.cover),
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          topLeft: Radius.circular(20)),
+                      image: DecorationImage(
+                          image: AssetImage("assets/bgbg2.png"),
+                          fit: BoxFit.cover),
                     ),
                     child: Column(
                       children: [
@@ -115,21 +119,26 @@ class DashboardState extends State<Dashboard> {
                             children: [
                               SizedBox(width: 15),
                               Text(
-                                "Selamat datang, \n" + preference.getData("name"),
-                                style: textStyling.customColor(global.getWidth(context) / 21, defWhite),
+                                "Selamat datang, \n" +
+                                    preference.getData("name"),
+                                style: textStyling.customColor(
+                                    global.getWidth(context) / 21, defWhite),
                               ),
                               Spacer(),
                               PopupMenuButton<String>(
-                                icon: Icon(Icons.more_vert_rounded, color: defWhite),
+                                icon: Icon(Icons.more_vert_rounded,
+                                    color: defWhite),
                                 onSelected: (value) async {
                                   if (value == "Logout") {
                                     alert.alertLogout(context);
                                   } else {
-                                    var token = await FirebaseMessaging.instance.getToken();
+                                    var token = await FirebaseMessaging.instance
+                                        .getToken();
                                     print(token);
                                   }
                                 },
-                                itemBuilder: (BuildContext context) => widget.getChoicePopUp(context),
+                                itemBuilder: (BuildContext context) =>
+                                    widget.getChoicePopUp(context),
                               ),
                             ],
                           ),
@@ -153,12 +162,14 @@ class DashboardState extends State<Dashboard> {
                     padding: EdgeInsets.only(top: 20, left: 10, right: 10),
                     height: global.getHeight(context) - (kToolbarHeight * 5),
                     decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          topLeft: Radius.circular(20)),
                       color: Colors.white,
                     ),
                     child: ScrollConfiguration(
-                      behavior: const ScrollBehavior().copyWith(overscroll: false),
+                      behavior:
+                          const ScrollBehavior().copyWith(overscroll: false),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [],
@@ -177,14 +188,16 @@ class DashboardState extends State<Dashboard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(height: kToolbarHeight * 2.8),
+                  SizedBox(height: kToolbarHeight * 3.3),
                   Container(
                     padding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     margin: EdgeInsets.only(left: 10, right: 10),
                     height: (kToolbarHeight * 2.7),
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      image: DecorationImage(image: AssetImage("assets/bgcard-o.png"), fit: BoxFit.cover),
+                      image: DecorationImage(
+                          image: AssetImage("assets/bgcard-o.png"),
+                          fit: BoxFit.cover),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.3),
@@ -195,7 +208,8 @@ class DashboardState extends State<Dashboard> {
                       ],
                     ),
                     child: ScrollConfiguration(
-                      behavior: const ScrollBehavior().copyWith(overscroll: false),
+                      behavior:
+                          const ScrollBehavior().copyWith(overscroll: false),
                       child: Column(
                         children: [
                           ListTile(
@@ -208,11 +222,17 @@ class DashboardState extends State<Dashboard> {
                           ),
                           Spacer(),
                           ListTile(
-                            title: Text("Total Saldo", style: textStyling.customColorBold(16, defOrange)),
+                            title: Text("Total Saldo",
+                                style:
+                                    textStyling.customColorBold(16, defOrange)),
                             subtitle: !isLoading
                                 ? Text(
-                                    isShowCash ? CurrencyFormat.convertToIdr(saldo, 2).toString() : "Rp ●●●.●●●.●●●,-",
-                                    style: textStyling.customColorBold(20, defBlack1),
+                                    isShowCash
+                                        ? CurrencyFormat.convertToIdr(saldo, 2)
+                                            .toString()
+                                        : "Rp ●●●.●●●.●●●,-",
+                                    style: textStyling.customColorBold(
+                                        20, defBlack1),
                                   )
                                 : shimmerWidget.defaultShimmer(
                                     width: global.getWidth(context),
@@ -220,12 +240,16 @@ class DashboardState extends State<Dashboard> {
                                   ),
                             trailing: IconButton(
                               onPressed: () {
-                                isShowCash ? isShowCash = false : isShowCash = true;
+                                isShowCash
+                                    ? isShowCash = false
+                                    : isShowCash = true;
                                 preference.setBool("isShowCash", isShowCash);
                                 setState(() {});
                               },
                               icon: Icon(
-                                !isShowCash ? Icons.remove_red_eye_rounded : Icons.visibility_off_rounded,
+                                !isShowCash
+                                    ? Icons.remove_red_eye_rounded
+                                    : Icons.visibility_off_rounded,
                                 color: defBlue,
                               ),
                             ),
@@ -240,9 +264,12 @@ class DashboardState extends State<Dashboard> {
                       GestureDetector(
                         onTap: () {
                           if (!dataMaster["data"]["ditinjau"]) {
-                            Navigator.pushNamed(context, '/formPengajuanPinjaman');
+                            Navigator.pushNamed(
+                                context, '/formPengajuanPinjaman');
                           } else {
-                            alert.alertWarning(context: context, text: "Akun anda sedang ditinjau !");
+                            alert.alertWarning(
+                                context: context,
+                                text: "Akun anda sedang ditinjau !");
                           }
                         },
                         child: Container(
@@ -266,7 +293,9 @@ class DashboardState extends State<Dashboard> {
                           ),
                           child: Row(
                             children: [
-                              Text("Pinjaman", style: textStyling.customColorBold(16, defWhite)),
+                              Text("Pinjaman",
+                                  style: textStyling.customColorBold(
+                                      16, defWhite)),
                               Spacer(),
                               Icon(Icons.download_rounded, color: Colors.white),
                             ],
@@ -276,9 +305,12 @@ class DashboardState extends State<Dashboard> {
                       GestureDetector(
                         onTap: () {
                           if (!dataMaster["data"]["ditinjau"]) {
-                            Navigator.pushNamed(context, '/formPengajuanSimpanan');
+                            Navigator.pushNamed(
+                                context, '/formPengajuanSimpanan');
                           } else {
-                            alert.alertWarning(context: context, text: "Akun anda sedang ditinjau !");
+                            alert.alertWarning(
+                                context: context,
+                                text: "Akun anda sedang ditinjau !");
                           }
                         },
                         child: Container(
@@ -304,7 +336,9 @@ class DashboardState extends State<Dashboard> {
                             children: [
                               Icon(Icons.upload_rounded, color: Colors.white),
                               Spacer(),
-                              Text("Simpanan", style: textStyling.customColorBold(16, defWhite)),
+                              Text("Simpanan",
+                                  style: textStyling.customColorBold(
+                                      16, defWhite)),
                             ],
                           ),
                         ),
@@ -320,20 +354,26 @@ class DashboardState extends State<Dashboard> {
                           SizedBox(height: 10),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10),
-                            decoration: widget.decCont2(defWhite, 10, 10, 10, 10),
+                            decoration:
+                                widget.decCont2(defWhite, 10, 10, 10, 10),
                             child: Column(
                               children: [
                                 SizedBox(height: 10),
                                 ListTile(
                                   dense: true,
-                                  visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                                  leading: Icon(Icons.payment_rounded, color: defblue2),
+                                  visualDensity: VisualDensity(
+                                      horizontal: 0, vertical: -4),
+                                  leading: Icon(Icons.payment_rounded,
+                                      color: defblue2),
                                   title: !isLoading
                                       ? Text(
                                           isShowCash
-                                              ? CurrencyFormat.convertToIdr(limit, 2).toString()
+                                              ? CurrencyFormat.convertToIdr(
+                                                      limit, 2)
+                                                  .toString()
                                               : "Rp ●●●.●●●.●●●,-",
-                                          style: textStyling.nunitoBold(15, defBlack2),
+                                          style: textStyling.nunitoBold(
+                                              15, defBlack2),
                                         )
                                       : shimmerWidget.defaultShimmer(
                                           width: global.getWidth(context),
@@ -346,13 +386,17 @@ class DashboardState extends State<Dashboard> {
                                 ),
                                 ListTile(
                                   dense: true,
-                                  leading: Icon(Icons.calendar_month_rounded, color: defRed),
+                                  leading: Icon(Icons.calendar_month_rounded,
+                                      color: defRed),
                                   title: !isLoading
                                       ? Text(
                                           isShowCash
-                                              ? CurrencyFormat.convertToIdr(sisaTagihan, 2).toString()
+                                              ? CurrencyFormat.convertToIdr(
+                                                      sisaTagihan, 2)
+                                                  .toString()
                                               : "Rp ●●●.●●●.●●●,-",
-                                          style: textStyling.nunitoBold(15, defBlack2),
+                                          style: textStyling.nunitoBold(
+                                              15, defBlack2),
                                         )
                                       : shimmerWidget.defaultShimmer(
                                           width: global.getWidth(context),
@@ -364,30 +408,38 @@ class DashboardState extends State<Dashboard> {
                                   ),
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       width: global.getWidth(context) / 5,
                                       padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.only(left: 20, right: 0, bottom: 10),
-                                      decoration: widget.decCont(defOrange, 8, 0, 8, 0),
+                                      margin: EdgeInsets.only(
+                                          left: 20, right: 0, bottom: 10),
+                                      decoration:
+                                          widget.decCont(defOrange, 8, 0, 8, 0),
                                       child: Column(
                                         children: [
                                           Text(
                                             "Sisa Angsuran",
-                                            style: textStyling.customColorBold(12, defWhite),
+                                            style: textStyling.customColorBold(
+                                                12, defWhite),
                                             textAlign: TextAlign.center,
                                           ),
                                           !isLoading
                                               ? Text(
                                                   sisaAngsuran.toString(),
-                                                  style: textStyling.customColorBold(20, defWhite),
+                                                  style: textStyling
+                                                      .customColorBold(
+                                                          20, defWhite),
                                                 )
                                               : Container(
                                                   width: 20,
                                                   height: 20,
-                                                  margin: EdgeInsets.only(top: 5),
-                                                  child: CircularProgressIndicator(
+                                                  margin:
+                                                      EdgeInsets.only(top: 5),
+                                                  child:
+                                                      CircularProgressIndicator(
                                                     strokeWidth: 1.5,
                                                   ),
                                                 ),
@@ -399,25 +451,33 @@ class DashboardState extends State<Dashboard> {
                                       child: Container(
                                         width: global.getWidth(context) / 5,
                                         padding: EdgeInsets.all(10),
-                                        margin: EdgeInsets.only(left: 0, right: 0, bottom: 10),
-                                        decoration: widget.decCont(defblue2, 0, 0, 0, 0),
+                                        margin: EdgeInsets.only(
+                                            left: 0, right: 0, bottom: 10),
+                                        decoration: widget.decCont(
+                                            defblue2, 0, 0, 0, 0),
                                         child: Column(
                                           children: [
                                             Text(
                                               "Pinjaman Aktif",
-                                              style: textStyling.customColorBold(12, defWhite),
+                                              style:
+                                                  textStyling.customColorBold(
+                                                      12, defWhite),
                                               textAlign: TextAlign.center,
                                             ),
                                             !isLoading
                                                 ? Text(
                                                     pinjamanAktif.toString(),
-                                                    style: textStyling.customColorBold(20, defWhite),
+                                                    style: textStyling
+                                                        .customColorBold(
+                                                            20, defWhite),
                                                   )
                                                 : Container(
                                                     width: 20,
                                                     height: 20,
-                                                    margin: EdgeInsets.only(top: 5),
-                                                    child: CircularProgressIndicator(
+                                                    margin:
+                                                        EdgeInsets.only(top: 5),
+                                                    child:
+                                                        CircularProgressIndicator(
                                                       strokeWidth: 1.5,
                                                     ),
                                                   ),
@@ -428,25 +488,32 @@ class DashboardState extends State<Dashboard> {
                                     Container(
                                       width: global.getWidth(context) / 5,
                                       padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.only(left: 0, right: 0, bottom: 10),
-                                      decoration: widget.decCont(defPurple, 0, 0, 0, 0),
+                                      margin: EdgeInsets.only(
+                                          left: 0, right: 0, bottom: 10),
+                                      decoration:
+                                          widget.decCont(defPurple, 0, 0, 0, 0),
                                       child: Column(
                                         children: [
                                           Text(
                                             "Pinjaman Lunas",
-                                            style: textStyling.customColorBold(12, defWhite),
+                                            style: textStyling.customColorBold(
+                                                12, defWhite),
                                             textAlign: TextAlign.center,
                                           ),
                                           !isLoading
                                               ? Text(
                                                   pinjamanLunas.toString(),
-                                                  style: textStyling.customColorBold(20, defWhite),
+                                                  style: textStyling
+                                                      .customColorBold(
+                                                          20, defWhite),
                                                 )
                                               : Container(
                                                   width: 20,
                                                   height: 20,
-                                                  margin: EdgeInsets.only(top: 5),
-                                                  child: CircularProgressIndicator(
+                                                  margin:
+                                                      EdgeInsets.only(top: 5),
+                                                  child:
+                                                      CircularProgressIndicator(
                                                     strokeWidth: 1.5,
                                                   ),
                                                 ),
@@ -456,14 +523,17 @@ class DashboardState extends State<Dashboard> {
                                     Container(
                                       width: global.getWidth(context) / 5,
                                       padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.only(left: 0, right: 20, bottom: 10),
-                                      decoration: widget.decCont(getStatPembayaran("l"), 0, 8, 0, 8),
+                                      margin: EdgeInsets.only(
+                                          left: 0, right: 20, bottom: 10),
+                                      decoration: widget.decCont(
+                                          getStatPembayaran("l"), 0, 8, 0, 8),
                                       child: Column(
                                         children: [
                                           Text(
                                             "Pembayaran Lancar",
                                             // "Pembayaran Tidak Lancar",
-                                            style: textStyling.customColorBold(10, defWhite),
+                                            style: textStyling.customColorBold(
+                                                10, defWhite),
                                             textAlign: TextAlign.center,
                                           ),
                                           !isLoading
@@ -475,8 +545,10 @@ class DashboardState extends State<Dashboard> {
                                               : Container(
                                                   width: 20,
                                                   height: 20,
-                                                  margin: EdgeInsets.only(top: 10),
-                                                  child: CircularProgressIndicator(
+                                                  margin:
+                                                      EdgeInsets.only(top: 10),
+                                                  child:
+                                                      CircularProgressIndicator(
                                                     strokeWidth: 1.5,
                                                   ),
                                                 ),
@@ -488,7 +560,9 @@ class DashboardState extends State<Dashboard> {
                               ],
                             ),
                           ),
-                          isLoading ? shimmerWidget.listTileShimmer(context: context) : Container(),
+                          isLoading
+                              ? shimmerWidget.listTileShimmer(context: context)
+                              : Container(),
                           isLoading ? SizedBox(height: 20) : Container(),
                           // Badge Status Pengajuan Pinjaman / Tracking
                           for (var i = 0; i < listPengajuan.length; i++)
@@ -502,25 +576,33 @@ class DashboardState extends State<Dashboard> {
                               child: GestureDetector(
                                 onTap: () {
                                   Map objParam = {'data': listPengajuan[i]};
-                                  Navigator.pushNamed(context, '/detailTransaksi', arguments: objParam);
+                                  Navigator.pushNamed(
+                                      context, '/detailTransaksi',
+                                      arguments: objParam);
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                                  margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                                  decoration: widget.decCont(defGrey, 10, 10, 10, 10),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  margin: EdgeInsets.only(
+                                      top: 10, left: 10, right: 10),
+                                  decoration:
+                                      widget.decCont(defGrey, 10, 10, 10, 10),
                                   child: ListTile(
                                     dense: true,
-                                    visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                                    visualDensity: VisualDensity(
+                                        horizontal: 0, vertical: -4),
                                     title: Text(
                                       "Pengajuan Pinjaman Terakhir",
-                                      style: textStyling.customColorBold(14, defWhite),
+                                      style: textStyling.customColorBold(
+                                          14, defWhite),
                                     ),
                                     subtitle: Text(
                                       '''Nomor Transaksi : ${listPengajuan[i]['nomor_transaksi']}
 Tanggal Transaksi :  ${listPengajuan[i]['tgl_transaksi']}
 Besar Pinjaman :  ${CurrencyFormat.convertToIdr(int.parse(listPengajuan[i]['besar_pinjaman']), 2).toString()}
 Angsuran : ${listPengajuan[i]['tenor']}x''',
-                                      style: textStyling.nunitoBold(13, defWhite),
+                                      style:
+                                          textStyling.nunitoBold(13, defWhite),
                                     ),
                                   ),
                                 ),
