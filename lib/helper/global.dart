@@ -13,7 +13,7 @@ TextStyling textStyling = TextStyling();
 ShimmerWidget shimmerWidget = ShimmerWidget();
 FirebaseMessagingHelper fbmessaging = FirebaseMessagingHelper();
 
-var appVersion = '0.1.0';
+var appVersion = '0.1.1';
 var isMenuActive = 0;
 
 //Default Theme Color
@@ -41,7 +41,8 @@ class Global {
   //Handle Service ===============================================================
 
   // final mainUrl = 'http://192.168.1.113:30/';
-  final mainUrl = 'http://cbn1.gsg.co.id/';
+  final mainUrl = 'http://192.168.1.186/';
+  // final mainUrl = 'http://192.168.1.128/';
   late String baseUrl, basePath, ktpPath, pasPath;
 
   @override

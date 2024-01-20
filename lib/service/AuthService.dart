@@ -85,6 +85,7 @@ class AuthService extends HandleStatusCode {
       await preference.setString("reff_id", lm.data!.user!.reffId.toString());
       await preference.setString("name", lm.data!.user!.name);
       await preference.setString("username", lm.data!.user!.username);
+      await preference.setString("plafon", lm.data!.user!.userData!.plafon ?? "0");
       await preference.setString("tanggalPernyataan", lm.data!.user!.userData!.tanggalPernyataan ?? "-");
       await preference.setString("tanggalPersetujuan", lm.data!.user!.userData!.tanggalPersetujuan ?? "-");
       await preference.setString("email", lm.data!.user!.email);

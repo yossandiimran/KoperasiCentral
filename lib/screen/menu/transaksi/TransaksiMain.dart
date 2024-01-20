@@ -87,6 +87,7 @@ class TransaksiState extends State<Transaksi> {
                                 subtitle: Text(
                                   // '''Nomor Transaksi : ${listPengajuan[i]['nomor_transaksi']}
                                   '''
+Nama Barang :  ${listPengajuan[i]['nama']}
 Tanggal Transaksi :  ${listPengajuan[i]['tgl_transaksi']}
 Tanggal Pencairan :  ${listPengajuan[i]['diterima'] ?? "-"}
 Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(listPengajuan[i]['besar_pinjaman']), 2).toString()}

@@ -59,7 +59,7 @@ class TransaksiDetailState extends State<TransaksiDetail> {
             child: !isLoading
                 ? Column(
                     children: [
-                      SizedBox(height: kToolbarHeight * 4),
+                      SizedBox(height: kToolbarHeight * 4.3),
                       for (var i = 0; i < listPengajuan.length; i++)
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -106,7 +106,7 @@ Status : ${listPengajuan[i]['sudah_dibayar'] ? 'Lunas' : 'Belum Lunas'}''',
           child: Column(
             children: [
               Container(
-                height: kToolbarHeight * 4,
+                height: kToolbarHeight * 4.3,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(40), bottomRight: Radius.circular(40)),
                   image: DecorationImage(image: AssetImage("assets/bgbg2.png"), fit: BoxFit.cover),
@@ -134,6 +134,7 @@ Status : ${listPengajuan[i]['sudah_dibayar'] ? 'Lunas' : 'Belum Lunas'}''',
                       ),
                       subtitle: Text(
                         '''Nomor Transaksi : ${obj["data"]['nomor_transaksi']}
+Nama Barang :  ${obj["data"]['nama']}
 Tanggal Transaksi :  ${obj["data"]['tgl_transaksi']}
 Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(obj["data"]['besar_pinjaman']), 2).toString()}
 Realisasi :  ${CurrencyFormat.convertToIdr(double.parse(obj["data"]['realisasi_pinjaman']), 2).toString()}
