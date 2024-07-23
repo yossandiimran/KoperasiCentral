@@ -27,6 +27,7 @@ class LoginModel {
 
 class Data {
   User? user;
+  String? wilayah;
   String? accessToken;
   String? tokenType;
   int? expiresIn;
@@ -35,6 +36,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? User.fromJson(json['user']) : null;
+    wilayah = json['wilayah'];
     accessToken = json['access_token'];
     tokenType = json['token_type'];
     expiresIn = json['expires_in'];
@@ -45,6 +47,7 @@ class Data {
     if (user != null) {
       data['user'] = user!.toJson();
     }
+    data['wilayah'] = wilayah;
     data['access_token'] = accessToken;
     data['token_type'] = tokenType;
     data['expires_in'] = expiresIn;

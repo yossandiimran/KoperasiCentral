@@ -53,10 +53,12 @@ class HomeState extends State<Home> {
       case 0:
         return Dashboard();
       case 1:
-        return Saldo();
+        return Katalog();
       case 2:
-        return Transaksi();
+        return Saldo();
       case 3:
+        return Transaksi();
+      case 4:
         return Profile();
     }
   }
@@ -74,7 +76,7 @@ class HomeState extends State<Home> {
         backgroundColor: defBlack1,
         tabBackgroundColor: defblue2,
         tabMargin: EdgeInsets.only(left: 3, right: 3, top: 4, bottom: 4),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 14),
         onTabChange: (value) {
           isMenuActive = value;
           setState(() {});
@@ -82,7 +84,11 @@ class HomeState extends State<Home> {
         tabs: const [
           GButton(
             icon: Icons.home_rounded,
-            text: 'Dashboard',
+            text: 'Beranda',
+          ),
+          GButton(
+            icon: Icons.shopify_rounded,
+            text: 'Katalog',
           ),
           GButton(
             icon: Icons.card_giftcard_rounded,
@@ -90,7 +96,7 @@ class HomeState extends State<Home> {
           ),
           GButton(
             icon: Icons.receipt_long_rounded,
-            text: 'Transaksi',
+            text: 'Pinjaman',
           ),
           GButton(
             icon: Icons.person_rounded,

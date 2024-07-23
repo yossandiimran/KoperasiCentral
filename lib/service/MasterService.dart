@@ -96,6 +96,8 @@ class MasterService extends HandleStatusCode {
 
   Future<Map> getDashboardService() async {
     Uri url = global.getMainServiceUrl('dashboard');
+    print(url);
+    print(preference.getData('token'));
     try {
       returnData = {};
       await http.get(url, headers: {

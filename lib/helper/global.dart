@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +10,7 @@ import 'package:koperasi_central/header.dart';
 Global global = Global();
 Preference preference = Preference();
 Alert alert = Alert();
-CustomWidget widget = CustomWidget();
+CustomWidget ui = CustomWidget();
 TextStyling textStyling = TextStyling();
 ShimmerWidget shimmerWidget = ShimmerWidget();
 FirebaseMessagingHelper fbmessaging = FirebaseMessagingHelper();
@@ -40,20 +42,24 @@ class Global {
   getHeight(context) => MediaQuery.of(context).size.height;
   //Handle Service ===============================================================
 
-  // final mainUrl = 'http://192.168.1.113:30/';
-  final mainUrl = 'http://192.168.1.186/';
-  // final mainUrl = 'http://192.168.1.128/';
-  late String baseUrl, basePath, ktpPath, pasPath;
+  final mainUrl = 'http://192.168.1.113:30/';
+  // final mainUrl = 'http://210.210.165.197/';
+  // final mainUrl = 'http://192.168.1.114:88/';
+  late String baseUrl, basePath, ktpPath, pasPath, baseUrlPengurus, imageUrl;
 
   @override
   Global() {
+    imageUrl = '${mainUrl}service-koperasi/public/storage/file/';
     baseUrl = '${mainUrl}service-koperasi/public/user/';
+    baseUrlPengurus = '${mainUrl}service-koperasi/public/pengurus/';
     basePath = '${mainUrl}service-koperasi/public/storage/file/';
     ktpPath = '${mainUrl}recruitment-e-central/public/img/identity/';
     pasPath = '${mainUrl}recruitment-e-central/public/img/user/';
   }
 
   getMainServiceUrl(String link) => Uri.parse(baseUrl + link);
+  getImageUrl(String link) => Uri.parse(imageUrl + link);
+  getMainServiceUrlPengurus(String link) => Uri.parse(baseUrlPengurus + link);
 
   defaultErrorResponse(context, message) => alert.alertWarning(context: context, text: message);
 
@@ -136,6 +142,40 @@ class Global {
       return preference.clearPreference();
     }
   }
+
+  // Keranjang Belanja
+  Future<void> addToCart(object, context, cntCart) async {
+    var checkCart = await preference.getData("cart"), msg = "menambahkan ke";
+    object["qty"] = cntCart;
+    Map tempCart;
+
+    if (checkCart == null) {
+      tempCart = {
+        "cart": [object]
+      };
+    } else {
+      tempCart = jsonDecode(utf8.decode(base64.decode(checkCart)));
+      Map<String, dynamic>? targetElemen = tempCart['cart'].firstWhere(
+        (elemen) => elemen['kode'] == object["kode"],
+        orElse: () => null,
+      );
+      if (targetElemen != null) {
+        if (cntCart == 0) {
+          tempCart['cart'].removeWhere((elemen) => elemen['kode'] == object["kode"]);
+          msg = "menghapus dari";
+        } else {
+          msg = "mengupdate ke";
+          targetElemen["qty"] = cntCart;
+        }
+      } else {
+        tempCart["cart"].add(object);
+      }
+    }
+    await preference.setString("cart", base64Encode(utf8.encode(jsonEncode(tempCart))));
+    if (msg != "menghapus dari") {
+      alert.alertSuccess(context: context, text: "Berhasil $msg keranjang");
+    }
+  }
 }
 
 class CurrencyFormat {
@@ -143,7 +183,8 @@ class CurrencyFormat {
     NumberFormat currencyFormatter = NumberFormat.currency(
       locale: 'id',
       symbol: 'Rp ',
-      decimalDigits: decimalDigit,
+      decimalDigits: 0,
+      // decimalDigits: decimalDigit,
     );
     return currencyFormatter.format(number);
   }
@@ -156,6 +197,33 @@ class UpperCaseTextFormatter extends TextInputFormatter {
     return TextEditingValue(
       text: newValue.text.toUpperCase(),
       selection: newValue.selection,
+    );
+  }
+}
+
+// Masking Satuan
+class NumberTextInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isEmpty) {
+      return newValue.copyWith(text: '');
+    }
+
+    final int selectionIndexFromTheRight = newValue.text.length - newValue.selection.end;
+
+    // Hapus pemisah ribuan sebelum melakukan parsing
+    final double number = double.parse(newValue.text.replaceAll('.', '').replaceAll(',', ''));
+
+    final formatter = NumberFormat('#,###',
+        'de_DE'); // Menggunakan konfigurasi de_DE agar pemisah ribuan menjadi titik dan pemisah desimal menjadi koma
+
+    final newText = formatter.format(number);
+
+    return TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(
+        offset: newText.length - selectionIndexFromTheRight.clamp(0, newText.length),
+      ),
     );
   }
 }

@@ -88,4 +88,50 @@ class PengajuanPinjamanService extends HandleStatusCode {
 
     return returnData;
   }
+
+  Future<Map> getListAgreement() async {
+    Uri url = global.getMainServiceUrl('transaksi/pinjaman/aggrement');
+    try {
+      returnData = {};
+      await http.get(url, headers: {
+        'authorization': 'Bearer ${preference.getData('token')}',
+      }).then((response) async {
+        Map res = await handle(code: response.statusCode, response: response.body);
+        returnData = {'data': res["data"]};
+      });
+    } catch (err) {
+      returnData = {};
+    }
+
+    return returnData;
+  }
+
+  Future<Map> postAgreement({required Map objectSend}) async {
+    alert.loadingAlert(context: context, text: "Mohon tunggu ... ", isPop: false);
+    Uri url = global.getMainServiceUrl('transaksi/pinjaman/aggrement');
+    Map<String, String> header = {
+      'authorization': 'Bearer ${preference.getData('token')}',
+    };
+
+    try {
+      returnData = {};
+      await http.post(url, headers: header, body: objectSend).then((response) async {
+        Map res = await handle(code: response.statusCode, response: response.body);
+        Navigator.pop(context);
+        print(response.statusCode);
+        print(json.decode(response.body));
+        if (res['success']) {
+          Navigator.pop(context);
+          alert.alertSuccess(context: context, text: res['message']);
+        } else {
+          Navigator.pop(context);
+          alert.alertWarning(context: context, text: res['message']);
+        }
+      });
+    } catch (err) {
+      returnData = {};
+    }
+
+    return returnData;
+  }
 }

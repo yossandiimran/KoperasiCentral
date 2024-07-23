@@ -123,7 +123,7 @@ class Alert {
                   GestureDetector(
                     onTap: () => exit(0),
                     child: Container(
-                      decoration: widget.decCont2(defRed, 10, 10, 10, 10),
+                      decoration: ui.decCont2(defRed, 10, 10, 10, 10),
                       padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
                       child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
                     ),
@@ -132,7 +132,7 @@ class Alert {
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: Container(
-                      decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
+                      decoration: ui.decCont2(defBlue, 10, 10, 10, 10),
                       padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                       child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
                     ),
@@ -179,7 +179,7 @@ class Alert {
                       // await SapLogoutService(context: context).sapCall();
                     },
                     child: Container(
-                      decoration: widget.decCont2(defRed, 10, 10, 10, 10),
+                      decoration: ui.decCont2(defRed, 10, 10, 10, 10),
                       padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
                       child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
                     ),
@@ -188,7 +188,7 @@ class Alert {
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: Container(
-                      decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
+                      decoration: ui.decCont2(defBlue, 10, 10, 10, 10),
                       padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                       child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
                     ),
@@ -204,50 +204,62 @@ class Alert {
     );
   }
 
-  alertConfirmation({required BuildContext context, required var action, required String message}) {
+  alertConfirmation({
+    required BuildContext context,
+    required var action,
+    required String message,
+    String ok = '   Ya   ',
+    String no = 'Tidak',
+    bool isPop = true,
+  }) {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 10),
-              Container(
-                margin: const EdgeInsets.all(10),
-                child: Text(
-                  message,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: global.getWidth(context) / 20),
+        return WillPopScope(
+          onWillPop: () async {
+            return isPop;
+          },
+          child: AlertDialog(
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 10),
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  child: Text(
+                    message,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: global.getWidth(context) / 20),
+                  ),
                 ),
-              ),
-              Row(
-                children: [
-                  Spacer(),
-                  GestureDetector(
-                    onTap: action,
-                    child: Container(
-                      decoration: widget.decCont2(defBlue, 10, 10, 10, 10),
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
-                      child: Text("   Ya   ", style: textStyling.customColor(14, defWhite)),
+                Row(
+                  children: [
+                    Spacer(),
+                    GestureDetector(
+                      onTap: action,
+                      child: Container(
+                        decoration: ui.decCont2(defBlue, 10, 10, 10, 10),
+                        padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+                        child: Text(" $ok ", style: textStyling.customColor(14, defWhite)),
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      decoration: widget.decCont2(defRed, 10, 10, 10, 10),
-                      padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                      child: Text("Tidak", style: textStyling.customColor(14, defWhite)),
+                    SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        decoration: ui.decCont2(defRed, 10, 10, 10, 10),
+                        padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                        child: Text(" $no ", style: textStyling.customColor(14, defWhite)),
+                      ),
                     ),
-                  ),
-                  Spacer(),
-                ],
-              ),
-              SizedBox(height: 10),
-            ],
+                    Spacer(),
+                  ],
+                ),
+                SizedBox(height: 10),
+              ],
+            ),
           ),
         );
       },

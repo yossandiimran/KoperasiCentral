@@ -65,7 +65,7 @@ class PengajuanSimpananFormState extends State<PengajuanSimpananForm> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               margin: EdgeInsets.only(top: 5),
-              decoration: widget.decCont(Colors.white, 15, 15, 15, 15),
+              decoration: ui.decCont(Colors.white, 15, 15, 15, 15),
               width: global.getWidth(context),
               child: SizedBox(
                 width: global.getWidth(context) / 1.2,
@@ -74,7 +74,7 @@ class PengajuanSimpananFormState extends State<PengajuanSimpananForm> {
                   mode: Mode.DIALOG,
                   items: [
                     for (var i = 0; i < item.length; i++)
-                      "${item[i]["kode"]}- Rp. ${CurrencyFormat.convertToIdr(int.parse(item[i]["nominal"]), 2).toString()}"
+                      "${item[i]["kode"]}- Rp. ${CurrencyFormat.convertToIdr(double.parse(item[i]["nominal"]), 2).toString()}"
                   ],
                   dropdownSearchDecoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -140,7 +140,7 @@ class PengajuanSimpananFormState extends State<PengajuanSimpananForm> {
                       width: global.getWidth(context) / 2.7,
                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(defRed, 15, 15, 15, 15),
+                      decoration: ui.decCont(defRed, 15, 15, 15, 15),
                       child: Row(
                         children: [
                           Spacer(),
@@ -160,7 +160,7 @@ class PengajuanSimpananFormState extends State<PengajuanSimpananForm> {
                       width: global.getWidth(context) / 2.7,
                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(defGreen, 15, 15, 15, 15),
+                      decoration: ui.decCont(defGreen, 15, 15, 15, 15),
                       child: Row(
                         children: [
                           Spacer(),

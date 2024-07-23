@@ -22,6 +22,10 @@ allprojects {
 
 rootProject.buildDir = '../build'
 subprojects {
+    // build(type: Debug){
+        // project.mavenGradle.builder = '../action/build/temporaty'
+        // mavenCentralConditional(Debug.conditional(classpath '$kotlin_version'))
+    // }
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {

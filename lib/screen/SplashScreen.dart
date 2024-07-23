@@ -61,22 +61,25 @@ class SplashScreenState extends State<SplashScreen> {
               left: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage("assets/splash2.png"), fit: BoxFit.cover),
+                  image: DecorationImage(image: AssetImage("assets/bgbg2.png"), fit: BoxFit.cover),
                 ),
                 height: global.getHeight(context),
                 child: Column(
                   children: [
                     Spacer(),
                     Text(
-                      "Untuk Karyawan\nPT. Graha Seribusatujaya",
+                      "Koperasi Konsumen \nGraha Makmur Abadi",
                       textAlign: TextAlign.center,
                       style: textStyling.defaultWhiteBold(25),
                     ),
+                    Spacer(),
+                    Image.asset("assets/welcome.png", scale: 6),
+                    Spacer(),
                     SizedBox(height: 25),
                     Padding(
                       padding: EdgeInsets.only(left: 15, right: 15),
                       child: Text(
-                        "Mobile Koperasi Central untuk seluruh karyawan central springbed yang untuk lebih fleksibel dimanapun dan kapanpun",
+                        "Mobile aplikasi koperasi untuk karyawan \nPT. Graha Seribusatujaya",
                         textAlign: TextAlign.center,
                         style: textStyling.nunitoBold(14, defWhite),
                       ),
@@ -89,7 +92,7 @@ class SplashScreenState extends State<SplashScreen> {
                       child: Container(
                         width: global.getWidth(context),
                         height: kToolbarHeight,
-                        decoration: widget.decCont2(defBlack1, 0, 0, 30, 30),
+                        decoration: ui.decCont2(defBlack1, 0, 0, 30, 30),
                         child: Row(
                           children: [
                             Spacer(),

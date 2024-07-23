@@ -70,7 +70,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               margin: EdgeInsets.only(top: 5),
-              decoration: widget.decCont(Colors.white, 15, 15, 15, 15),
+              decoration: ui.decCont(Colors.white, 15, 15, 15, 15),
               width: global.getWidth(context),
               child: SizedBox(
                 width: global.getWidth(context) / 1.2,
@@ -147,9 +147,10 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
             Container(
               padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
               margin: EdgeInsets.only(top: 5),
-              decoration: widget.decCont(Colors.white, 15, 15, 15, 15),
+              decoration: ui.decCont(Colors.white, 15, 15, 15, 15),
               width: global.getWidth(context),
               child: TextFormField(
+                inputFormatters: [NumberTextInputFormatter()],
                 controller: jumlahPinjaman,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -167,7 +168,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                 ? Container(
                     padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                     margin: EdgeInsets.only(top: 5),
-                    decoration: widget.decCont(Colors.white, 15, 15, 15, 15),
+                    decoration: ui.decCont(Colors.white, 15, 15, 15, 15),
                     width: global.getWidth(context),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -181,7 +182,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                 // Container(
                 //     padding: EdgeInsets.symmetric(horizontal: 10),
                 //     margin: EdgeInsets.only(top: 5),
-                //     decoration: widget.decCont(Colors.white, 15, 15, 15, 15),
+                //     decoration: ui.decCont(Colors.white, 15, 15, 15, 15),
                 //     width: global.getWidth(context),
                 //     child: SizedBox(
                 //       width: global.getWidth(context) / 1.2,
@@ -233,7 +234,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                 : Container(
                     padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                     margin: EdgeInsets.only(top: 5),
-                    decoration: widget.decCont(Colors.white, 15, 15, 15, 15),
+                    decoration: ui.decCont(Colors.white, 15, 15, 15, 15),
                     width: global.getWidth(context),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -258,7 +259,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                       width: global.getWidth(context) / 2.7,
                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(defRed, 15, 15, 15, 15),
+                      decoration: ui.decCont(defRed, 15, 15, 15, 15),
                       child: Row(
                         children: [
                           Spacer(),
@@ -277,7 +278,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(defBlue, 15, 15, 15, 15),
+                      decoration: ui.decCont(defBlue, 15, 15, 15, 15),
                       child: Row(
                         children: [
                           Text("Simulasi Cicilan", style: textStyling.customColor(14, defWhite)),
@@ -291,7 +292,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
             ),
             dataSimulasi.isNotEmpty
                 ? Container(
-                    decoration: widget.decCont2(defWhite, 10, 10, 10, 10),
+                    decoration: ui.decCont2(defWhite, 10, 10, 10, 10),
                     padding: EdgeInsets.all(10),
                     child: Column(
                       children: [
@@ -302,8 +303,9 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                           visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                           subtitle: Text(
                             // '''Nomor Transaksi : ${listPengajuan[i]['nomor_transaksi']}
+// Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(jumlahPinjaman.text.replaceAll('.', '')), 2).toString()}
                             '''
-Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(jumlahPinjaman.text), 2).toString()}
+Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(dataSimulasi["data"]["besar_pinjaman"].toString()), 2).toString()}
 Realisasi :  ${CurrencyFormat.convertToIdr(double.parse(dataSimulasi["data"]["realisasi"].toString()), 2).toString()}
 Angsuran : ${angsuranInput.text != "" ? angsuranInput.text : "1"}x''',
                             style: textStyling.nunitoBold(15, defBlack1),
@@ -317,15 +319,59 @@ Angsuran : ${angsuranInput.text != "" ? angsuranInput.text : "1"}x''',
                               Container(
                                 padding: EdgeInsets.all(8),
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Angsuran Ke - ${element["angsuran_ke"]}",
-                                      style: textStyling.mcLaren(13, defBlack1),
+                                      "Cicilan Angsuran Ke - ${element["angsuran_ke"]}",
+                                      style: textStyling.mcLarenBold(13, defBlack1),
                                     ),
-                                    Text(
-                                      CurrencyFormat.convertToIdr(element["nominal"], 2).toString(),
-                                      style: textStyling.nunitoBold(15, defBlack1),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Pokok   ",
+                                          style: textStyling.nunitoBold(15, defBlack1),
+                                        ),
+                                        Spacer(),
+                                        Text(
+                                          CurrencyFormat.convertToIdr(double.parse(element["nominal"].toString()), 2)
+                                              .toString(),
+                                          style: textStyling.nunitoBold(15, defBlack1),
+                                        ),
+                                      ],
                                     ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Bunga   ",
+                                          style: textStyling.nunitoBold(15, defBlack1),
+                                        ),
+                                        Spacer(),
+                                        Text(
+                                          CurrencyFormat.convertToIdr(double.parse(element["bunga"].toString()), 2)
+                                              .toString(),
+                                          style: textStyling.nunitoBold(15, defBlack1),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Total     ",
+                                          style: textStyling.mcLaren(15, defBlue),
+                                        ),
+                                        Spacer(),
+                                        Text(
+                                          CurrencyFormat.convertToIdr(
+                                            double.parse((double.parse(element["nominal"].toString()) +
+                                                    double.parse(element["bunga"].toString()))
+                                                .toString()),
+                                            2,
+                                          ).toString(),
+                                          style: textStyling.mcLaren(15, defBlue),
+                                        ),
+                                      ],
+                                    )
                                   ],
                                 ),
                               ),
@@ -338,7 +384,7 @@ Angsuran : ${angsuranInput.text != "" ? angsuranInput.text : "1"}x''',
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                             margin: EdgeInsets.only(top: 5),
-                            decoration: widget.decCont(defGreen, 15, 15, 15, 15),
+                            decoration: ui.decCont(defGreen, 15, 15, 15, 15),
                             child: Row(
                               children: [
                                 Spacer(),
@@ -361,18 +407,20 @@ Angsuran : ${angsuranInput.text != "" ? angsuranInput.text : "1"}x''',
   }
 
   cekAngsuran() async {
-    if (jumlahPinjaman.text == '') return alert.alertWarning(context: context, text: "Jumlah Pinjaman Wajib Diisi !");
+    if (jumlahPinjaman.text.replaceAll('.', '') == '') {
+      return alert.alertWarning(context: context, text: "Jumlah Pinjaman Wajib Diisi !");
+    }
     List kodeJenis = item.where((element) => element['nama'] == jenisSelected).toList();
     var angsr = angsuranInput.text != "" ? angsuranInput.text : "1";
     print(angsr);
-    if (int.parse(angsr.toString()) > int.parse(kodeJenis[0]['tenor'].toString())) {
+    if (double.parse(angsr.toString()) > double.parse(kodeJenis[0]['tenor'].toString())) {
       return alert.alertWarning(
           context: context,
           text: "Jumlah angsuran pada ${kodeJenis[0]['nama']} tidak boleh melebihi ${kodeJenis[0]['tenor']}x");
     }
     Map objParam = {
       'kode_jenis': kodeJenis[0]['kode'],
-      'besar_pinjaman': jumlahPinjaman.text,
+      'besar_pinjaman': jumlahPinjaman.text.replaceAll('.', ''),
       'tenor': angsr,
     };
     PengajuanPinjamanService pps = PengajuanPinjamanService(context: context, objParam: objParam);
@@ -385,13 +433,15 @@ Angsuran : ${angsuranInput.text != "" ? angsuranInput.text : "1"}x''',
   }
 
   save() async {
-    if (jumlahPinjaman.text == '') return alert.alertWarning(context: context, text: "Jumlah Pinjaman Wajib Diisi !");
+    if (jumlahPinjaman.text.replaceAll('.', '') == '') {
+      return alert.alertWarning(context: context, text: "Jumlah Pinjaman Wajib Diisi !");
+    }
 
     List kodeJenis = item.where((element) => element['nama'] == jenisSelected).toList();
 
     Map objParam = {
       'kode_jenis': kodeJenis[0]['kode'],
-      'besar_pinjaman': jumlahPinjaman.text,
+      'besar_pinjaman': jumlahPinjaman.text.replaceAll('.', ''),
       'tenor': angsuranInput.text != "" ? angsuranInput.text : "1",
     };
 

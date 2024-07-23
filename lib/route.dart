@@ -25,6 +25,16 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => TransaksiDetail(obj: settings.arguments));
       case '/profileUser':
         return MaterialPageRoute(builder: (_) => ProfileUser());
+      case '/keranjangBelanja':
+        return MaterialPageRoute(builder: (_) => Keranjang());
+      case '/detailBarang':
+        return MaterialPageRoute(builder: (_) => DetailBarang(obj: settings.arguments));
+      case '/listOrder':
+        return MaterialPageRoute(builder: (_) => ListOrder());
+      case '/listOrderDetail':
+        return MaterialPageRoute(builder: (_) => ListOrderDetail(obj: settings.arguments));
+      case '/notification':
+        return MaterialPageRoute(builder: (_) => NotificationView());
       default:
         return _errorRoute();
     }

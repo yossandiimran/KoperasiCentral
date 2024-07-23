@@ -12,10 +12,14 @@ class AuthService extends HandleStatusCode {
 
     try {
       var url = global.getMainServiceUrl('login');
+
       var dvc = await FirebaseMessaging.instance.getToken();
       var obj = {"username": objParam["username"], "password": objParam["password"], "device_token": dvc};
+      print(url);
+      print(obj);
       await http.post(url, body: obj).then((res) async {
         var data = json.decode(res.body), lm = LoginModel.fromJson(data);
+        print(res.body);
         if (res.statusCode == 200) {
           if (lm.success == false) {
             return global.errorResponse(context, lm.message);
@@ -84,6 +88,8 @@ class AuthService extends HandleStatusCode {
       await preference.setString("id", lm.data!.user!.id.toString());
       await preference.setString("reff_id", lm.data!.user!.reffId.toString());
       await preference.setString("name", lm.data!.user!.name);
+      await preference.setString("kodeAnggota", lm.data!.user!.userData!.kodeAnggota);
+      await preference.setString("kodeWilayah", lm.data!.wilayah ?? "BDG");
       await preference.setString("username", lm.data!.user!.username);
       await preference.setString("plafon", lm.data!.user!.userData!.plafon ?? "0");
       await preference.setString("tanggalPernyataan", lm.data!.user!.userData!.tanggalPernyataan ?? "-");
@@ -105,11 +111,14 @@ class AuthService extends HandleStatusCode {
 
   Future<Map> getCentralData() async {
     Uri url = global.getMainServiceUrl('profile/central');
+    print(url);
+    print(preference.getData('token'));
     try {
       returnData = {};
       await http.get(url, headers: {
         'authorization': 'Bearer ${preference.getData('token')}',
       }).then((response) async {
+        print(response.statusCode);
         Map res = await handle(code: response.statusCode, response: response.body);
         returnData = {'data': res["data"]};
       });

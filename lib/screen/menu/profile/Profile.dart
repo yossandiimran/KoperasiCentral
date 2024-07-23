@@ -59,7 +59,7 @@ class ProfileState extends State<Profile> {
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 10),
                           padding: EdgeInsets.all(10),
-                          decoration: widget.decCont(Colors.white, 0, 0, 10, 10),
+                          decoration: ui.decCont(Colors.white, 0, 0, 10, 10),
                           child: Column(
                             children: [
                               GestureDetector(
@@ -109,7 +109,7 @@ class ProfileState extends State<Profile> {
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 10),
                           padding: EdgeInsets.all(10),
-                          decoration: widget.decCont(Colors.white, 10, 10, 0, 0),
+                          decoration: ui.decCont(Colors.white, 10, 10, 0, 0),
                           child: Column(
                             children: [
                               GestureDetector(
@@ -156,7 +156,7 @@ class ProfileState extends State<Profile> {
               Container(
                 padding: EdgeInsets.only(top: 20, left: 10, right: 10),
                 height: kToolbarHeight * 3,
-                decoration: widget.decorationContainerGradient(defOrange2, defOrange, 0.0),
+                decoration: ui.decorationContainerGradient(defOrange2, defOrange, 0.0),
                 child: ScrollConfiguration(
                   behavior: const ScrollBehavior().copyWith(overscroll: false),
                   child: SingleChildScrollView(
@@ -177,7 +177,7 @@ class ProfileState extends State<Profile> {
               Container(
                 width: 120,
                 height: 120,
-                decoration: widget.decCont2(defWhite, 100, 100, 100, 100),
+                decoration: ui.decCont2(defWhite, 100, 100, 100, 100),
                 margin: EdgeInsets.only(top: kToolbarHeight * 1.8, bottom: 5),
                 child: Icon(Icons.person, size: 40, color: defOrange),
               ),

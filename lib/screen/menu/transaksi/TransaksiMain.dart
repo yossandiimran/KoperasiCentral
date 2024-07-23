@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, avoid_unnecessary_containers, prefer_const_constructors
+// ignore_for_file: file_names, avoid_unnecessary_containers, prefer_const_constructors, avoid_print
 
 part of '../../../header.dart';
 
@@ -30,10 +30,28 @@ class TransaksiState extends State<Transaksi> {
       }
       isLoading = false;
       setState(() {});
+      await getAggreement(pps);
     } catch (err) {
       Navigator.pushNamed(context, '/home');
       setState(() {});
       // alert.alertWarning(context: context, text: "Koneksi tidak stabil");
+    }
+  }
+
+  Future<void> getAggreement(PengajuanPinjamanService pps) async {
+    Map dataAggreement = await pps.getListAgreement();
+    for (int i = 0; i < dataAggreement["data"].length; i++) {
+      Map objAggreement = dataAggreement["data"][i];
+      await alert.alertConfirmation(
+        context: context,
+        message: "Informasi Tagihan Sebelumnya ${objAggreement['tagihan']}",
+        ok: "Setuju",
+        isPop: false,
+        action: () async {
+          Map obj = {'nomor_transaksi': objAggreement["nomor_transaksi"]};
+          pps.postAgreement(objectSend: obj);
+        },
+      );
     }
   }
 
@@ -73,7 +91,7 @@ class TransaksiState extends State<Transaksi> {
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                             margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                            decoration: widget.decCont2(defWhite, 15, 15, 15, 15),
+                            decoration: ui.decCont2(defWhite, 15, 15, 15, 15),
                             child: Column(children: [
                               Divider(thickness: 3),
                               ListTile(
@@ -92,7 +110,8 @@ Tanggal Transaksi :  ${listPengajuan[i]['tgl_transaksi']}
 Tanggal Pencairan :  ${listPengajuan[i]['diterima'] ?? "-"}
 Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(listPengajuan[i]['besar_pinjaman']), 2).toString()}
 Realisasi :  ${CurrencyFormat.convertToIdr(double.parse(listPengajuan[i]['realisasi_pinjaman']), 2).toString()}
-Sisa Tagihan :  ${CurrencyFormat.convertToIdr(int.parse(listPengajuan[i]['sisa_pembayaran'].toString()), 2).toString()}
+Bunga Total :  ${CurrencyFormat.convertToIdr(double.parse(listPengajuan[i]['bunga_total']), 2).toString()}
+Sisa Tagihan :  ${CurrencyFormat.convertToIdr(double.parse(listPengajuan[i]['sisa_pembayaran'].toString()), 2).toString()}
 Angsuran : ${listPengajuan[i]['tenor']}x''',
                                   style: textStyling.nunitoBold(14, defGrey),
                                 ),
@@ -106,7 +125,7 @@ Angsuran : ${listPengajuan[i]['tenor']}x''',
                                     },
                                     child: Container(
                                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                      decoration: widget.decCont2(defWhite, 15, 15, 15, 15),
+                                      decoration: ui.decCont2(defWhite, 15, 15, 15, 15),
                                       child: Row(
                                         children: [
                                           getIconStatus(listPengajuan[i]),
@@ -123,7 +142,7 @@ Angsuran : ${listPengajuan[i]['tenor']}x''',
                                     },
                                     child: Container(
                                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                      decoration: widget.decCont2(defBlue, 15, 15, 15, 15),
+                                      decoration: ui.decCont2(defBlue, 15, 15, 15, 15),
                                       child: Row(
                                         children: [
                                           Icon(Icons.info_outline_rounded, color: defWhite, size: 20),
@@ -172,7 +191,7 @@ Angsuran : ${listPengajuan[i]['tenor']}x''',
                     ),
                   ],
                 ),
-                child: Center(child: Text("\nDaftar Transaksi", style: textStyling.customColorBold(18, defWhite))),
+                child: Center(child: Text("\nDaftar Pinjaman", style: textStyling.customColorBold(18, defWhite))),
               ),
             ],
           ),
@@ -184,7 +203,7 @@ Angsuran : ${listPengajuan[i]['tenor']}x''',
   Icon getIconStatus(data) {
     Icon icon = Icon(Icons.access_time_rounded, color: defOrange, size: 20);
     if (data["lunas"] == true) return Icon(Icons.check_circle, color: defGreen, size: 20);
-    if (data["batalkan"] != null) return Icon(Icons.remove_circle_outline_rounded, color: defRed, size: 20);
+    if (data["batalkan"] != null) return Icon(Icons.cancel_rounded, color: defRed, size: 20);
     if (data["diterima"] != null) return Icon(Icons.access_time_rounded, color: defPurple, size: 20);
     return icon;
   }

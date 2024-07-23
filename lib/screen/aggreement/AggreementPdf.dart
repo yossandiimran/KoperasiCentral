@@ -82,7 +82,7 @@ class AggreementPdfState extends State<AggreementPdf> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.all(10),
-                    decoration: widget.decCont(defWhite, 10, 10, 10, 10),
+                    decoration: ui.decCont(defWhite, 10, 10, 10, 10),
                     height: global.getHeight(context) / 1.3,
                     child: Center(
                       child: PDFView(
@@ -99,7 +99,7 @@ class AggreementPdfState extends State<AggreementPdf> {
                           Navigator.pop(context);
                         },
                         child: Container(
-                          decoration: widget.decCont(
+                          decoration: ui.decCont(
                             defOrange,
                             10,
                             0,
@@ -117,7 +117,7 @@ class AggreementPdfState extends State<AggreementPdf> {
                           Navigator.pop(context);
                         },
                         child: Container(
-                          decoration: widget.decCont(
+                          decoration: ui.decCont(
                             defBlue,
                             0,
                             10,
@@ -164,7 +164,7 @@ class AggreementPdfState extends State<AggreementPdf> {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.all(10),
-                  decoration: widget.decCont(defWhite, 10, 10, 10, 10),
+                  decoration: ui.decCont(defWhite, 10, 10, 10, 10),
                   height: global.getHeight(context) / 1.3,
                   child: Center(
                     child: PDFView(
@@ -181,7 +181,7 @@ class AggreementPdfState extends State<AggreementPdf> {
                         Navigator.pop(context);
                       },
                       child: Container(
-                        decoration: widget.decCont(
+                        decoration: ui.decCont(
                           defOrange,
                           10,
                           0,
@@ -199,7 +199,7 @@ class AggreementPdfState extends State<AggreementPdf> {
                         Navigator.pop(context);
                       },
                       child: Container(
-                        decoration: widget.decCont(
+                        decoration: ui.decCont(
                           defBlue,
                           0,
                           10,
@@ -438,7 +438,7 @@ class AggreementPdfState extends State<AggreementPdf> {
                         Navigator.pop(context);
                       },
                       child: Container(
-                        decoration: widget.decCont(
+                        decoration: ui.decCont(
                           defOrange,
                           10,
                           0,
@@ -456,7 +456,7 @@ class AggreementPdfState extends State<AggreementPdf> {
                         Navigator.pop(context);
                       },
                       child: Container(
-                        decoration: widget.decCont(
+                        decoration: ui.decCont(
                           defBlue,
                           0,
                           10,

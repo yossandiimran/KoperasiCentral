@@ -51,7 +51,7 @@ class ProfileUserState extends State<ProfileUser> {
     // kotaSelected = "BANDUNG";
     // kecamatanSelected = "ANDIR";
     kelurahan.text = await centralData["data"]["kelurahan"];
-    kodePos.text = await centralData["data"]["kode_pos"];
+    kodePos.text = await centralData["data"]["kode_pos"] ?? "";
     statGaji = await centralData["data"]["statgaji"] == "1"
         ? "1 Mingguan"
         : centralData["data"]["statgaji"] == "2"
@@ -62,7 +62,7 @@ class ProfileUserState extends State<ProfileUser> {
     npwp.text = await centralData["data"]["npwp"];
     noHp.text = await centralData["data"]["no_hp"];
     // var getIdKota = item.where((element) => element['name'] == centralData["data"]["kota"]).first;
-    var getIdKota = item.where((element) => element['name'] == kotaSelected);
+    var getIdKota = item.where((element) => element['name'].toUpperCase() == kotaSelected.toUpperCase());
     if (getIdKota.isNotEmpty) {
       getKecamatan(getIdKota.first['id'].toString(), false);
     } else {
@@ -192,7 +192,7 @@ class ProfileUserState extends State<ProfileUser> {
             child: Container(
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               padding: EdgeInsets.symmetric(vertical: 10),
-              decoration: widget.decCont2(defWhite, 8, 8, 8, 8),
+              decoration: ui.decCont2(defWhite, 8, 8, 8, 8),
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -206,7 +206,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         readOnly: true,
@@ -228,7 +228,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         readOnly: true,
@@ -250,7 +250,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         readOnly: true,
@@ -270,7 +270,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
@@ -326,7 +326,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         readOnly: true,
@@ -349,7 +349,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
@@ -417,7 +417,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
@@ -481,7 +481,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         readOnly: true,
@@ -503,7 +503,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         readOnly: true,
@@ -525,7 +525,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       alignment: Alignment.center,
                       width: global.getWidth(context),
-                      decoration: widget.decCont(defWhite, 20, 20, 20, 20),
+                      decoration: ui.decCont(defWhite, 20, 20, 20, 20),
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.all(15),
                       child: Wrap(
@@ -571,7 +571,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       alignment: Alignment.center,
                       width: global.getWidth(context),
-                      decoration: widget.decCont(defWhite, 20, 20, 20, 20),
+                      decoration: ui.decCont(defWhite, 20, 20, 20, 20),
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.all(15),
                       child: Wrap(
@@ -617,7 +617,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         readOnly: true,
@@ -639,7 +639,7 @@ class ProfileUserState extends State<ProfileUser> {
                     // Container(
                     //   padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                     //   margin: EdgeInsets.only(top: 5),
-                    //   decoration: widget.decCont(Colors.blueGrey.shade50, 0, 0, 10, 10),
+                    //   decoration: ui.decCont(Colors.blueGrey.shade50, 0, 0, 10, 10),
                     //   width: global.getWidth(context),
                     //   child: ListTile(
                     //     leading: IconButton(
@@ -657,7 +657,7 @@ class ProfileUserState extends State<ProfileUser> {
                     // ),
                     // Container(
                     //   padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                    //   decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 0, 0),
+                    //   decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 0, 0),
                     //   width: global.getWidth(context),
                     //   child: TextFormField(
                     //     readOnly: true,
@@ -680,7 +680,7 @@ class ProfileUserState extends State<ProfileUser> {
                     // Container(
                     //   padding: EdgeInsets.symmetric(horizontal: 10),
                     //   margin: EdgeInsets.only(top: 5),
-                    //   decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                    //   decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                     //   width: global.getWidth(context),
                     //   child: SizedBox(
                     //     width: global.getWidth(context) / 1.2,
@@ -747,7 +747,7 @@ class ProfileUserState extends State<ProfileUser> {
                     // Container(
                     //   padding: EdgeInsets.symmetric(horizontal: 10),
                     //   margin: EdgeInsets.only(top: 5),
-                    //   decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                    //   decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                     //   width: global.getWidth(context),
                     //   child: SizedBox(
                     //     width: global.getWidth(context) / 1.2,
@@ -810,7 +810,7 @@ class ProfileUserState extends State<ProfileUser> {
                     // Container(
                     //   padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                     //   margin: EdgeInsets.only(top: 5),
-                    //   decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                    //   decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                     //   width: global.getWidth(context),
                     //   child: TextFormField(
                     //     readOnly: true,
@@ -832,7 +832,7 @@ class ProfileUserState extends State<ProfileUser> {
                     // Container(
                     //   padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                     //   margin: EdgeInsets.only(top: 5),
-                    //   decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                    //   decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                     //   width: global.getWidth(context),
                     //   child: TextFormField(
                     //     readOnly: true,
@@ -855,7 +855,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         readOnly: true,
@@ -877,7 +877,7 @@ class ProfileUserState extends State<ProfileUser> {
                     // Container(
                     //   alignment: Alignment.center,
                     //   width: global.getWidth(context),
-                    //   decoration: widget.decCont(defWhite, 20, 20, 20, 20),
+                    //   decoration: ui.decCont(defWhite, 20, 20, 20, 20),
                     //   margin: EdgeInsets.only(top: 10),
                     //   padding: EdgeInsets.all(15),
                     //   child: Wrap(
@@ -930,7 +930,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         readOnly: true,
@@ -952,7 +952,7 @@ class ProfileUserState extends State<ProfileUser> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,

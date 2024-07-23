@@ -20,7 +20,9 @@ class CustomWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/notification');
+          },
           icon: Icon(Icons.notifications_on_rounded, color: defblue2),
         ),
       ],
@@ -359,12 +361,12 @@ class CustomWidget {
   }
 
   getItemsDropdown(selection, data) {
-    List<DropdownMenuItem<String>> widget = [];
+    List<DropdownMenuItem<String>> ui = [];
     if (selection == "server") {
-      widget.add(DropdownMenuItem(value: "0", child: Text("Server", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "0", child: Text("Server", style: textStyling.defaultBlack(13))));
       if (data != null) {
         for (var i = 0; i < data.length; i++) {
-          widget.add(
+          ui.add(
             DropdownMenuItem(
               value: (i + 1).toString(),
               child: Text(data[i]["description"], style: textStyling.defaultBlack(13)),
@@ -373,10 +375,10 @@ class CustomWidget {
         }
       }
     } else if (selection == "jenisVendor") {
-      widget.add(DropdownMenuItem(value: "0", child: Text("Jenis Vendor", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "0", child: Text("Jenis Vendor", style: textStyling.defaultBlack(13))));
       if (data != null) {
         for (var i = 0; i < data.length; i++) {
-          widget.add(
+          ui.add(
             DropdownMenuItem(
               value: (i + 1).toString(),
               child: Text(data[i]["jenis_vendor"], style: textStyling.defaultBlack(13)),
@@ -385,10 +387,10 @@ class CustomWidget {
         }
       }
     } else if (selection == "compCode") {
-      widget.add(DropdownMenuItem(value: "0", child: Text("Company Code", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "0", child: Text("Company Code", style: textStyling.defaultBlack(13))));
       if (data != null) {
         for (var i = 0; i < data.length; i++) {
-          widget.add(
+          ui.add(
             DropdownMenuItem(
               value: (i + 1).toString(),
               child: Text(data[i]["deskripsi"], style: textStyling.defaultBlack(13)),
@@ -397,10 +399,10 @@ class CustomWidget {
         }
       }
     } else if (selection == "purchOrg") {
-      widget.add(DropdownMenuItem(value: "0", child: Text("Purch Org", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "0", child: Text("Purch Org", style: textStyling.defaultBlack(13))));
       if (data != null) {
         for (var i = 0; i < data.length; i++) {
-          widget.add(
+          ui.add(
             DropdownMenuItem(
               value: (i + 1).toString(),
               child: Text(data[i]["deskripsi"], style: textStyling.defaultBlack(13)),
@@ -409,10 +411,10 @@ class CustomWidget {
         }
       }
     } else if (selection == "kodeNegara") {
-      widget.add(DropdownMenuItem(value: "0", child: Text("Kode Negara", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "0", child: Text("Kode Negara", style: textStyling.defaultBlack(13))));
       if (data != null) {
         for (var i = 0; i < data.length; i++) {
-          widget.add(
+          ui.add(
             DropdownMenuItem(
               value: (i + 1).toString(),
               child: Text(data[i]["name"], style: textStyling.defaultBlack(13)),
@@ -421,10 +423,10 @@ class CustomWidget {
         }
       }
     } else if (selection == "kodeBank") {
-      widget.add(DropdownMenuItem(value: "0", child: Text("Kode Bank", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "0", child: Text("Kode Bank", style: textStyling.defaultBlack(13))));
       if (data != null) {
         for (var i = 0; i < data.length; i++) {
-          widget.add(
+          ui.add(
             DropdownMenuItem(
               value: (i + 1).toString(),
               child: Text(data[i]["deskripsi"], style: textStyling.defaultBlack(13)),
@@ -433,10 +435,10 @@ class CustomWidget {
         }
       }
     } else if (selection == "lamaPembayaran") {
-      widget.add(DropdownMenuItem(value: "0", child: Text("Lama Pembyayaran", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "0", child: Text("Lama Pembyayaran", style: textStyling.defaultBlack(13))));
       if (data != null) {
         for (var i = 0; i < data.length; i++) {
-          widget.add(
+          ui.add(
             DropdownMenuItem(
               value: (i + 1).toString(),
               child: Text(data[i]["deskripsi"], style: textStyling.defaultBlack(13)),
@@ -445,16 +447,15 @@ class CustomWidget {
         }
       }
     } else if (selection == "mataUang") {
-      widget.add(DropdownMenuItem(value: "0", child: Text("Mata Uang", style: textStyling.defaultBlack(13))));
-      widget.add(DropdownMenuItem(value: "USD", child: Text("USD - US Dollar", style: textStyling.defaultBlack(13))));
-      widget.add(DropdownMenuItem(value: "RP", child: Text("Rp - IDR Rupiah", style: textStyling.defaultBlack(13))));
-      widget.add(DropdownMenuItem(value: "YEN", child: Text("¥ - Yen Japan", style: textStyling.defaultBlack(13))));
-      widget
-          .add(DropdownMenuItem(value: "YUAN", child: Text("YUAN - Yuan China", style: textStyling.defaultBlack(13))));
-      widget.add(
+      ui.add(DropdownMenuItem(value: "0", child: Text("Mata Uang", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "USD", child: Text("USD - US Dollar", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "RP", child: Text("Rp - IDR Rupiah", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "YEN", child: Text("¥ - Yen Japan", style: textStyling.defaultBlack(13))));
+      ui.add(DropdownMenuItem(value: "YUAN", child: Text("YUAN - Yuan China", style: textStyling.defaultBlack(13))));
+      ui.add(
         DropdownMenuItem(value: "MYR", child: Text("MYR - Malaysia Ringgit", style: textStyling.defaultBlack(13))),
       );
     }
-    return widget;
+    return ui;
   }
 }

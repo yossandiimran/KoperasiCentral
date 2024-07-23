@@ -48,8 +48,15 @@ class LoginState extends State<Login> {
               ),
             ),
             Positioned(
+              top: kToolbarHeight - 20,
+              bottom: global.getHeight(context) / 2,
+              left: 0,
+              right: 0,
+              child: Image.asset("assets/new_icon.png", scale: 1.8),
+            ),
+            Positioned(
               top: 0,
-              bottom: kToolbarHeight,
+              bottom: 0,
               left: 0,
               right: 0,
               child: Stack(
@@ -65,7 +72,7 @@ class LoginState extends State<Login> {
                         Container(
                           margin: const EdgeInsets.all(20),
                           padding: const EdgeInsets.all(20),
-                          decoration: widget.decorationContainer1(Colors.white, 20.0),
+                          decoration: ui.decorationContainer1(Colors.white, 20.0),
                           child: Container(
                             padding: const EdgeInsets.all(10),
                             child: Column(
@@ -124,11 +131,10 @@ class LoginState extends State<Login> {
                                         onTap: () async {
                                           var obj = {"username": email.text, "password": password.text};
                                           await AuthService(context: context, objParam: obj).login();
-                                          // Navigator.pushNamed(context, '/home');
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.all(15),
-                                          decoration: widget.decorationContainerGradient(
+                                          decoration: ui.decorationContainerGradient(
                                             defOrange,
                                             defOrange,
                                             10.0,

@@ -175,15 +175,17 @@ class SaldoState extends State<Saldo> {
                     children: [
                       for (var i = 0; i < listSaldo.length; i++)
                         Container(
-                          decoration: widget.decCont(defWhite, 20, 20, 20, 20),
+                          decoration: ui.decCont(defWhite, 20, 20, 20, 20),
                           margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                           padding: EdgeInsets.all(15),
                           child: ListTile(
                             title: Text(
-                              listSaldo[i]["jenis_simpanan"] == "wajib" ? "Simpanan Wajib" : "Simpanan Pokok",
+                              listSaldo[i]["tipe_simpanan"] == 2
+                                  ? "Penarikan ${listSaldo[i]['doc_type'] == '4' ? 'Koreksi' : 'Normal'}"
+                                  : "Simpanan ${listSaldo[i]['jenis_simpanan']}",
                             ),
                             subtitle: Text(
-                              '''${CurrencyFormat.convertToIdr(int.parse(listSaldo[i]['nominal']), 2).toString()}
+                              '''${CurrencyFormat.convertToIdr(double.parse(listSaldo[i]['nominal']), 2).toString()}
 Tanggal : ${listSaldo[i]["tgl_transaksi"]}''',
                             ),
                             trailing: IconButton(

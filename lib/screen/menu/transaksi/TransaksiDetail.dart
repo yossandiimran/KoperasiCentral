@@ -57,39 +57,120 @@ class TransaksiDetailState extends State<TransaksiDetail> {
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: !isLoading
-                ? Column(
-                    children: [
-                      SizedBox(height: kToolbarHeight * 4.3),
-                      for (var i = 0; i < listPengajuan.length; i++)
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                          decoration: widget.decCont2(defWhite, 15, 15, 15, 15),
-                          child: Column(children: [
-                            ListTile(
-                              dense: true,
-                              visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                              leading: Icon(
-                                listPengajuan[i]['sudah_dibayar'] ? Icons.check_circle : Icons.access_time,
-                                color: listPengajuan[i]['sudah_dibayar'] ? defGreen : defRed,
-                                size: 35,
-                              ),
-                              title: Text(
-                                "Angsuran Ke ${listPengajuan[i]["angsuran_ke"]}",
-                                style: textStyling.customColorBold(15, defBlack1),
-                              ),
-                              subtitle: Text(
-                                '''Jatuh Tempo : ${listPengajuan[i]["jatuh_tempo"] ?? '-'}
-Nominal :  ${CurrencyFormat.convertToIdr(int.parse(listPengajuan[i]["nominal"]), 2).toString()}
-Status : ${listPengajuan[i]['sudah_dibayar'] ? 'Lunas' : 'Belum Lunas'}''',
-                                style: textStyling.nunitoBold(14, defGrey),
+                ? obj['data']["batalkan"] == null
+                    ? Column(
+                        children: [
+                          SizedBox(height: kToolbarHeight * 4.3),
+                          for (var i = 0; i < listPengajuan.length; i++)
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+                              margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                              decoration: ui.decCont2(defWhite, 15, 15, 15, 15),
+                              child: Container(
+                                padding: EdgeInsets.all(8),
+                                child: ExpansionTile(
+                                  leading: Icon(
+                                    listPengajuan[i]['sudah_dibayar']
+                                        ? Icons.check_circle
+                                        : Icons.remove_circle_outline_rounded,
+                                    color: listPengajuan[i]['sudah_dibayar'] ? defGreen : defRed,
+                                    size: 35,
+                                  ),
+                                  title: Text(
+                                    "Cicilan Angsuran Ke - ${listPengajuan[i]["angsuran_ke"]}",
+                                    style: textStyling.mcLarenBold(13, defBlack1),
+                                  ),
+                                  subtitle: Row(
+                                    children: [
+                                      Text(
+                                        listPengajuan[i]['sudah_dibayar'] ? 'Lunas' : 'Belum Lunas',
+                                        style: textStyling.mcLaren(
+                                          12,
+                                          listPengajuan[i]['sudah_dibayar'] ? defGreen : defRed,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                        !listPengajuan[i]['sudah_dibayar']
+                                            ? CurrencyFormat.convertToIdr(
+                                                double.parse((double.parse(listPengajuan[i]["nominal"].toString()) +
+                                                        double.parse(listPengajuan[i]["bunga"].toString()))
+                                                    .toString()),
+                                                2,
+                                              ).toString()
+                                            : "",
+                                        style: textStyling.mcLaren(
+                                            13, listPengajuan[i]['sudah_dibayar'] ? defGreen : defRed),
+                                      ),
+                                    ],
+                                  ),
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Pokok   ",
+                                          style: textStyling.nunitoBold(15, defBlack1),
+                                        ),
+                                        Spacer(),
+                                        Text(
+                                          CurrencyFormat.convertToIdr(
+                                                  double.parse(listPengajuan[i]["nominal"].toString()), 2)
+                                              .toString(),
+                                          style: textStyling.nunitoBold(15, defBlack1),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Bunga   ",
+                                          style: textStyling.nunitoBold(15, defBlack1),
+                                        ),
+                                        Spacer(),
+                                        Text(
+                                          CurrencyFormat.convertToIdr(
+                                                  double.parse(listPengajuan[i]["bunga"].toString()), 2)
+                                              .toString(),
+                                          style: textStyling.nunitoBold(15, defBlack1),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Total     ",
+                                          style: textStyling.mcLaren(15, defBlue),
+                                        ),
+                                        Spacer(),
+                                        Text(
+                                          CurrencyFormat.convertToIdr(
+                                            double.parse((double.parse(listPengajuan[i]["nominal"].toString()) +
+                                                    double.parse(listPengajuan[i]["bunga"].toString()))
+                                                .toString()),
+                                            2,
+                                          ).toString(),
+                                          style: textStyling.mcLaren(15, defBlue),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ]),
+                          SizedBox(height: 10),
+                        ],
+                      )
+                    : SizedBox(
+                        height: global.getHeight(context),
+                        child: Column(
+                          children: [
+                            Spacer(),
+                            Icon(Icons.cancel_rounded, color: defRed, size: 40),
+                            Text("Transaksi Dibatalkan !", style: textStyling.mcLarenBold(20, defRed)),
+                            Spacer(),
+                          ],
                         ),
-                      SizedBox(height: 10),
-                    ],
-                  )
+                      )
                 : Column(
                     children: [
                       SizedBox(height: kToolbarHeight * 4),
@@ -123,7 +204,7 @@ Status : ${listPengajuan[i]['sudah_dibayar'] ? 'Lunas' : 'Belum Lunas'}''',
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   margin: EdgeInsets.only(top: 40, left: 10, right: 10, bottom: 10),
-                  decoration: widget.decCont2(defWhite, 28, 28, 28, 28),
+                  decoration: ui.decCont2(defWhite, 28, 28, 28, 28),
                   child: Column(children: [
                     SizedBox(height: 5),
                     ListTile(
@@ -138,7 +219,7 @@ Nama Barang :  ${obj["data"]['nama']}
 Tanggal Transaksi :  ${obj["data"]['tgl_transaksi']}
 Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(obj["data"]['besar_pinjaman']), 2).toString()}
 Realisasi :  ${CurrencyFormat.convertToIdr(double.parse(obj["data"]['realisasi_pinjaman']), 2).toString()}
-Sisa Tagihan :  ${CurrencyFormat.convertToIdr(int.parse(obj["data"]['sisa_pembayaran'].toString()), 2).toString()}
+Sisa Tagihan :  ${CurrencyFormat.convertToIdr(double.parse(obj["data"]['sisa_pembayaran'].toString()), 2).toString()}
 Angsuran : ${obj["data"]['tenor']}x''',
                         style: textStyling.nunitoBold(15, defGrey),
                       ),

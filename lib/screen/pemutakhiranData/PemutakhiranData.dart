@@ -34,6 +34,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
     for (int i = 0; i < item.length; i++) {
       item[i]['name'] = await item[i]['name'].toUpperCase();
     }
+    print(centralData);
     await parseCentral();
     setState(() {
       isLoading = false;
@@ -64,7 +65,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
     npwp.text = await centralData["data"]["npwp"] ?? "";
     noHp.text = await centralData["data"]["no_hp"] ?? "";
     // var getIdKota = item.where((element) => element['name'] == centralData["data"]["kota"]).first;
-    var getIdKota = item.where((element) => element['name'] == kotaSelected);
+    var getIdKota = item.where((element) => element['name'].toUpperCase() == kotaSelected.toUpperCase());
     if (getIdKota.isNotEmpty) {
       getKecamatan(getIdKota.first['id'].toString(), false);
     } else {
@@ -97,7 +98,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
       domkecSelected = kecamatanSelected;
       domKelurahan.text = kelurahan.text;
       domKodePos.text = kodePos.text;
-      var getIdKota = item.where((element) => element['name'] == domKotaSelected);
+      var getIdKota = item.where((element) => element['name'].toUpperCase() == domKotaSelected.toUpperCase());
       if (getIdKota.isNotEmpty) {
         getKecamatan(getIdKota.first['id'].toString(), true);
       } else {
@@ -199,7 +200,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
             child: Container(
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               padding: EdgeInsets.symmetric(vertical: 10),
-              decoration: widget.decCont2(defWhite, 8, 8, 8, 8),
+              decoration: ui.decCont2(defWhite, 8, 8, 8, 8),
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -213,7 +214,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: nik,
@@ -234,7 +235,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: nama,
@@ -255,7 +256,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: ttl,
@@ -290,7 +291,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context),
@@ -345,7 +346,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: alamat,
@@ -368,7 +369,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
@@ -435,7 +436,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
@@ -498,7 +499,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         textCapitalization: TextCapitalization.characters,
@@ -519,7 +520,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: kodePos,
@@ -540,7 +541,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       alignment: Alignment.center,
                       width: global.getWidth(context),
-                      decoration: widget.decCont(defWhite, 20, 20, 20, 20),
+                      decoration: ui.decCont(defWhite, 20, 20, 20, 20),
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.all(15),
                       child: Wrap(
@@ -593,7 +594,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       alignment: Alignment.center,
                       width: global.getWidth(context),
-                      decoration: widget.decCont(defWhite, 20, 20, 20, 20),
+                      decoration: ui.decCont(defWhite, 20, 20, 20, 20),
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.all(15),
                       child: Wrap(
@@ -646,7 +647,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: npwp,
@@ -667,7 +668,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 0, 0, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 0, 0, 10, 10),
                       width: global.getWidth(context),
                       child: ListTile(
                         leading: IconButton(
@@ -685,7 +686,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 0, 0),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 0, 0),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: domAlamat,
@@ -708,7 +709,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
@@ -775,7 +776,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
@@ -838,7 +839,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: domKelurahan,
@@ -859,7 +860,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: domKodePos,
@@ -880,7 +881,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: norek,
@@ -901,7 +902,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       alignment: Alignment.center,
                       width: global.getWidth(context),
-                      decoration: widget.decCont(defWhite, 20, 20, 20, 20),
+                      decoration: ui.decCont(defWhite, 20, 20, 20, 20),
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.all(15),
                       child: Wrap(
@@ -954,7 +955,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: noHp,
@@ -975,7 +976,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                       margin: EdgeInsets.only(top: 5),
-                      decoration: widget.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
+                      decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: SizedBox(
                         width: global.getWidth(context) / 1.2,
@@ -1033,7 +1034,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                               width: global.getWidth(context) / 2.7,
                               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                               margin: EdgeInsets.only(top: 5),
-                              decoration: widget.decCont(defRed, 15, 15, 15, 15),
+                              decoration: ui.decCont(defRed, 15, 15, 15, 15),
                               child: Row(
                                 children: [
                                   Spacer(),
@@ -1053,7 +1054,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                               width: global.getWidth(context) / 2.7,
                               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                               margin: EdgeInsets.only(top: 5),
-                              decoration: widget.decCont(defBlue, 15, 15, 15, 15),
+                              decoration: ui.decCont(defBlue, 15, 15, 15, 15),
                               child: Row(
                                 children: [
                                   Spacer(),
@@ -1120,10 +1121,12 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
     if (domKodePos.text == '') return alert.alertWarning(context: context, text: "Kode Pos Domisili Wajib Diisi !");
     if (noHp.text == '') return alert.alertWarning(context: context, text: "NO HP Wajib Diisi !");
 
-    var getIdKota = item.where((element) => element['name'] == kotaSelected).first;
-    var getIdKeca = kecamatan.where((element) => element['name'] == kecamatanSelected).first;
-    var getDomIdKota = item.where((element) => element['name'] == domKotaSelected).first;
-    var getDomIdKeca = kecamatanDom.where((element) => element['name'] == domkecSelected).first;
+    var getIdKota = item.where((element) => element['name'].toUpperCase() == kotaSelected.toUpperCase()).first;
+    var getIdKeca =
+        kecamatan.where((element) => element['name'].toUpperCase() == kecamatanSelected.toUpperCase()).first;
+    var getDomIdKota = item.where((element) => element['name'].toUpperCase() == domKotaSelected.toUpperCase()).first;
+    var getDomIdKeca =
+        kecamatanDom.where((element) => element['name'].toUpperCase() == domkecSelected.toUpperCase()).first;
 
     // Convert Date TTL
     var splitDate = ttl.text.split("-");

@@ -11,7 +11,7 @@ class ShimmerWidget {
         child: Container(
           width: width,
           height: height,
-          decoration: widget.decCont(defWhite, 20, 20, 20, 20),
+          decoration: ui.decCont(defWhite, 20, 20, 20, 20),
         ),
       ),
     );
@@ -21,7 +21,7 @@ class ShimmerWidget {
     return Container(
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        decoration: widget.decCont2(defWhite, 20, 20, 20, 20),
+        decoration: ui.decCont2(defWhite, 20, 20, 20, 20),
         height: 100,
         child: Row(
           children: [

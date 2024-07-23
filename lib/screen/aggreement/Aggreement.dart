@@ -86,7 +86,7 @@ class AggreementState extends State<Aggreement> {
                 children: [
                   Container(
                     margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                    decoration: widget.decCont(defWhite, 10, 10, 10, 10),
+                    decoration: ui.decCont(defWhite, 10, 10, 10, 10),
                     child: Column(
                       children: [
                         SizedBox(height: kToolbarHeight),
@@ -165,7 +165,7 @@ class AggreementState extends State<Aggreement> {
                                 alert.alertLogout(context);
                               },
                               child: Container(
-                                decoration: widget.decCont(
+                                decoration: ui.decCont(
                                   defOrange,
                                   10,
                                   0,
@@ -182,7 +182,7 @@ class AggreementState extends State<Aggreement> {
                                 submitAggreement();
                               },
                               child: Container(
-                                decoration: widget.decCont(
+                                decoration: ui.decCont(
                                   cek1 && cek2 ? defBlue : defGrey,
                                   0,
                                   10,
@@ -428,7 +428,7 @@ class AggreementState extends State<Aggreement> {
                         Navigator.pop(context);
                       },
                       child: Container(
-                        decoration: widget.decCont(
+                        decoration: ui.decCont(
                           defOrange,
                           10,
                           0,
@@ -446,7 +446,7 @@ class AggreementState extends State<Aggreement> {
                         Navigator.pop(context);
                       },
                       child: Container(
-                        decoration: widget.decCont(
+                        decoration: ui.decCont(
                           defBlue,
                           0,
                           10,
