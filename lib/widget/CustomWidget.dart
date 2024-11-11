@@ -21,7 +21,8 @@ class CustomWidget {
       actions: [
         IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/notification');
+            // Navigator.pushNamed(context, '/notification');
+            alert.alertWarning(context: context, text: "Cooming Soon!");
           },
           icon: Icon(Icons.notifications_on_rounded, color: defblue2),
         ),

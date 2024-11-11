@@ -22,9 +22,8 @@ class SplashScreenState extends State<SplashScreen> {
       await preference.initialization();
       var firstLogin = await preference.getData("first_login");
       var name = await preference.getData("name");
-      var pernyataan = await preference.getData('tanggalPernyataan');
-      print(pernyataan);
-      if (pernyataan == '-') {
+      var aggrement = await preference.getData('aggrement');
+      if (aggrement == false) {
         if (mounted) Navigator.pushNamed(context, '/aggreement');
       } else {
         if (firstLogin == "true") {

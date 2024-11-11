@@ -30,7 +30,7 @@ class ProfileUserState extends State<ProfileUser> {
     MasterService masterService = MasterService(context: context);
     Map respData = await masterService.getMasterKota();
     item = await respData["data"];
-    centralData = await AuthService(context: context).getCentralData();
+    centralData = await AuthService(context: context).getProfileData();
     for (int i = 0; i < item.length; i++) {
       item[i]['name'] = await item[i]['name'].toUpperCase();
     }
@@ -41,27 +41,27 @@ class ProfileUserState extends State<ProfileUser> {
   }
 
   Future<dynamic> parseCentral() async {
-    nik.text = await centralData["data"]["nik"];
-    nama.text = await centralData["data"]["nama"];
-    ttl.text = global.formatDate3(DateTime.parse(await centralData["data"]["tgllahir"]));
-    jenisKelamin = await centralData["data"]["sex"] ? "LAKI - LAKI" : "PEREMPUAN";
-    alamat.text = await centralData["data"]["alamat"];
-    kotaSelected = await centralData["data"]["kota"];
-    kecamatanSelected = await centralData["data"]["kecamatan"];
+    nik.text = await centralData["data"]["data"]["info"]["nik"];
+    nama.text = await centralData["data"]["data"]["info"]["nama"];
+    ttl.text = global.formatDate3(DateTime.parse(await centralData["data"]["data"]["info"]["tgl_lahir"]));
+    jenisKelamin = await centralData["data"]["data"]["info"]["jenis_kelamin"] ? "LAKI - LAKI" : "PEREMPUAN";
+    alamat.text = await centralData["data"]["data"]["info"]["alamat"];
+    kotaSelected = await centralData["data"]["data"]["info"]["kota"];
+    kecamatanSelected = await centralData["data"]["data"]["info"]["kecamatan"];
     // kotaSelected = "BANDUNG";
     // kecamatanSelected = "ANDIR";
-    kelurahan.text = await centralData["data"]["kelurahan"];
-    kodePos.text = await centralData["data"]["kode_pos"] ?? "";
-    statGaji = await centralData["data"]["statgaji"] == "1"
+    kelurahan.text = await centralData["data"]["data"]["info"]["kelurahan"];
+    kodePos.text = await centralData["data"]["data"]["info"]["kode_pos"] ?? "";
+    statGaji = await centralData["data"]["data"]["info"]["statgaji"] == "1"
         ? "1 Mingguan"
-        : centralData["data"]["statgaji"] == "2"
+        : centralData["data"]["data"]["info"]["statgaji"] == "2"
             ? "3 Mingguan"
             : "Bulanan";
-    // statGaji = await centralData["data"]["statgaji"] == "2" ? "Bulanan" : "Harian";
-    norek.text = await centralData["data"]["norek_bank"];
-    npwp.text = await centralData["data"]["npwp"];
-    noHp.text = await centralData["data"]["no_hp"];
-    // var getIdKota = item.where((element) => element['name'] == centralData["data"]["kota"]).first;
+    // statGaji = await centralData["data"]["data"]["info"]["statgaji"] == "2" ? "Bulanan" : "Harian";
+    norek.text = await centralData["data"]["data"]["info"]["norek_bank"];
+    npwp.text = await centralData["data"]["data"]["info"]["npwp"];
+    noHp.text = await centralData["data"]["data"]["info"]["no_hp"];
+    // var getIdKota = item.where((element) => element['name'] == centralData["data"]["data"]["info"]["kota"]).first;
     var getIdKota = item.where((element) => element['name'].toUpperCase() == kotaSelected.toUpperCase());
     if (getIdKota.isNotEmpty) {
       getKecamatan(getIdKota.first['id'].toString(), false);
@@ -69,15 +69,22 @@ class ProfileUserState extends State<ProfileUser> {
       kotaSelected = "";
       kecamatanSelected = "";
     }
+    print("${global.ktpPath}${centralData["data"]["data"]["info"]["f_ktp"]}");
+    print("${global.pasPath}${centralData["data"]["data"]["info"]["f_foto"]}");
+    print("${global.rekeningPath}${centralData["data"]["data"]["info"]["f_norek"]}");
 
     try {
       ktp = await downloadAndSaveFile(
-        url: "${global.ktpPath}${centralData["data"]["f_ktp"]}",
-        filename: "ktp_image_${centralData["data"]["nama"]}.jpg",
+        url: "${global.ktpPath}${centralData["data"]["data"]["info"]["f_ktp"]}",
+        filename: "ktp_image_${centralData["data"]["data"]["info"]["nama"]}.jpg",
       );
       wajah = await downloadAndSaveFile(
-        url: "${global.pasPath}${centralData["data"]["f_pasfoto"]}",
-        filename: "wajah_image_${centralData["data"]["nama"]}.jpg",
+        url: "${global.pasPath}${centralData["data"]["data"]["info"]["f_foto"]}",
+        filename: "wajah_image_${centralData["data"]["data"]["info"]["nama"]}.jpg",
+      );
+      dokNorek = await downloadAndSaveFile(
+        url: "${global.rekeningPath}${centralData["data"]["data"]["info"]["f_norek"]}",
+        filename: "rek_image_${centralData["data"]["data"]["info"]["nama"]}.jpg",
       );
     } catch (e) {
       print('Error: $e');
@@ -556,7 +563,7 @@ class ProfileUserState extends State<ProfileUser> {
                                       borderRadius: BorderRadius.all(Radius.circular(20)),
                                     ),
                                     child: Center(
-                                      child: Icon(Icons.camera_alt, color: defOrange),
+                                      child: Center(child: CircularProgressIndicator()),
                                     ),
                                   ),
                                 ),
@@ -602,7 +609,7 @@ class ProfileUserState extends State<ProfileUser> {
                                       borderRadius: BorderRadius.all(Radius.circular(20)),
                                     ),
                                     child: Center(
-                                      child: Icon(Icons.camera_alt, color: defOrange),
+                                      child: Center(child: CircularProgressIndicator()),
                                     ),
                                   ),
                                 ),
@@ -846,7 +853,50 @@ class ProfileUserState extends State<ProfileUser> {
                     //     ),
                     //   ),
                     // ),
-
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      margin: EdgeInsets.only(top: 10),
+                      child: Text("  Foto Rekening", textAlign: TextAlign.left),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      width: global.getWidth(context),
+                      decoration: ui.decCont(defWhite, 20, 20, 20, 20),
+                      margin: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.all(15),
+                      child: Wrap(
+                        children: [
+                          dokNorek != null
+                              ? GestureDetector(
+                                  child: Container(
+                                    margin: EdgeInsets.all(5),
+                                    width: global.getWidth(context) / 1.6,
+                                    height: 140,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: defBlue),
+                                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                                      image: DecorationImage(
+                                        image: FileImage(File(dokNorek.path)),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : GestureDetector(
+                                  child: Container(
+                                    margin: EdgeInsets.all(5),
+                                    width: global.getWidth(context) / 1.6,
+                                    height: 140,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: defOrange),
+                                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    ),
+                                    child: Center(child: CircularProgressIndicator()),
+                                  ),
+                                ),
+                        ],
+                      ),
+                    ),
                     Container(
                       alignment: Alignment.bottomLeft,
                       margin: EdgeInsets.only(top: 10),

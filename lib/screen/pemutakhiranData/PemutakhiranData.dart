@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, no_logic_in_create_state, avoid_print, avoid_unnecessary_containers, unnecessary_null_comparison, invalid_use_of_visible_for_testing_member, prefer_interpolation_to_compose_strings
+// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, no_logic_in_create_state, avoid_print, avoid_unnecessary_containers, unnecessary_null_comparison, invalid_use_of_visible_for_testing_member, prefer_interpolation_to_compose_strings, use_build_context_synchronously
 part of '../../header.dart';
 
 class PemutakhiranData extends StatefulWidget {
@@ -218,6 +218,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: nik,
+                        readOnly: true,
                         maxLength: 16,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
@@ -238,6 +239,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                       decoration: ui.decCont(Colors.blueGrey.shade50, 10, 10, 10, 10),
                       width: global.getWidth(context),
                       child: TextFormField(
+                        readOnly: true,
                         controller: nama,
                         textCapitalization: TextCapitalization.characters,
                         inputFormatters: [UpperCaseTextFormatter()],
@@ -267,19 +269,19 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                           hintText: "Tanggal Lahir",
                         ),
                         onTap: () async {
-                          var splitDate = ttl.text.split("-");
-                          var splitted = splitDate[2] + "" + splitDate[1] + "" + splitDate[0];
-                          var initDt = global.formatDate2(DateTime.parse(splitted));
-                          DateTime date = DateTime(1900);
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          date = (await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.parse(initDt),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime(2100),
-                          ))!;
+                          // var splitDate = ttl.text.split("-");
+                          // var splitted = splitDate[2] + "" + splitDate[1] + "" + splitDate[0];
+                          // var initDt = global.formatDate2(DateTime.parse(splitted));
+                          // DateTime date = DateTime(1900);
+                          // FocusScope.of(context).requestFocus(FocusNode());
+                          // date = (await showDatePicker(
+                          //   context: context,
+                          //   initialDate: DateTime.parse(initDt),
+                          //   firstDate: DateTime(1900),
+                          //   lastDate: DateTime(2100),
+                          // ))!;
 
-                          ttl.text = global.formatDate3(date);
+                          // ttl.text = global.formatDate3(date);
                         },
                       ),
                     ),
@@ -651,7 +653,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                       width: global.getWidth(context),
                       child: TextFormField(
                         controller: npwp,
-                        maxLength: 15,
+                        maxLength: 16,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           counterText: "",
@@ -929,7 +931,63 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
                                 )
                               : GestureDetector(
                                   onTap: () async {
-                                    getImage(picker: 'foto', type: 'rekening');
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return WillPopScope(
+                                          onWillPop: () async {
+                                            return true;
+                                          },
+                                          child: AlertDialog(
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                                            contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                                            content: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                SizedBox(height: 10),
+                                                Container(
+                                                  margin: const EdgeInsets.all(10),
+                                                  child: Text(
+                                                    "Pilih Sumber",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(fontSize: global.getWidth(context) / 20),
+                                                  ),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Spacer(),
+                                                    GestureDetector(
+                                                      onTap: () => getImage(picker: 'gallery', type: 'rekening'),
+                                                      child: Container(
+                                                        decoration: ui.decCont2(defGreen, 10, 10, 10, 10),
+                                                        padding:
+                                                            EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+                                                        child: Text(" Gallery ",
+                                                            style: textStyling.customColor(14, defWhite)),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                    GestureDetector(
+                                                      onTap: () => getImage(picker: 'foto', type: 'rekening'),
+                                                      child: Container(
+                                                        decoration: ui.decCont2(defGreen, 10, 10, 10, 10),
+                                                        padding:
+                                                            EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                                                        child: Text(" Camera ",
+                                                            style: textStyling.customColor(14, defWhite)),
+                                                      ),
+                                                    ),
+                                                    Spacer(),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 10),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
                                   },
                                   child: Container(
                                     margin: EdgeInsets.all(5),
@@ -1078,12 +1136,23 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
       );
 
   Future getImage({required String picker, required String type}) async {
-    var img = await ImagePicker.platform.pickImage(
-      source: ImageSource.camera,
-      maxWidth: 2048,
-      maxHeight: 1080,
-      imageQuality: 100,
-    );
+    var img;
+    if (picker == 'foto') {
+      img = await ImagePicker.platform.pickImage(
+        source: ImageSource.camera,
+        maxWidth: 2048,
+        maxHeight: 1080,
+        imageQuality: 100,
+      );
+    } else {
+      img = await ImagePicker.platform.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 2048,
+        maxHeight: 1080,
+        imageQuality: 100,
+      );
+    }
+
     if (img != null) {
       File rotatedImage = await FlutterExifRotation.rotateAndSaveImage(path: img.path);
       if (type == 'ktp') {
@@ -1091,6 +1160,7 @@ class PemutakhiranDataState extends State<PemutakhiranData> {
       } else if (type == 'wajah') {
         wajah = rotatedImage;
       } else if (type == 'rekening') {
+        Navigator.pop(context);
         dokNorek = rotatedImage;
       }
 

@@ -162,7 +162,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
             Container(
               alignment: Alignment.bottomLeft,
               margin: EdgeInsets.only(top: 15),
-              child: Text("  Jumlah Angsuran", textAlign: TextAlign.left),
+              child: Text("  Lama Cicilan (x)", textAlign: TextAlign.left),
             ),
             !tanpaAngsuran
                 ? Container(
@@ -175,7 +175,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                       controller: angsuranInput,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Angsuran",
+                        hintText: "Lama Cicilan (x)",
                       ),
                     ),
                   )
@@ -307,7 +307,7 @@ class PengajuanPinjamanFormState extends State<PengajuanPinjamanForm> {
                             '''
 Besar Pinjaman :  ${CurrencyFormat.convertToIdr(double.parse(dataSimulasi["data"]["besar_pinjaman"].toString()), 2).toString()}
 Realisasi :  ${CurrencyFormat.convertToIdr(double.parse(dataSimulasi["data"]["realisasi"].toString()), 2).toString()}
-Angsuran : ${angsuranInput.text != "" ? angsuranInput.text : "1"}x''',
+Lama Cicilan : ${angsuranInput.text != "" ? angsuranInput.text : "1"}x''',
                             style: textStyling.nunitoBold(15, defBlack1),
                           ),
                         ),

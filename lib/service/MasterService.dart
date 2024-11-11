@@ -114,8 +114,9 @@ class MasterService extends HandleStatusCode {
   }
 
   // User Aggreement Service ========================================================================
-  Future<Map> getUserAggreement() async {
-    Uri url = global.getMainServiceUrl('user-aggrement');
+  Future<Map> getUserAggreement(jenis) async {
+    Uri url = global.getMainServiceUrl('user-aggrement?jenis=$jenis');
+    print("asdadasdasd");
     try {
       returnData = {};
       await http.get(url, headers: {

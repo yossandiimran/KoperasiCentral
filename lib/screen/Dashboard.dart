@@ -37,8 +37,22 @@ class DashboardState extends State<Dashboard> {
       pinjamanAktif = int.parse(dataMaster["data"]['pinjaman_aktif'].toString());
       limit = double.parse(dataMaster["data"]['limit_pinjaman'].toString());
       pinjamanLunas = int.parse(dataMaster["data"]['pinjaman_lunas'].toString());
-      saldo = double.parse(dataMaster["data"]['saldo_simpanan']);
+      saldo = double.parse(dataMaster["data"]['saldo_simpanan'].toString());
       plafon = double.parse(dataMaster["data"]['plafon'].toString());
+
+      var version = dataMaster["data"]['version'];
+
+      if (version != appVersion) {
+        Navigator.pushNamed(context, '/login');
+        preference.clearPreference();
+        return alert.alertWarning(
+            context: context,
+            text: "Aplikasi Versi $version sudah tersedia di playstore, mohon update untuk menggunakan aplikasi !");
+      }
+      await preference.setBool("aggrement", dataMaster["data"]['aggrement']);
+      if (dataMaster["data"]['aggrement'] == false) {
+        Navigator.pushNamed(context, '/aggreement');
+      }
       PengajuanPinjamanService pps = PengajuanPinjamanService(context: context);
       Map dataPengajuan = await pps.getListPengajuan();
       for (int i = 0; i < dataPengajuan["data"].length; i++) {
@@ -258,10 +272,28 @@ class DashboardState extends State<Dashboard> {
                         Spacer(),
                         GestureDetector(
                           onTap: () {
-                            if (!dataMaster["data"]["ditinjau"]) {
-                              Navigator.pushNamed(context, '/formPengajuanPinjaman');
-                            } else {
-                              alert.alertWarning(context: context, text: "Akun anda sedang ditinjau !");
+                            try {
+                              var dtTglMasuk = DateTime.parse(preference.getData("tanggalMasuk"));
+                              var today = DateTime.now();
+
+                              var differenceInDays = today.difference(dtTglMasuk).inDays;
+
+                              if (differenceInDays < 183) {
+                                alert.alertWarning(
+                                  context: context,
+                                  text:
+                                      "Karyawan dengan masa kerja di bawah 6 bulan belum memenuhi syarat untuk pengajuan pinjaman.",
+                                );
+                              } else {
+                                if (!dataMaster["data"]["ditinjau"]) {
+                                  Navigator.pushNamed(context, '/formPengajuanPinjaman');
+                                } else {
+                                  alert.alertWarning(context: context, text: "Akun anda sedang ditinjau !");
+                                }
+                              }
+                            } catch (e) {
+                              print(e);
+                              alert.alertWarning(context: context, text: "Tanggal masuk tidak diketahui");
                             }
                           },
                           child: Container(

@@ -25,10 +25,9 @@ class HandleStatusCode {
         Navigator.pushReplacementNamed(context, '/');
         return alert.alertWarning(context: context, text: "Sesi anda telah habis, silahkan login ulang");
       } else if (code == 404) {
-        return alert.alertWarning(context: context, text: "Service tidak tersedia ! \nerr(404)");
+        return alert.alertWarning(context: context, text: data['message']);
       } else if (code == 403) {
         isMenuActive = 0;
-        // Navigator.pushNamed(context, '/home');
         if (!isDashboard) {
           return alert.alertWarning(context: context, text: data["message"]);
         }

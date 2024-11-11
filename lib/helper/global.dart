@@ -15,7 +15,7 @@ TextStyling textStyling = TextStyling();
 ShimmerWidget shimmerWidget = ShimmerWidget();
 FirebaseMessagingHelper fbmessaging = FirebaseMessagingHelper();
 
-var appVersion = '0.1.1';
+var appVersion = '0.5.6';
 var isMenuActive = 0;
 
 //Default Theme Color
@@ -42,10 +42,11 @@ class Global {
   getHeight(context) => MediaQuery.of(context).size.height;
   //Handle Service ===============================================================
 
-  final mainUrl = 'http://192.168.1.113:30/';
-  // final mainUrl = 'http://210.210.165.197/';
+  // final mainUrl = 'http://192.168.1.128/';
+  // final mainUrl = 'http://192.168.1.113:30/';
+  final mainUrl = 'http://210.210.165.197/';
   // final mainUrl = 'http://192.168.1.114:88/';
-  late String baseUrl, basePath, ktpPath, pasPath, baseUrlPengurus, imageUrl;
+  late String baseUrl, basePath, ktpPath, pasPath, baseUrlPengurus, imageUrl, rekeningPath;
 
   @override
   Global() {
@@ -53,8 +54,14 @@ class Global {
     baseUrl = '${mainUrl}service-koperasi/public/user/';
     baseUrlPengurus = '${mainUrl}service-koperasi/public/pengurus/';
     basePath = '${mainUrl}service-koperasi/public/storage/file/';
-    ktpPath = '${mainUrl}recruitment-e-central/public/img/identity/';
-    pasPath = '${mainUrl}recruitment-e-central/public/img/user/';
+
+    // ktpPath = '${mainUrl}recruitment-e-central/public/img/identity/';
+    // pasPath = '${mainUrl}recruitment-e-central/public/img/user/';
+    // rekeningPath = '${mainUrl}e-central/public/storage/images/rekening/';
+
+    ktpPath = 'http://jobs.gsg.co.id:81/img/identity/';
+    pasPath = 'http://jobs.gsg.co.id:81/img/user/';
+    rekeningPath = 'http://developer.gsg.co.id/e-central/public/storage/images/rekening/';
   }
 
   getMainServiceUrl(String link) => Uri.parse(baseUrl + link);

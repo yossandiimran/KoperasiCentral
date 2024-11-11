@@ -30,12 +30,16 @@ class Data {
   String? wilayah;
   String? accessToken;
   String? tokenType;
+  bool? aggrement;
+  String? tglMasuk;
   int? expiresIn;
 
   Data({this.user, this.accessToken, this.tokenType, this.expiresIn});
 
   Data.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? User.fromJson(json['user']) : null;
+    tglMasuk = json['tgl_masuk'];
+    aggrement = json['aggrement'];
     wilayah = json['wilayah'];
     accessToken = json['access_token'];
     tokenType = json['token_type'];
@@ -47,6 +51,8 @@ class Data {
     if (user != null) {
       data['user'] = user!.toJson();
     }
+    data['tgl_masuk'] = tglMasuk;
+    data['aggrement'] = aggrement;
     data['wilayah'] = wilayah;
     data['access_token'] = accessToken;
     data['token_type'] = tokenType;

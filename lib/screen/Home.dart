@@ -15,9 +15,8 @@ class HomeState extends State<Home> {
   }
 
   Future<void> getStatusPernyataan() async {
-    var pernyataan = await preference.getData('tanggalPernyataan');
-    print(pernyataan);
-    if (pernyataan == '-') {
+    var aggrement = await preference.getData('aggrement');
+    if (aggrement == false) {
       Navigator.pushNamed(context, '/aggreement');
     }
     firstLogin = await preference.getData("first_login");

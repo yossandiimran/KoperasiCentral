@@ -23,7 +23,7 @@ class AggreementState extends State<Aggreement> {
 
   Future<void> getAggreementFile() async {
     MasterService masterService = MasterService(context: context);
-    data = await masterService.getUserAggreement();
+    data = await masterService.getUserAggreement('A');
 
     var url = global.basePath + 'user-aggrement/${data['data']}';
     createFileOfPdfUrl(url);
@@ -35,6 +35,7 @@ class AggreementState extends State<Aggreement> {
     print("Start download file from internet!");
     try {
       final filename = url.substring(url.lastIndexOf("/") + 1);
+
       var request = await HttpClient().getUrl(Uri.parse(url));
       var response = await request.close();
       var bytes = await consolidateHttpClientResponseBytes(response);
@@ -94,7 +95,8 @@ class AggreementState extends State<Aggreement> {
                         SizedBox(height: 15),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/aggreementPdf').then((value) => setState(() {}));
+                            Navigator.pushNamed(context, '/aggreementPdf', arguments: {"jenis": "A"})
+                                .then((value) => setState(() {}));
                           },
                           child: ListTile(
                             leading: Icon(
@@ -127,7 +129,8 @@ class AggreementState extends State<Aggreement> {
                           onTap: () {
                             // cek1 ? cek1 = false : cek1 = true;
                             // setState(() {});
-                            openModalSheetPrivacy().then((value) => setState(() {}));
+                            Navigator.pushNamed(context, '/aggreementPdf', arguments: {"jenis": "B"})
+                                .then((value) => setState(() {}));
                           },
                           child: ListTile(
                             leading: Icon(
@@ -212,260 +215,261 @@ class AggreementState extends State<Aggreement> {
     MasterService(context: context).postUserAggreement();
   }
 
-  Future<void> openModalSheetPrivacy() async {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      isDismissible: false,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10.0),
-          topRight: Radius.circular(10.0),
-        ),
-      ),
-      builder: (BuildContext context) {
-        return FractionallySizedBox(
-          heightFactor: 0.9,
-          child: Container(
-            padding: EdgeInsets.only(top: 10, left: 25, right: 25),
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              children: <Widget>[
-                Divider(thickness: 3),
-                RichText(
-                  textAlign: TextAlign.justify,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Kebijakan Privasi : \n\n',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Selamat datang di Aplikasi Koperasi Kami. Aplikasi ini disediakan oleh PT Graha Seribusatu Jaya sebagai alat untuk anggota koperasi kami. Kami sangat menghargai privasi Anda dan berkomitmen untuk melindungi informasi pribadi yang Anda berikan kepada kami. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: '\n\n1. Informasi yang Kami Kumpulkan:',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Kami dapat mengumpulkan informasi pribadi seperti nama, alamat email, nomor telepon, dan informasi keuangan yang Anda berikan kepada kami saat mendaftar atau menggunakan aplikasi.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Kami juga dapat mengumpulkan informasi yang dihasilkan secara otomatis, seperti alamat IP, data perangkat, dan aktivitas pengguna dalam aplikasi.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: '\n\n2. Penggunaan Informasi:',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Kami menggunakan informasi pribadi Anda untuk menyediakan layanan koperasi kami, memproses transaksi, memberi Anda akses ke informasi keanggotaan, dan menghubungi Anda terkait layanan kami.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: 'Kami dapat menggunakan informasi anonim untuk tujuan analisis dan perbaikan aplikasi.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: '\n\n3. Berbagi Informasi:',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Kami tidak akan menjual, menyewakan, atau menukar informasi pribadi Anda dengan pihak ketiga tanpa izin Anda, kecuali jika diperlukan untuk tujuan layanan koperasi.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Informasi pribadi Anda dapat dibagikan dengan mitra atau penyedia layanan kami yang membantu kami menyediakan layanan aplikasi.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: '\n\n4. Keamanan:',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Kami memiliki langkah-langkah keamanan yang diterapkan untuk melindungi informasi pribadi Anda dari akses yang tidak sah atau pengungkapan.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: '\n\n5. Perubahan pada Kebijakan Privasi:',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Kebijakan Privasi ini dapat berubah dari waktu ke waktu. Kami akan memberitahu Anda tentang perubahan signifikan melalui pembaruan di aplikasi kami.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10),
-                Divider(thickness: 3),
-                SizedBox(height: 10),
-                RichText(
-                  textAlign: TextAlign.justify,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Kebijakan Pengguna (Terms of Service): \n\n',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: '1. Penggunaan Aplikasi:',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Dengan menggunakan aplikasi koperasi kami, Anda setuju untuk mematuhi syarat dan ketentuan dalam Kebijakan Pengguna ini.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: '\n\n2. Akun Pengguna:',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Anda bertanggung jawab untuk menjaga keamanan akun pengguna Anda. Anda setuju untuk tidak memberikan akses ke akun Anda kepada orang lain.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: '\n\n3. Keterbatasan Tanggung Jawab:',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Kami tidak bertanggung jawab atas kerugian atau kerusakan yang timbul akibat penggunaan atau ketidakmampuan menggunakan aplikasi kami.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: '\n\n4. Pengakhiran Akses:',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Kami berhak untuk mengakhiri atau menangguhkan akses Anda ke aplikasi jika Anda melanggar Kebijakan Pengguna ini.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                      TextSpan(
-                        text: '\n\n5. Perubahan pada Syarat dan Ketentuan:',
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text: "\n- ",
-                        style: textStyling.defaultBlackBold(13),
-                      ),
-                      TextSpan(
-                        text:
-                            'Syarat dan Ketentuan ini dapat berubah dari waktu ke waktu. Anda akan diberitahu tentang perubahan signifikan.',
-                        style: textStyling.defaultBlack(13),
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(thickness: 3),
-                Row(
-                  children: [
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        cek1 = false;
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        decoration: ui.decCont(
-                          defOrange,
-                          10,
-                          0,
-                          10,
-                          0,
-                        ),
-                        padding: EdgeInsets.all(10),
-                        child: Text("     Batalkan     ", style: textStyling.defaultWhiteBold(14)),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: () {
-                        cek1 = true;
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        decoration: ui.decCont(
-                          defBlue,
-                          0,
-                          10,
-                          0,
-                          10,
-                        ),
-                        padding: EdgeInsets.all(10),
-                        child: Text("          Setuju          ", style: textStyling.defaultWhiteBold(14)),
-                      ),
-                    ),
-                    Spacer(),
-                  ],
-                ),
-                SizedBox(height: 15),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // Future<void> openModalSheetPrivacy() async {
+  //   return showModalBottomSheet(
+  //     context: context,
+  //     isScrollControlled: true,
+  //     isDismissible: false,
+  //     shape: RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.only(
+  //         topLeft: Radius.circular(10.0),
+  //         topRight: Radius.circular(10.0),
+  //       ),
+  //     ),
+  //     builder: (BuildContext context) {
+  //       return FractionallySizedBox(
+  //         heightFactor: 0.9,
+  //         child: Container(
+  //           padding: EdgeInsets.only(top: 10, left: 25, right: 25),
+  //           child: ListView(
+  //             physics: BouncingScrollPhysics(),
+  //             children: <Widget>[
+  //               Divider(thickness: 3),
+  //               RichText(
+  //                 textAlign: TextAlign.justify,
+  //                 text: TextSpan(
+  //                   children: [
+  //                     TextSpan(
+  //                       text: 'Kebijakan Privasi : \n\n',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Selamat datang di Aplikasi Koperasi Kami. Aplikasi ini disediakan oleh PT Graha Seribusatu Jaya sebagai alat untuk anggota koperasi kami. Kami sangat menghargai privasi Anda dan berkomitmen untuk melindungi informasi pribadi yang Anda berikan kepada kami. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: '\n\n1. Informasi yang Kami Kumpulkan:',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Kami dapat mengumpulkan informasi pribadi seperti nama, alamat email, nomor telepon, dan informasi keuangan yang Anda berikan kepada kami saat mendaftar atau menggunakan aplikasi.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Kami juga dapat mengumpulkan informasi yang dihasilkan secara otomatis, seperti alamat IP, data perangkat, dan aktivitas pengguna dalam aplikasi.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: '\n\n2. Penggunaan Informasi:',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Kami menggunakan informasi pribadi Anda untuk menyediakan layanan koperasi kami, memproses transaksi, memberi Anda akses ke informasi keanggotaan, dan menghubungi Anda terkait layanan kami.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: 'Kami dapat menggunakan informasi anonim untuk tujuan analisis dan perbaikan aplikasi.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: '\n\n3. Berbagi Informasi:',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Kami tidak akan menjual, menyewakan, atau menukar informasi pribadi Anda dengan pihak ketiga tanpa izin Anda, kecuali jika diperlukan untuk tujuan layanan koperasi.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Informasi pribadi Anda dapat dibagikan dengan mitra atau penyedia layanan kami yang membantu kami menyediakan layanan aplikasi.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: '\n\n4. Keamanan:',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Kami memiliki langkah-langkah keamanan yang diterapkan untuk melindungi informasi pribadi Anda dari akses yang tidak sah atau pengungkapan.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: '\n\n5. Perubahan pada Kebijakan Privasi:',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Kebijakan Privasi ini dapat berubah dari waktu ke waktu. Kami akan memberitahu Anda tentang perubahan signifikan melalui pembaruan di aplikasi kami.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //               SizedBox(height: 10),
+  //               Divider(thickness: 3),
+  //               SizedBox(height: 10),
+  //               RichText(
+  //                 textAlign: TextAlign.justify,
+  //                 text: TextSpan(
+  //                   children: [
+  //                     TextSpan(
+  //                       text: 'Kebijakan Pengguna (Terms of Service): \n\n',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: '1. Penggunaan Aplikasi:',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Dengan menggunakan aplikasi koperasi kami, Anda setuju untuk mematuhi syarat dan ketentuan dalam Kebijakan Pengguna ini.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: '\n\n2. Akun Pengguna:',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Anda bertanggung jawab untuk menjaga keamanan akun pengguna Anda. Anda setuju untuk tidak memberikan akses ke akun Anda kepada orang lain.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: '\n\n3. Keterbatasan Tanggung Jawab:',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Kami tidak bertanggung jawab atas kerugian atau kerusakan yang timbul akibat penggunaan atau ketidakmampuan menggunakan aplikasi kami.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: '\n\n4. Pengakhiran Akses:',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Kami berhak untuk mengakhiri atau menangguhkan akses Anda ke aplikasi jika Anda melanggar Kebijakan Pengguna ini.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: '\n\n5. Perubahan pada Syarat dan Ketentuan:',
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text: "\n- ",
+  //                       style: textStyling.defaultBlackBold(13),
+  //                     ),
+  //                     TextSpan(
+  //                       text:
+  //                           'Syarat dan Ketentuan ini dapat berubah dari waktu ke waktu. Anda akan diberitahu tentang perubahan signifikan.',
+  //                       style: textStyling.defaultBlack(13),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //               Divider(thickness: 3),
+  //               Row(
+  //                 children: [
+  //                   Spacer(),
+  //                   GestureDetector(
+  //                     onTap: () {
+  //                       cek1 = false;
+  //                       Navigator.pop(context);
+  //                     },
+  //                     child: Container(
+  //                       decoration: ui.decCont(
+  //                         defOrange,
+  //                         10,
+  //                         0,
+  //                         10,
+  //                         0,
+  //                       ),
+  //                       padding: EdgeInsets.all(10),
+  //                       child: Text("     Batalkan     ", style: textStyling.defaultWhiteBold(14)),
+  //                     ),
+  //                   ),
+  //                   SizedBox(width: 8),
+  //                   GestureDetector(
+  //                     onTap: () {
+  //                       cek1 = true;
+  //                       Navigator.pop(context);
+  //                     },
+  //                     child: Container(
+  //                       decoration: ui.decCont(
+  //                         defBlue,
+  //                         0,
+  //                         10,
+  //                         0,
+  //                         10,
+  //                       ),
+  //                       padding: EdgeInsets.all(10),
+  //                       child: Text("          Setuju          ", style: textStyling.defaultWhiteBold(14)),
+  //                     ),
+  //                   ),
+  //                   Spacer(),
+  //                 ],
+  //               ),
+  //               SizedBox(height: 15),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
 }

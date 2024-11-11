@@ -129,6 +129,8 @@ class LoginState extends State<Login> {
                                     children: [
                                       GestureDetector(
                                         onTap: () async {
+                                          cek1 = false;
+                                          cek2 = false;
                                           var obj = {"username": email.text, "password": password.text};
                                           await AuthService(context: context, objParam: obj).login();
                                         },

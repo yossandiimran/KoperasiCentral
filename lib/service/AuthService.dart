@@ -27,9 +27,9 @@ class AuthService extends HandleStatusCode {
             var checkPreference = await setUserPreference(lm, objParam["password"]);
             if (checkPreference == 200) {
               var firstLogin = await preference.getData("first_login");
-              var pernyataan = await preference.getData('tanggalPernyataan');
+              var aggrement = await preference.getData('aggrement');
 
-              if (pernyataan == "-") {
+              if (aggrement == false) {
                 return Navigator.pushNamed(context, '/aggreement');
               }
               if (firstLogin == "false") {
@@ -94,17 +94,20 @@ class AuthService extends HandleStatusCode {
       await preference.setString("plafon", lm.data!.user!.userData!.plafon ?? "0");
       await preference.setString("tanggalPernyataan", lm.data!.user!.userData!.tanggalPernyataan ?? "-");
       await preference.setString("tanggalPersetujuan", lm.data!.user!.userData!.tanggalPersetujuan ?? "-");
+      await preference.setString("tanggalMasuk", lm.data!.tglMasuk ?? "-");
       await preference.setString("email", lm.data!.user!.email);
       await preference.setString("email_verified_at", lm.data!.user!.emailVerifiedAt.toString());
       await preference.setString("first_login", lm.data!.user!.firstLogin.toString());
       await preference.setString("token", lm.data!.accessToken);
       await preference.setString("token_type", lm.data!.tokenType);
       await preference.setString("expires_in", lm.data!.expiresIn.toString());
+      await preference.setBool("aggrement", lm.data!.aggrement);
       await preference.setString("pass", pass);
       await preference.setString("dtLogin", DateTime.now().toString());
       return 200;
     } catch (err) {
-      print(err);
+      print(lm.data!.aggrement);
+      print("asdasdasds");
       return 201;
     }
   }
@@ -119,10 +122,34 @@ class AuthService extends HandleStatusCode {
         'authorization': 'Bearer ${preference.getData('token')}',
       }).then((response) async {
         print(response.statusCode);
+        print(response.body);
         Map res = await handle(code: response.statusCode, response: response.body);
         returnData = {'data': res["data"]};
       });
     } catch (err) {
+      print(err);
+      returnData = {};
+    }
+
+    return returnData;
+  }
+
+  Future<Map> getProfileData() async {
+    Uri url = global.getMainServiceUrl('profile');
+    print(url);
+    print(preference.getData('token'));
+    try {
+      returnData = {};
+      await http.get(url, headers: {
+        'authorization': 'Bearer ${preference.getData('token')}',
+      }).then((response) async {
+        print(response.statusCode);
+        print(response.body);
+        Map res = await handle(code: response.statusCode, response: response.body);
+        returnData = {'data': res["data"]};
+      });
+    } catch (err) {
+      print(err);
       returnData = {};
     }
 
